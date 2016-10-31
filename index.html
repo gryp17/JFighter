@@ -4,8 +4,26 @@
 		<title>JFighter</title>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="stylesheet" type="text/css" href="css/style.css">
 	</head>
 	<body>
-		<div>JFighter</div>
+
+		<div id="container">
+			<canvas id="background-canvas" class="canvas" width="1000" height="580">
+				Your browser does not support HTML5 Canvas.
+			</canvas>
+			<canvas id="plane-canvas" class="canvas" width="1000" height="580"></canvas>
+		</div>
+		
+		<!-- libraries -->
+		<script type="text/javascript" src="libs/jquery.js"></script>
+		<script type="text/javascript" src="libs/lodash.js"></script>
+
+		<!-- game -->
+		<script type="text/javascript" src="game/misc/context.js"></script>
+		<script type="text/javascript" src="game/misc/image-repository.js"></script>
+		<script type="text/javascript" src="game/objects/background.js"></script>
+		<script type="text/javascript" src="game/main.js"></script>
+		
 	</body>
 </html>
