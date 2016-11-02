@@ -1,0 +1,19 @@
+* {
+	margin: 0px;
+	padding: 0px;
+}
+
+#container{
+	position: relative;
+	margin: auto;
+	width: 1000px;
+	height: 620px;
+	top: 10px;
+
+	.canvas {
+		display: none;
+		position: absolute;
+		border: solid 1px;
+		background: transparent;
+	}
+}

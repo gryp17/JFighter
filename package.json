@@ -1,0 +1,27 @@
+{ 
+  "name": "JFighter-HTML5", 
+  "version": "1.0.0", 
+  "description": "JFighter game", 
+  "main": "index.html", 
+  "devDependencies": { 
+	"del": "^2.2.0", 
+	"gulp": "^3.9.1", 
+	"gulp-autoprefixer": "^3.1.0", 
+	"gulp-concat": "^2.6.0", 
+	"gulp-debug": "^2.1.2", 
+	"gulp-notify": "^2.2.0", 
+	"gulp-replace": "^0.5.4", 
+	"gulp-sass": "^2.2.0", 
+	"gulp-uglify": "1.5.3" 
+  }, 
+  "repository": { 
+	"type": "git", 
+	"url": "git+https://github.com/gryp17/JFighter.git" 
+  }, 
+  "author": "Plamen Ivanov", 
+  "license": "ISC", 
+  "bugs": { 
+	"url": "https://github.com/gryp17/JFighter/issues" 
+  }, 
+  "homepage": "https://github.com/gryp17/JFighter#readme" 
+} 

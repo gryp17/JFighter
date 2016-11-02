@@ -4,26 +4,122 @@
 		<title>JFighter</title>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<link rel="stylesheet" type="text/css" href="css/style.css">
+		<link rel="stylesheet" type="text/css" href="stylesheets/css/style.min.css">
 	</head>
 	<body>
-
 		<div id="container">
+
+			<!-- loading ring -->
+			<div class="uil-ring-css">
+				<div></div>
+			</div>
+
+			<!-- main menu -->
+			<div id="main-menu">
+				<div class="plane" data-plane="BF109">
+					<img src="img/planes/bf109/1.png"/>
+					<div class="stats">
+						<h4>Messerschmitt Bf 109</h4>
+						<table class="stats">
+							<tr>
+								<td>
+									Defense
+								</td>
+								<td>
+									<div style="width: 50%"></div>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									Damage
+								</td>
+								<td>
+									<div style="width: 70%"></div>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									Speed
+								</td>
+								<td>
+									<div style="width: 60%"></div>
+								</td>
+							</tr>
+						</table>
+					</div>
+				</div>
+				<div class="plane" data-plane="STUKA">
+					<img src="img/planes/stuka/1.png"/>
+					<div class="stats">
+						<h4>Ju-87 Stuka</h4>
+						<table>
+							<tr>
+								<td>
+									Defense
+								</td>
+								<td>
+									<div style="width: 90%"></div>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									Damage
+								</td>
+								<td>
+									<div style="width: 70%"></div>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									Speed
+								</td>
+								<td>
+									<div style="width: 30%"></div>
+								</td>
+							</tr>
+						</table>
+					</div>
+				</div>
+				<div class="plane" data-plane="KI84">
+					<img src="img/planes/ki84/1.png"/>
+					<div class="stats">
+						<h4>Ki-84</h4>
+						<table>
+							<tr>
+								<td>
+									Defense
+								</td>
+								<td>
+									<div style="width: 30%"></div>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									Damage
+								</td>
+								<td>
+									<div style="width: 90%"></div>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									Speed
+								</td>
+								<td>
+									<div style="width: 80%"></div>
+								</td>
+							</tr>
+						</table>
+					</div>
+				</div>
+			</div>
+
 			<canvas id="background-canvas" class="canvas" width="1000" height="620">
 				Your browser does not support HTML5 Canvas.
 			</canvas>
 			<canvas id="plane-canvas" class="canvas" width="1000" height="620"></canvas>
 		</div>
-		
-		<!-- libraries -->
-		<script type="text/javascript" src="libs/jquery.js"></script>
-		<script type="text/javascript" src="libs/lodash.js"></script>
 
-		<!-- game -->
-		<script type="text/javascript" src="game/misc/context.js"></script>
-		<script type="text/javascript" src="game/misc/image-repository.js"></script>
-		<script type="text/javascript" src="game/objects/background.js"></script>
-		<script type="text/javascript" src="game/main.js"></script>
-		
+		<script type="text/javascript" src="game.js"></script>
 	</body>
 </html>
