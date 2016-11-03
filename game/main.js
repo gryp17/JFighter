@@ -1,4 +1,4 @@
-var imageRepository = new ImageRepository(GAME_IMAGES, function () {
+var IMAGE_REPOSITORY = new ImageRepository(GAME_IMAGES, function () {
 	$(".uil-ring-css").fadeOut(300, function () {
 		$("#main-menu").fadeIn(300);
 	});
@@ -28,9 +28,9 @@ function init(selectedPlane) {
 	BACKGROUND.canvas.focus();
 
 	//game objects
-	var background = new Background(BACKGROUND, imageRepository);
-	var plane = new Plane(PLANE, selectedPlane, imageRepository);
-	var obstacle = new Obstacle(PLANE, imageRepository);
+	var background = new Background(BACKGROUND);
+	var plane = new Plane(PLANE, selectedPlane);
+	var obstacle = new Obstacle(PLANE);
 
 	function animate() {
 		requestAnimFrame(animate);

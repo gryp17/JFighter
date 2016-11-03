@@ -1,8 +1,8 @@
-function Obstacle(context, imageRepository) {
+function Obstacle(context) {
 	var self = this;
 	this.context = context.context;
 	this.canvas = context.canvas;
-	this.planeImages = imageRepository.images.PLANES["STUKA"];
+	this.planeImages = IMAGE_REPOSITORY.images.PLANES["STUKA"];
 	this.spriteIndex = 0;
 	this.currentImage = this.planeImages.SPRITE[0];
 	this.dx = -1;
@@ -31,15 +31,11 @@ function Obstacle(context, imageRepository) {
 			this.currentImage = this.planeImages.SPRITE[this.spriteIndex];
 			this.frames = 0;
 		}
-
-		//clear the rectangle around the obstacle
-		this.context.clearRect(this.x - 5, (this.y + backgroundObject.offset - 5), this.currentImage.width + 5, this.currentImage.height + 10);
 		
 		this.x = this.x + this.dx;
 		this.y = this.y + this.dy;
 		
 		this.context.drawImage(this.currentImage, this.x, this.y + backgroundObject.offset);
-
 	};
 
 }

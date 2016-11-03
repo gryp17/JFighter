@@ -1,7 +1,7 @@
-function Background(backgroundContext, imageRepository) {
+function Background(backgroundContext) {
 	this.context = backgroundContext.context;
 	this.canvas = backgroundContext.canvas;
-	this.backgroundImage = imageRepository.images.BACKGROUND;
+	this.backgroundImage = IMAGE_REPOSITORY.images.BACKGROUND;
 	this.dx = -2;
 	this.x = 0;
 	this.dy = 0;
