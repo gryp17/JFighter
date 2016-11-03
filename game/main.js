@@ -29,11 +29,11 @@ function init(selectedPlane) {
 
 	//game objects
 	var background = new Background(BACKGROUND, imageRepository);
-	var plane = new Plane(PLANE, selectedPlane, background, imageRepository);
+	var plane = new Plane(PLANE, selectedPlane, imageRepository);
 
 	function animate() {
 		requestAnimFrame(animate);
-		background.draw();
+		background.draw(plane);
 		plane.draw();
 	}
 

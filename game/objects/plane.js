@@ -1,4 +1,4 @@
-function Plane(planeContext, planeType, backgroundObject, imageRepository) {
+function Plane(planeContext, planeType, imageRepository) {
 	var self = this;
 	this.context = planeContext.context;
 	this.canvas = planeContext.canvas;
@@ -39,42 +39,17 @@ function Plane(planeContext, planeType, backgroundObject, imageRepository) {
 		this.x = this.x + this.dx;
 		this.y = this.y + this.dy;
 
-		this.checkForCollision();
-
-		this.moveBackground();
+		this.checkForCollisions();
 
 		this.context.drawImage(this.currentImage, this.x, this.y);
 
 	};
 
-	/**
-	 * Moves the background depending on the plane position
-	 */
-	this.moveBackground = function () {
-		//if the plane is moving up or down
-		if (this.dy !== 0) {
-			var difference = this.y - (this.canvas.height / 2);
-
-			//if the plane is moving up - move the background up
-			if ((difference > 0) && this.dy < 0) {
-				backgroundObject.dy = this.dy * -1.3;
-			}
-			//if the plane is moving down - - move the background down
-			else if (this.dy > 0) {
-				backgroundObject.dy = this.dy * -1.3;
-			}
-		}
-		//otherwise stop moving the background
-		else {
-			backgroundObject.dy = 0;
-		}
-	};
 
 	/**
 	 * Checks if the plane has reached the top, bottom, left or right end of the screen
-	 * @returns {undefined}
 	 */
-	this.checkForCollision = function () {
+	this.checkForCollisions = function () {
 		//top end of screen
 		if (this.y < 0) {
 			this.y = 0;
@@ -130,5 +105,4 @@ function Plane(planeContext, planeType, backgroundObject, imageRepository) {
 
 	});
 
-	console.log(this.canvas);
 }
