@@ -1,17 +1,20 @@
 function Background(backgroundContext, imageRepository) {
 	this.context = backgroundContext.context;
 	this.canvas = backgroundContext.canvas;
+	this.backgroundImage = imageRepository.images.BACKGROUND;
 	this.dx = -2;
 	this.x = 0;
 	this.dy = 0;
-	this.y = -145;
+	//calculate the difference between the image height and the canvas height and pin the background to the bottom
+	this.y = this.canvas.height - this.backgroundImage.height;
+	this.offset = 0;
 
 	this.draw = function (planeObject) {
 		this.x = this.x + this.dx;
 		this.y = this.y + this.dy;
 
 		//reset the background horizontal position and start over again
-		if (this.x < imageRepository.images.BACKGROUND.width * -1) {
+		if (this.x < this.backgroundImage.width * -1) {
 			this.x = 0;
 		}
 		
@@ -25,14 +28,17 @@ function Background(backgroundContext, imageRepository) {
 		}
 
 		//bottom end of canvas
-		if (this.y < (imageRepository.images.BACKGROUND.height - this.canvas.height) * -1) {
+		if (this.y < (this.backgroundImage.height - this.canvas.height) * -1) {
 			this.dy = 0;
-			this.y = (imageRepository.images.BACKGROUND.height - this.canvas.height) * -1;
+			this.y = (this.backgroundImage.height - this.canvas.height) * -1;
 		}
+		
+		//calculate the difference between the canvas height and the backgroundImage height and the necessary offset in order to "not move" the rest of the objects
+		var heightDifference = this.canvas.height - this.backgroundImage.height;
+		this.offset = this.y - heightDifference;
 
-
-		this.context.drawImage(imageRepository.images.BACKGROUND, this.x, this.y);
-		this.context.drawImage(imageRepository.images.BACKGROUND, this.x + imageRepository.images.BACKGROUND.width, this.y);
+		this.context.drawImage(this.backgroundImage, this.x, this.y);
+		this.context.drawImage(this.backgroundImage, this.x + this.backgroundImage.width, this.y);
 
 	};
 
