@@ -5,52 +5,107 @@
 	height: 100%;
 	background-image: url("../../img/menu/menu.png");
 	background-size: 100% 100%;
-
-	.plane{
-		display: inline-block;
-		vertical-align: top;
-		margin: 30px 14px;
-		width: 30%;
-		border: solid 1px transparent;
-		border-radius: 5px;
-		color: #ffffff;
-		cursor: pointer;
-
-		img{
-			display: block;
-			margin: 10px auto;
-			transform: scaleX(-1);
-			filter: FlipH;
+	
+	.select-plane, .select-level{
+		> h4{
+			text-align: center;
+			font-size: 30px;
+			margin-top: 10px;
+			color: #ffffff;
 		}
+	}
 
-		.stats{
-			display: none;
-			background-color: #022161;
+	//select plane screen
+	.select-plane{
+		.plane{
+			display: inline-block;
+			vertical-align: top;
+			margin: 30px 12px;
+			width: 30%;
+			border: solid 3px transparent;
+			border-radius: 5px;
+			color: #ffffff;
+			cursor: pointer;
 
-			h4{
-				padding: 5px 0px;
-				text-align: center;
+			img{
+				display: block;
+				margin: 10px auto;
+				transform: scaleX(-1);
+				filter: FlipH;
 			}
 
-			td{
-				padding: 2px 5px;
-				&:nth-child(2){
-					padding-left: 0px;
-					width: 100%;
+			.stats{
+				display: none;
+				background-color: #022161;
+
+				h4{
+					padding: 5px 0px;
+					text-align: center;
+				}
+
+				td{
+					padding: 2px 5px;
+					&:nth-child(2){
+						padding-left: 0px;
+						width: 100%;
+					}
+				}
+
+				div{
+					background-color: #ffffff;
+					height: 20px;
 				}
 			}
 
-			div{
-				background-color: #ffffff;
-				height: 20px;
+			&:hover{
+				border: solid 3px #022161;
+				.stats{
+					display: block;
+				}
 			}
+		}
+	}
+
+	//select level screen
+	.select-level{
+		display: none;
+
+		.level{
+			position: relative;
+			display: inline-block;
+			vertical-align: top;
+			margin: 30px 12px;
+			width: 30%;
+			height: 200px;
+			border: solid 3px transparent;
+			color: #ffffff;
+			cursor: pointer;
+						
+			.level-title{
+				position: absolute;
+				display: none;
+				width: 100%;
+				height: 100%;
+				text-align: center;
+				margin-top: 90px;
+				color: #022161;
+				font-weight: bold;
+			}
+			
+			img{
+				width: 100%;
+				height: 200px;
+			}
+			
+			&:hover{
+				border: solid 3px #022161;
+				
+				.level-title{
+					display: block;
+				}
+			}
+			
 		}
 
-		&:hover{
-			border: solid 1px #022161;
-			.stats{
-				display: block;
-			}
-		}
 	}
 }

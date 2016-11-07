@@ -1,7 +1,7 @@
-function Background(backgroundContext) {
+function Background(backgroundContext, selectedLevel) {
 	this.context = backgroundContext.context;
 	this.canvas = backgroundContext.canvas;
-	this.backgroundImage = IMAGE_REPOSITORY.images.BACKGROUND;
+	this.backgroundImage = IMAGE_REPOSITORY.images.LEVELS[selectedLevel];
 	this.dx = -2;
 	this.x = 0;
 	this.dy = 0;

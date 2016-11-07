@@ -1,6 +1,5 @@
 var GAME_IMAGES = {
 	MAIN_MENU: "img/menu/menu.png",
-	BACKGROUND: "img/levels/grassland.jpg",
 	//planes
 	PLANES: {
 		BF109: {
@@ -24,5 +23,11 @@ var GAME_IMAGES = {
 			],
 			CRASHED: "img/planes/ki84/3.png"
 		}
+	},
+	//levels
+	LEVELS: {
+		GRASSLAND: "img/levels/grassland.jpg",
+		DESERT: "img/levels/desert.jpg",
+		CITY: "img/levels/city.jpg"
 	}
 };

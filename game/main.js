@@ -1,24 +1,17 @@
 var IMAGE_REPOSITORY = new ImageRepository(GAME_IMAGES, function () {
-	$(".uil-ring-css").fadeOut(300, function () {
-		$("#main-menu").fadeIn(300);
+	var menu = new Menu();
+	menu.showMenu(function (selectedPlane, selectedLevel){
+		init(selectedPlane, selectedLevel);
 	});
-	
-	$(".plane").click(function (){
-		var selectedPlane = $(this).attr("data-plane");
-		$("#main-menu").fadeOut(300, function (){
-			$(".canvas").fadeIn(300);
-		});
-		init(selectedPlane);
-	});
-	
 });
 
 
 /**
  * Main function that is called when all images have been loaded
  * @param {String} selectedPlane
+ * @param {String} selectedLevel
  */
-function init(selectedPlane) {
+function init(selectedPlane, selectedLevel) {
 	var GAME_STATE = CONSTANTS.GAME_STATE.MAIN_MENU;
 
 	//canvas/context objects
@@ -28,7 +21,7 @@ function init(selectedPlane) {
 	BACKGROUND.canvas.focus();
 
 	//game objects
-	var background = new Background(BACKGROUND);
+	var background = new Background(BACKGROUND, selectedLevel);
 	var plane = new Plane(PLANE, selectedPlane);
 	var obstacle = new Obstacle(PLANE);
 
