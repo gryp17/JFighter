@@ -2,20 +2,31 @@ function Plane(planeContext, planeType) {
 	var self = this;
 	this.context = planeContext.context;
 	this.canvas = planeContext.canvas;
+	
 	this.planeStats = PLANES_STATS[planeType];
 	this.currentHealth = this.planeStats.HEALTH;
 	this.planeImages = IMAGE_REPOSITORY.images.PLANES[planeType];
-	this.spriteIndex = 0;
-	this.currentImage = this.planeImages.SPRITE[0];
 	this.disabled = false; //the plane is disabled and can't be controlled anymore
 	this.crashed = false; //the plane has crashed to the ground
+	
+	//positioning
 	this.dx = 1;
-	this.x = 300;
+	this.x = 200;
 	this.dy = 0;
 	this.y = 350;
 
+	//sprite variables
+	this.spriteIndex = 0;
+	this.currentImage = this.planeImages.SPRITE[this.spriteIndex];
 	this.frames = 0;
 	this.limit = 2;
+	
+	//bullets
+	this.shooting = false;
+	this.bulletsCooldown = 10;
+	this.bulletsTimer = 0;
+	this.numberOfBullets = 4;
+	this.bullets = [];
 
 	/**
 	 * Draws the plane object
@@ -50,7 +61,21 @@ function Plane(planeContext, planeType) {
 			this.disabled = true;
 			this.dy = 2;
 		}
-
+		
+		//bullets cooldown
+		if(this.shooting === true){
+			this.bulletsTimer++;
+			if(this.bulletsTimer > this.bulletsCooldown){
+				this.shooting = false;
+				this.bulletsTimer = 0;
+			}
+		}
+		
+		//destroy bullets that are outside of the canvas
+		this.bullets = _.filter(this.bullets, function (bullet){
+			return bullet.x < self.canvas.width;
+		});
+		
 		//clear the rectangle around the plane
 		//this.context.clearRect(this.x - 5, this.y - 5, this.currentImage.width + 5, this.currentImage.height + 5);
 		this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
@@ -92,7 +117,22 @@ function Plane(planeContext, planeType) {
 		//and restore the co-ords to how they were when we began
 		this.context.restore();
 	};
-
+	
+	/**
+	 * Makes the plane shoot bullets
+	 */
+	this.shoot = function () {
+		var bulletsMargin = 20;
+		
+		//shoot only if the bullets are not on cooldown
+		if(this.shooting === false){
+			this.shooting = true;
+			
+			for(var i = 0; i < this.numberOfBullets; i++){
+				this.bullets.push(new PlaneBullet(planeContext, this.x + this.currentImage.width + bulletsMargin * i, this.y + (this.currentImage.height / 2), 15, 0));
+			}
+		}
+	};
 
 	/**
 	 * Checks if the plane has reached the top, bottom, left or right end of the screen
@@ -158,6 +198,11 @@ function Plane(planeContext, planeType) {
 				if (self.dy < 3) {
 					self.dy = self.dy + 1;
 				}
+			}
+			
+			//shoot (space)
+			if(e.which === 32){
+				self.shoot();
 			}
 
 		}

@@ -27,9 +27,15 @@ function init(selectedPlane, selectedLevel) {
 
 	function animate() {
 		requestAnimFrame(animate);
+		
 		background.draw(plane);
 		plane.draw();
 		obstacle.draw(background);
+		
+		//draw all plane bullets
+		plane.bullets.forEach(function (bullet){
+			bullet.draw();
+		});
 	}
 
 	/**

@@ -29,5 +29,8 @@ var GAME_IMAGES = {
 		GRASSLAND: "img/levels/grassland.jpg",
 		DESERT: "img/levels/desert.jpg",
 		CITY: "img/levels/city.jpg"
+	},
+	PROJECTILES: {
+		BULLET: "img/projectiles/bullet.png"
 	}
 };
