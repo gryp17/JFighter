@@ -122,14 +122,35 @@ function Plane(planeContext, planeType) {
 	 * Makes the plane shoot bullets
 	 */
 	this.shoot = function () {
-		var bulletsMargin = 20;
+		var horizontalSpeed = 15;
+		var verticalSpeed = 0;
+		var bulletsHorizontalMargin = 20;
+		var bulletsVerticalMargin = 0;
 		
 		//shoot only if the bullets are not on cooldown
 		if(this.shooting === false){
+			var angle = 0;
 			this.shooting = true;
 			
+			
+			//TODO: fix the speed and margins for both directions
+			if (this.dy > 0) {
+				angle = this.dy * this.planeStats.DESCEND_SPEED;
+				//bulletsVerticalMargin = 5;
+				bulletsVerticalMargin = this.dy * 3;
+				//verticalSpeed = 15;
+				verticalSpeed = this.dy * this.planeStats.DESCEND_SPEED;
+			} else if (this.dy < 0) {
+				angle = this.dy * this.planeStats.CLIMB_SPEED;
+				//bulletsVerticalMargin = -5;
+				bulletsVerticalMargin = this.dy * 3;
+				//verticalSpeed = -15;
+				verticalSpeed = this.dy * this.planeStats.CLIMB_SPEED;
+			}
+			
+			
 			for(var i = 0; i < this.numberOfBullets; i++){
-				this.bullets.push(new PlaneBullet(planeContext, this.x + this.currentImage.width + bulletsMargin * i, this.y + (this.currentImage.height / 2), 15, 0));
+				this.bullets.push(new PlaneBullet(planeContext, this.x + this.currentImage.width + bulletsHorizontalMargin * i, this.y + (this.currentImage.height / 2) + bulletsVerticalMargin * i, horizontalSpeed, verticalSpeed, angle));
 			}
 		}
 	};
