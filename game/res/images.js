@@ -28,7 +28,7 @@ var GAME_IMAGES = {
 	LEVELS: {
 		GRASSLAND: "img/levels/grassland.jpg",
 		DESERT: "img/levels/desert.jpg",
-		CITY: "img/levels/city.jpg"
+		WINTER: "img/levels/winter.jpg"
 	},
 	PROJECTILES: {
 		BULLET: "img/projectiles/bullet.png"
