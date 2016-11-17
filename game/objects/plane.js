@@ -23,9 +23,8 @@ function Plane(planeContext, planeType) {
 	
 	//bullets
 	this.shooting = false;
-	this.bulletsCooldown = 10;
+	this.bulletsCooldown = 3;
 	this.bulletsTimer = 0;
-	this.numberOfBullets = 4;
 	this.bullets = [];
 
 	/**
@@ -122,36 +121,37 @@ function Plane(planeContext, planeType) {
 	 * Makes the plane shoot bullets
 	 */
 	this.shoot = function () {
-		var horizontalSpeed = 15;
-		var verticalSpeed = 0;
-		var bulletsHorizontalMargin = 20;
-		var bulletsVerticalMargin = 0;
 		
 		//shoot only if the bullets are not on cooldown
 		if(this.shooting === false){
+			var bulletX = this.x + this.currentImage.width - 10;
+			var bulletY = this.y + (this.currentImage.height / 2);
+			var bulletDx = 15;
+			var bulletDy = 0;
 			var angle = 0;
 			this.shooting = true;
-			
-			
-			//TODO: fix the speed and margins for both directions
+						
+			//calculate the speed and angle if the plane is moving down or up
 			if (this.dy > 0) {
 				angle = this.dy * this.planeStats.DESCEND_SPEED;
-				//bulletsVerticalMargin = 5;
-				bulletsVerticalMargin = this.dy * 3;
-				//verticalSpeed = 15;
-				verticalSpeed = this.dy * this.planeStats.DESCEND_SPEED;
+				bulletY = bulletY + angle * 1;
+				bulletDy = this.dy * this.planeStats.DESCEND_SPEED;
 			} else if (this.dy < 0) {
 				angle = this.dy * this.planeStats.CLIMB_SPEED;
-				//bulletsVerticalMargin = -5;
-				bulletsVerticalMargin = this.dy * 3;
-				//verticalSpeed = -15;
-				verticalSpeed = this.dy * this.planeStats.CLIMB_SPEED;
+				bulletY = bulletY + angle * 1;
+				bulletDy = this.dy * this.planeStats.CLIMB_SPEED;
 			}
 			
-			
-			for(var i = 0; i < this.numberOfBullets; i++){
-				this.bullets.push(new PlaneBullet(planeContext, this.x + this.currentImage.width + bulletsHorizontalMargin * i, this.y + (this.currentImage.height / 2) + bulletsVerticalMargin * i, horizontalSpeed, verticalSpeed, angle));
+			//extreme angles adjustments
+			if(angle === -45){
+				bulletY = bulletY + 10;
+				bulletX = bulletX - 25;
+			}else if(angle === 45){
+				bulletY = bulletY - 10;
+				bulletX = bulletX - 20;
 			}
+			
+			this.bullets.push(new PlaneBullet(planeContext, bulletX, bulletY, bulletDx, bulletDy, angle));
 		}
 	};
 

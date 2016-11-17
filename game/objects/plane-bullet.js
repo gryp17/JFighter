@@ -22,6 +22,10 @@ function PlaneBullet(planeContext, x, y, dx, dy, angle) {
 
 	};
 	
+	/**
+	 * Rotates the bullet by the specified angle/degrees
+	 * @param {int} angle
+	 */
 	this.rotateBullet = function (angle) {
 		this.context.save();
 
