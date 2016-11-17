@@ -8,7 +8,7 @@ function PlaneBullet(planeContext, x, y, dx, dy, angle) {
 	this.y = y;
 	this.offset = 0;
 
-	this.draw = function (backgroundObject) {
+	this.draw = function () {
 		this.x = this.x + this.dx;
 		this.y = this.y + this.dy;
 
@@ -17,7 +17,7 @@ function PlaneBullet(planeContext, x, y, dx, dy, angle) {
 		}
 		//otherwise draw it in it's normal state
 		else {
-			this.context.drawImage(this.bulletImage, this.x, this.y + backgroundObject.offset);
+			this.context.drawImage(this.bulletImage, this.x, this.y);
 		}
 
 	};

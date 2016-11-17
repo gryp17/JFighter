@@ -34,7 +34,7 @@ function init(selectedPlane, selectedLevel) {
 		
 		//draw all plane bullets
 		plane.bullets.forEach(function (bullet){
-			bullet.draw(background);
+			bullet.draw();
 		});
 	}
 
