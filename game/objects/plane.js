@@ -126,7 +126,7 @@ function Plane(planeContext, planeType) {
 		if(this.shooting === false){
 			var bulletX = this.x + this.currentImage.width - 10;
 			var bulletY = this.y + (this.currentImage.height / 2);
-			var bulletDx = 15;
+			var bulletDx = 25;
 			var bulletDy = 0;
 			var angle = 0;
 			this.shooting = true;
@@ -135,11 +135,11 @@ function Plane(planeContext, planeType) {
 			if (this.dy > 0) {
 				angle = this.dy * this.planeStats.DESCEND_SPEED;
 				bulletY = bulletY + angle * 1;
-				bulletDy = this.dy * this.planeStats.DESCEND_SPEED;
+				bulletDy = this.dy * (angle / 2);
 			} else if (this.dy < 0) {
 				angle = this.dy * this.planeStats.CLIMB_SPEED;
 				bulletY = bulletY + angle * 1;
-				bulletDy = this.dy * this.planeStats.CLIMB_SPEED;
+				bulletDy = this.dy * (angle / 2) * -1;
 			}
 			
 			//extreme angles adjustments
