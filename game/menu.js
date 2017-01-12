@@ -5,8 +5,7 @@ function Menu() {
 
 	/**
 	 * Hides the loader and shows the game menu
-	 * @param {type} startGameCallback
-	 * @returns {undefined}
+	 * @param {Function} startGameCallback
 	 */
 	this.showMenu = function (startGameCallback) {
 		$(".uil-ring-css").fadeOut(300, function () {
