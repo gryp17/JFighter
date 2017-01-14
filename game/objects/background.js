@@ -1,6 +1,6 @@
-function Background(backgroundContext, selectedLevel) {
-	this.context = backgroundContext.context;
-	this.canvas = backgroundContext.canvas;
+function Background(gameContexts, selectedLevel) {
+	this.context = gameContexts["BACKGROUND"].context;
+	this.canvas = gameContexts["BACKGROUND"].canvas;
 	this.backgroundImage = IMAGE_REPOSITORY.images.LEVELS[selectedLevel];
 	this.dx = -2;
 	this.x = 0;

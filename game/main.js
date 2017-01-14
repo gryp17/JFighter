@@ -15,22 +15,42 @@ function init(selectedPlane, selectedLevel) {
 	var GAME_STATE = CONSTANTS.GAME_STATE.MAIN_MENU;
 
 	//canvas/context objects
-	var BACKGROUND = new Context("background-canvas");
-	var PLANE = new Context("plane-canvas");
+	var CONTEXTS = {
+		BACKGROUND: new Context("background-canvas"),
+		PLANE: new Context("plane-canvas"),
+		ENEMIES: new Context("enemies-canvas")
+	};
 
-	BACKGROUND.canvas.focus();
+	CONTEXTS["BACKGROUND"].canvas.focus();
 
 	//game objects
-	var background = new Background(BACKGROUND, selectedLevel);
-	var plane = new Plane(PLANE, selectedPlane);
-	var obstacle = new Obstacle(PLANE);
+	var background = new Background(CONTEXTS, selectedLevel);
+	var plane = new Plane(CONTEXTS, selectedPlane);
+	var enemies = LEVELS_DATA[selectedLevel].ENEMIES.map(function (enemy){
+		//default arguments for each enemy object type
+		var arguments = [null, CONTEXTS];
+		
+		//additional arguments (x, y...)
+		var objectArguments = Object.values(enemy.arguments);
+		
+		//merge all arguments
+		arguments = arguments.concat(objectArguments);
+		
+		//create new dynamic Object (this[item.objectType]) passing the arguments
+		return new (Function.prototype.bind.apply(this[enemy.objectType], arguments));
+	});
+	
 
 	function animate() {
 		requestAnimFrame(animate);
 		
 		background.draw(plane);
 		plane.draw();
-		obstacle.draw(background);
+		
+		//draw all enemies
+		enemies.forEach(function (enemy){
+			enemy.draw(background);
+		});
 		
 		//draw all plane bullets
 		plane.bullets.forEach(function (bullet){

@@ -1,7 +1,7 @@
-function Plane(planeContext, planeType) {
+function Plane(gameContexts, planeType) {
 	var self = this;
-	this.context = planeContext.context;
-	this.canvas = planeContext.canvas;
+	this.context = gameContexts["PLANE"].context;
+	this.canvas = gameContexts["PLANE"].canvas;
 	
 	this.planeStats = PLANES_STATS[planeType];
 	this.currentHealth = this.planeStats.HEALTH;
@@ -151,7 +151,7 @@ function Plane(planeContext, planeType) {
 				bulletX = bulletX - 20;
 			}
 			
-			this.bullets.push(new PlaneBullet(planeContext, bulletX, bulletY, bulletDx, bulletDy, angle));
+			this.bullets.push(new PlaneBullet(gameContexts["PLANE"], bulletX, bulletY, bulletDx, bulletDy, angle));
 		}
 	};
 

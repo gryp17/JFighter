@@ -56,5 +56,4 @@ function ImageRepository(images, callback) {
 
 	}
 
-}
-;
+};
