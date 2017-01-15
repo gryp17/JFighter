@@ -1,6 +1,6 @@
-function PlaneBullet(planeContext, x, y, dx, dy, angle) {
-	this.context = planeContext.context;
-	this.canvas = planeContext.canvas;
+function PlaneBullet(gameContexts, x, y, dx, dy, angle) {
+	this.context = gameContexts["PLANE"].context;
+	this.canvas = gameContexts["PLANE"].canvas;
 	this.bulletImage = IMAGE_REPOSITORY.images.PROJECTILES.BULLET;
 	this.dx = dx;
 	this.x = x;

@@ -26,6 +26,12 @@ function Plane(gameContexts, planeType) {
 	this.bulletsCooldown = 3;
 	this.bulletsTimer = 0;
 	this.bullets = [];
+	
+	//bomb
+	this.bombing = false;
+	this.bombCooldown = 100;
+	this.bombTimer = 0;
+	this.bombs = [];
 
 	/**
 	 * Draws the plane object
@@ -46,7 +52,6 @@ function Plane(gameContexts, planeType) {
 
 				if (_.isUndefined(this.planeImages.SPRITE[this.spriteIndex])) {
 					this.spriteIndex = 0;
-					;
 				}
 
 				this.currentImage = this.planeImages.SPRITE[this.spriteIndex];
@@ -70,9 +75,23 @@ function Plane(gameContexts, planeType) {
 			}
 		}
 		
+		//bombs cooldown
+		if(this.bombing === true){
+			this.bombTimer++;
+			if(this.bombTimer > this.bombCooldown){
+				this.bombing = false;
+				this.bombTimer = 0;
+			}
+		}
+		
 		//destroy bullets that are outside of the canvas
 		this.bullets = _.filter(this.bullets, function (bullet){
 			return bullet.x < self.canvas.width;
+		});
+		
+		//destroy bombs that are outside of the canvas
+		this.bombs = _.filter(this.bombs, function (bomb){
+			return bomb.x > IMAGE_REPOSITORY.images.EXPLOSION[0].width * -1;
 		});
 		
 		//clear the rectangle around the plane
@@ -151,7 +170,23 @@ function Plane(gameContexts, planeType) {
 				bulletX = bulletX - 20;
 			}
 			
-			this.bullets.push(new PlaneBullet(gameContexts["PLANE"], bulletX, bulletY, bulletDx, bulletDy, angle));
+			this.bullets.push(new PlaneBullet(gameContexts, bulletX, bulletY, bulletDx, bulletDy, angle));
+		}
+	};
+	
+	/**
+	 * Makes the plane drop bombs
+	 */
+	this.dropBomb = function () {
+		//drop bomb only if the bomb is not on cooldown
+		if(this.bombing === false){
+			var bombX = this.x + this.currentImage.width - 10;
+			var bombY = this.y + (this.currentImage.height / 2);
+			var bombDx = this.dx - 2;
+			var bombDy = (this.dy > 0 ? this.dy : 0) + 3;
+			this.bombing = true;
+			
+			this.bombs.push(new PlaneBomb(gameContexts, bombX, bombY, bombDx, bombDy));
 		}
 	};
 
@@ -224,6 +259,11 @@ function Plane(gameContexts, planeType) {
 			//shoot (space)
 			if(e.which === 32){
 				self.shoot();
+			}
+			
+			//drop bomb
+			if(e.which === 16){
+				self.dropBomb();
 			}
 
 		}

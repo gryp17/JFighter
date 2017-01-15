@@ -56,6 +56,11 @@ function init(selectedPlane, selectedLevel) {
 		plane.bullets.forEach(function (bullet){
 			bullet.draw();
 		});
+		
+		//draw all plane bombs
+		plane.bombs.forEach(function (bomb){
+			bomb.draw(background);
+		});
 	}
 
 	/**

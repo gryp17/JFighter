@@ -31,6 +31,17 @@ var GAME_IMAGES = {
 		WINTER: "img/levels/winter.jpg"
 	},
 	PROJECTILES: {
-		BULLET: "img/projectiles/bullet.png"
-	}
+		BULLET: "img/projectiles/bullet.png",
+		PLANE_BOMB: "img/projectiles/bomb.png"
+	},
+	EXPLOSION: [
+		"img/explosion/1.png",
+		"img/explosion/2.png",
+		"img/explosion/3.png",
+		"img/explosion/4.png",
+		"img/explosion/5.png",
+		"img/explosion/6.png",
+		"img/explosion/7.png"
+	],
+	BOMB_HOLE: "img/bomb_hole.png"
 };
