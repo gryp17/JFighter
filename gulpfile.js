@@ -14,12 +14,19 @@ var AutoPrefixerOptions = {
 	cascade: false
 };
 
+var cssAppSource = "./stylesheets/**/*.scss";
+var cssDestination = "./min/css";
+var jsAppSource = ["./game/res/**/*.js", "./game/**/*.js"];
+var jsDestination = "./min/js";
+var jsLibsDestination = "./min/js";
+
 //build task
 gulp.task("build", function() {
 	del([
-		"./stylesheets/css/style.min.css"
+		cssDestination
 	]);
 	gulp.start("styles-min");
+	gulp.start("js-libs");
 	gulp.start("scripts");
 	gulp.start("watch");
 });
@@ -27,7 +34,7 @@ gulp.task("build", function() {
 //styles task
 gulp.task("styles-min", function() {
 	return gulp.src([
-		"./stylesheets/scss/**/*.scss"
+		cssAppSource
 	]).pipe(sass({
 		precision: 4,
 		outputStyle: "compressed"
@@ -36,28 +43,33 @@ gulp.task("styles-min", function() {
 		return e;
 	})))
 	.pipe(autoprefixer(AutoPrefixerOptions))
-	.pipe(concat("./style.min.css"))
+	.pipe(concat("./style.css"))
 	.pipe(replace("\n", ""))
-	.pipe(gulp.dest("./stylesheets/css"));
+	.pipe(gulp.dest(cssDestination));
+});
+
+//js-libs task
+gulp.task("js-libs", function () {
+	return gulp.src([
+		"./libs/jquery.js",
+		"./libs/lodash.js"
+	])
+	.pipe(concat("lib.js"))
+	.pipe(gulp.dest(jsLibsDestination));
 });
 
 //scripts task
 gulp.task("scripts", function() {
-	return gulp.src([
-		"./libs/jquery.js",
-		"./libs/lodash.js",
-		"./game/res/**/*.js",
-		"./game/**/*.js"
-	])
+	return gulp.src(jsAppSource)
 		.pipe(concat("game.js"))
 		.pipe(uglify({
 			mangle: true
 		}))
-		.pipe(gulp.dest("."));
+		.pipe(gulp.dest(jsDestination));
 });
 
 //watch task
 gulp.task("watch", function() {
-	gulp.watch("./stylesheets/scss/**/*.scss", ["styles-min"]);
-	gulp.watch("./game/**/*.js", ["scripts"]);
+	gulp.watch(cssAppSource, ["styles-min"]);
+	gulp.watch(jsAppSource, ["scripts"]);
 });
