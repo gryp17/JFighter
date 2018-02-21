@@ -1,6 +1,6 @@
 var IMAGE_REPOSITORY = new ImageRepository(GAME_IMAGES, function () {
 	var menu = new Menu();
-	menu.showMenu(function (selectedPlane, selectedLevel){
+	menu.showMenu(function (selectedPlane, selectedLevel) {
 		init(selectedPlane, selectedLevel);
 	});
 });
@@ -25,41 +25,32 @@ function init(selectedPlane, selectedLevel) {
 
 	//game objects
 	var background = new Background(CONTEXTS, selectedLevel);
-	var plane = new Plane(CONTEXTS, selectedPlane);
-	var enemies = LEVELS_DATA[selectedLevel].ENEMIES.map(function (enemy){
-		//default arguments for each enemy object type
-		var arguments = [null, CONTEXTS];
+	var plane = new Plane(CONTEXTS, background, selectedPlane);
+	var enemies = LEVELS_DATA[selectedLevel].ENEMIES.map(function (enemy) {
 		
+		//default arguments for each enemy object type
+		var arguments = [null, CONTEXTS, background];
+
 		//additional arguments (x, y...)
 		var objectArguments = Object.values(enemy.arguments);
-		
+
 		//merge all arguments
 		arguments = arguments.concat(objectArguments);
-		
-		//create new dynamic Object (this[item.objectType]) passing the arguments
+
+		//create new dynamic Object (this[enemy.objectType]) passing the arguments
 		return new (Function.prototype.bind.apply(this[enemy.objectType], arguments));
 	});
-	
+
 
 	function animate() {
 		requestAnimFrame(animate);
-		
+
 		background.draw(plane);
 		plane.draw();
-		
+
 		//draw all enemies
-		enemies.forEach(function (enemy){
+		enemies.forEach(function (enemy) {
 			enemy.draw(background);
-		});
-		
-		//draw all plane bullets
-		plane.bullets.forEach(function (bullet){
-			bullet.draw();
-		});
-		
-		//draw all plane bombs
-		plane.bombs.forEach(function (bomb){
-			bomb.draw(background);
 		});
 	}
 

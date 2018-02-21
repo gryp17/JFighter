@@ -56,7 +56,7 @@ function Background(gameContexts, selectedLevel) {
 			if ((planeObject.y < middle) && planeObject.dy < 0) {
 				this.dy = planeObject.dy * -1.3;
 			}
-			//if the plane is moving down - - move the background down
+			//if the plane is moving down - move the background down
 			else if (planeObject.dy > 0) {
 				this.dy = planeObject.dy * -1.3;
 			}

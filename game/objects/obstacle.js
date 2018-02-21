@@ -1,7 +1,11 @@
-function Obstacle(gameContexts, x, y) {	
+function Obstacle(gameContexts, background, x, y) {	
 	var self = this;
 	this.context = gameContexts["ENEMIES"].context;
 	this.canvas = gameContexts["ENEMIES"].canvas;
+	
+	//background object that is used mostly for accessing the background vertical offset
+	this.background = background;
+	
 	this.planeImages = IMAGE_REPOSITORY.images.PLANES["STUKA"];
 	this.spriteIndex = 0;
 	this.currentImage = this.planeImages.SPRITE[0];
@@ -16,7 +20,7 @@ function Obstacle(gameContexts, x, y) {
 	/**
 	 * Draws the plane object
 	 */
-	this.draw = function (backgroundObject) {
+	this.draw = function () {
 		this.frames++;
 
 		//if the limit has been reached show the next sprite image
@@ -35,10 +39,10 @@ function Obstacle(gameContexts, x, y) {
 		this.y = this.y + this.dy;
 		
 		//clear the rectangle around the plane/obstacle
-		this.context.clearRect(this.x - 5, this.y + backgroundObject.offset - 5, this.currentImage.width + 10, this.currentImage.height + 10);
+		this.context.clearRect(this.x - 5, this.y + background.offset - 5, this.currentImage.width + 10, this.currentImage.height + 10);
 		
 		//draw the image
-		this.context.drawImage(this.currentImage, this.x, this.y + backgroundObject.offset);
+		this.context.drawImage(this.currentImage, this.x, this.y + background.offset);
 	};
 
 }

@@ -1,30 +1,33 @@
-function PlaneBullet(gameContexts, x, y, dx, dy, angle) {
+function PlaneBullet(gameContexts, background, x, y, dx, dy, angle) {
 	this.context = gameContexts["PLANE"].context;
 	this.canvas = gameContexts["PLANE"].canvas;
+	
+	//background object that is used mostly for accessing the background vertical offset
+	this.background = background;
+	
 	this.bulletImage = IMAGE_REPOSITORY.images.PROJECTILES.BULLET;
 	this.dx = dx;
 	this.x = x;
 	this.dy = dy;
 	this.y = y;
-	this.offset = 0;
 
 	this.draw = function () {
 		this.x = this.x + this.dx;
 		this.y = this.y + this.dy;
 
-		if(angle !== 0){
+		if (angle !== 0) {
 			this.rotateBullet(angle);
 		}
 		//otherwise draw it in it's normal state
 		else {
-			this.context.drawImage(this.bulletImage, this.x, this.y);
+			this.context.drawImage(this.bulletImage, this.x, this.y + background.offset);
 		}
 
 	};
-	
+
 	/**
 	 * Rotates the bullet by the specified angle/degrees
-	 * @param {int} angle
+	 * @param {Number} angle
 	 */
 	this.rotateBullet = function (angle) {
 		this.context.save();
@@ -36,7 +39,7 @@ function PlaneBullet(gameContexts, x, y, dx, dy, angle) {
 		this.context.rotate(angle * Math.PI / 180);
 
 		//draw it up and to the left by half the width and height of the image 
-		this.context.drawImage(this.bulletImage, -(this.bulletImage.width / 2), -(this.bulletImage.height / 2));
+		this.context.drawImage(this.bulletImage, -(this.bulletImage.width / 2), -(this.bulletImage.height / 2) + background.offset);
 
 		//and restore the co-ords to how they were when we began
 		this.context.restore();
