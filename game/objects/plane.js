@@ -26,7 +26,7 @@ function Plane(gameContexts, background, planeType) {
 
 	//bullets
 	this.shooting = false;
-	this.bulletsCooldown = 3;
+	this.bulletsCooldown = 5;
 	this.bulletsTimer = 0;
 	this.bullets = [];
 
