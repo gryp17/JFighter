@@ -238,44 +238,51 @@ function Plane(gameContexts, background, planeType) {
 	//keyboard controls
 	$("body").keydown(function (e) {
 
+		var LEFT = [37, 65];
+		var RIGHT = [39, 68];
+		var UP = [38, 87];
+		var DOWN = [40, 83];
+		var SHOOT = [32];
+		var BOMB = [16];
+
 		//respond to the controls only if the plane is not disabled
 		if (self.disabled === false) {
 
 			//left
-			if (e.which === 37 || e.which === 65) {
+			if (_.includes(LEFT, e.which)) {
 				if (self.dx > -1) {
 					self.dx = self.dx - 1;
 				}
 			}
 
 			//right
-			if (e.which === 39 || e.which === 68) {
+			if (_.includes(RIGHT, e.which)) {
 				if (self.dx < self.planeStats.MAX_SPEED) {
 					self.dx = self.dx + 1;
 				}
 			}
 
-			//top
-			if (e.which === 38 || e.which === 87) {
+			//up
+			if (_.includes(UP, e.which)) {
 				if (self.dy > -3) {
 					self.dy = self.dy - 1;
 				}
 			}
 
-			//bottom
-			if (e.which === 40 || e.which === 83) {
+			//down
+			if (_.includes(DOWN, e.which)) {
 				if (self.dy < 3) {
 					self.dy = self.dy + 1;
 				}
 			}
 
 			//shoot (space)
-			if (e.which === 32) {
+			if (_.includes(SHOOT, e.which)) {
 				self.shoot();
 			}
 
 			//drop bomb
-			if (e.which === 16) {
+			if (_.includes(BOMB, e.which)) {
 				self.dropBomb();
 			}
 
