@@ -10,39 +10,29 @@ function PlaneBullet(gameContexts, background, x, y, dx, dy, angle) {
 	this.x = x;
 	this.dy = dy;
 	this.y = y;
+	this.angle = angle;
+	this.distance = 0;
 
 	this.draw = function () {
-		this.x = this.x + this.dx;
-		this.y = this.y + this.dy;
+		
+		//increments the distance between the plane and the bullet (we are not using this.x because of the weird rotation...)
+		this.distance = this.distance + this.dx;
 
-		if (angle !== 0) {
-			this.rotateBullet(angle);
-		}
-		//otherwise draw it in it's normal state
-		else {
-			this.context.drawImage(this.bulletImage, this.x, this.y + background.offset);
-		}
+		//rotate the canvas in order to rotate the bullet... converting our angle from degrees to radians
+        this.context.save();
+        this.context.translate(this.x, this.y);
+        this.context.rotate(this.angle * Math.PI / 180);
+        
+		//clear the area around the bullet
+        this.context.clearRect(this.distance - this.dx, -10, 50, 50);
+        //this.context.rect(this.distance - this.dx, -10, 10 + 50, 2 + 50);
+        //this.context.stroke();
+        
+		this.context.drawImage(this.bulletImage, this.distance, background.offset);
+		
+        //and restore the co-ords to how they were when we began
+        this.context.restore();
 
-	};
-
-	/**
-	 * Rotates the bullet by the specified angle/degrees
-	 * @param {Number} angle
-	 */
-	this.rotateBullet = function (angle) {
-		this.context.save();
-
-		//move to the middle of where we want to draw our image
-		this.context.translate(this.x + this.bulletImage.width / 2, this.y + this.bulletImage.height / 2);
-
-		//rotate around that point, converting our angle from degrees to radians 
-		this.context.rotate(angle * Math.PI / 180);
-
-		//draw it up and to the left by half the width and height of the image 
-		this.context.drawImage(this.bulletImage, -(this.bulletImage.width / 2), -(this.bulletImage.height / 2) + background.offset);
-
-		//and restore the co-ords to how they were when we began
-		this.context.restore();
 	};
 
 }

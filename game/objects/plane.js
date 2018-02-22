@@ -17,6 +17,7 @@ function Plane(gameContexts, background, planeType) {
 	this.x = 200;
 	this.dy = 0;
 	this.y = 350;
+	this.angle = 0;
 
 	//sprite variables
 	this.spriteIndex = 0;
@@ -108,12 +109,15 @@ function Plane(gameContexts, background, planeType) {
 
 		//if the plane is ascending or descending rotate it
 		if (this.dy > 0) {
-			this.rotatePlane(this.dy * this.planeStats.DESCEND_SPEED);
+			this.angle = this.dy * this.planeStats.DESCEND_SPEED;
+			this.rotatePlane(this.angle);
 		} else if (this.dy < 0) {
-			this.rotatePlane(this.dy * this.planeStats.CLIMB_SPEED);
+			this.angle = this.dy * this.planeStats.CLIMB_SPEED;
+			this.rotatePlane(this.angle);
 		}
-		//otherwise draw it in it's normal state
+		//otherwise reset the angle and draw it in it's normal state
 		else {
+			this.angle = 0;
 			this.context.drawImage(this.currentImage, this.x, this.y);
 		}
 
@@ -131,7 +135,7 @@ function Plane(gameContexts, background, planeType) {
 
 	/**
 	 * Rotates the plane
-	 * @param {int} angle
+	 * @param {Number} angle
 	 */
 	this.rotatePlane = function (angle) {
 		this.context.save();
@@ -160,9 +164,10 @@ function Plane(gameContexts, background, planeType) {
 			var bulletY = this.y - this.background.offset + (this.currentImage.height / 2);
 			var bulletDx = 25;
 			var bulletDy = 0;
-			var angle = 0;
+			var angle = this.angle;
 			this.shooting = true;
 
+			/*
 			//calculate the speed and angle if the plane is moving down or up
 			if (this.dy > 0) {
 				angle = this.dy * this.planeStats.DESCEND_SPEED;
@@ -182,7 +187,8 @@ function Plane(gameContexts, background, planeType) {
 				bulletY = bulletY - 10;
 				bulletX = bulletX - 20;
 			}
-
+			*/
+			
 			this.bullets.push(new PlaneBullet(gameContexts, background, bulletX, bulletY, bulletDx, bulletDy, angle));
 		}
 	};
