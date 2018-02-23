@@ -27,7 +27,7 @@ function init(selectedPlane, selectedLevel) {
 	var enemies = LEVELS_DATA[selectedLevel].ENEMIES.map(function (enemy) {
 		
 		//default arguments for each enemy object type
-		var arguments = [null, CONTEXTS, background];
+		var arguments = [null, CONTEXTS, background, plane];
 
 		//additional arguments (x, y...)
 		var objectArguments = Object.values(enemy.arguments);
