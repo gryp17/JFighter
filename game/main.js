@@ -1,8 +1,6 @@
 var IMAGE_REPOSITORY = new ImageRepository(GAME_IMAGES, function () {
 	var menu = new Menu();
-	menu.showMenu(function (selectedPlane, selectedLevel) {
-		init(selectedPlane, selectedLevel);
-	});
+	menu.showMenu(init);
 });
 
 
@@ -20,7 +18,7 @@ function init(selectedPlane, selectedLevel) {
 		PLANE: new Context("plane-canvas"),
 		ENEMIES: new Context("enemies-canvas")
 	};
-
+	
 	CONTEXTS["BACKGROUND"].canvas.focus();
 
 	//game objects
@@ -40,13 +38,22 @@ function init(selectedPlane, selectedLevel) {
 		//create new dynamic Object (this[enemy.objectType]) passing the arguments
 		return new (Function.prototype.bind.apply(this[enemy.objectType], arguments));
 	});
-
+	
+	//initialize the keyboard controls
+	var keyboard = new Keyboard();
+	keyboard.listen();
 
 	function animate() {
 		requestAnimFrame(animate);
 
+		//get the current inputs status 
+		var inputs = keyboard.getInputs();
+
+		//draw the background
 		background.draw(plane);
-		plane.draw();
+		
+		//draw the plane
+		plane.draw(inputs);
 
 		//draw all enemies
 		enemies.forEach(function (enemy) {

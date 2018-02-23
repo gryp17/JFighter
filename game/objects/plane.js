@@ -24,7 +24,7 @@ function Plane(gameContexts, background, planeType) {
 	this.currentImage = this.planeImages.SPRITE[this.spriteIndex];
 	this.frames = 0;
 	this.limit = 2;
-
+	
 	//bullets
 	this.shooting = false;
 	this.bulletsCooldown = 5;
@@ -33,15 +33,64 @@ function Plane(gameContexts, background, planeType) {
 
 	//bomb
 	this.bombing = false;
-	this.bombCooldown = 100;
+	this.bombCooldown = 20;
 	this.bombTimer = 0;
 	this.bombs = [];
 
 	/**
+	 * Processes the keyboard inputs and responds to them
+	 * @param {Object} inputs
+	 */
+	this.processInputs = function (inputs) {
+		//up
+		if (inputs.UP) {
+			if (this.dy > -3) {
+				this.dy = this.dy - 0.1;
+			}
+		}
+
+		//down
+		if (inputs.DOWN) {
+			if (this.dy < 3) {
+				this.dy = this.dy + 0.1;
+			}
+		}
+
+		//left
+		if (inputs.LEFT) {
+			if (this.dx > -1) {
+				this.dx = this.dx - 0.1;
+			}
+		}
+
+		//right
+		if (inputs.RIGHT) {
+			if (this.dx < this.planeStats.MAX_SPEED) {
+				this.dx = this.dx + 0.1;
+			}
+		}
+
+		//shoot
+		if (inputs.SHOOT) {
+			this.shoot();
+		}
+
+		//bomb
+		if (inputs.BOMB) {
+			this.dropBomb();
+		}
+	};
+
+	/**
 	 * Draws the plane object and all it's bullets and bombs
 	 */
-	this.draw = function () {
+	this.draw = function (inputs) {
 
+		//respond to the controls only if the plane is not disabled
+		if (self.disabled === false) {
+			this.processInputs(inputs);
+		}
+		
 		//if the plane has crashed show the crashed image
 		if (this.crashed === true) {
 			this.currentImage = this.planeImages.CRASHED;
@@ -219,60 +268,5 @@ function Plane(gameContexts, background, planeType) {
 			this.crashed = true;
 		}
 	};
-
-	//keyboard controls
-	$("body").keydown(function (e) {
-
-		var LEFT = [37, 65];
-		var RIGHT = [39, 68];
-		var UP = [38, 87];
-		var DOWN = [40, 83];
-		var SHOOT = [32];
-		var BOMB = [16];
-
-		//respond to the controls only if the plane is not disabled
-		if (self.disabled === false) {
-
-			//left
-			if (_.includes(LEFT, e.which)) {
-				if (self.dx > -1) {
-					self.dx = self.dx - 1;
-				}
-			}
-
-			//right
-			if (_.includes(RIGHT, e.which)) {
-				if (self.dx < self.planeStats.MAX_SPEED) {
-					self.dx = self.dx + 1;
-				}
-			}
-
-			//up
-			if (_.includes(UP, e.which)) {
-				if (self.dy > -3) {
-					self.dy = self.dy - 1;
-				}
-			}
-
-			//down
-			if (_.includes(DOWN, e.which)) {
-				if (self.dy < 3) {
-					self.dy = self.dy + 1;
-				}
-			}
-
-			//shoot (space)
-			if (_.includes(SHOOT, e.which)) {
-				self.shoot();
-			}
-
-			//drop bomb
-			if (_.includes(BOMB, e.which)) {
-				self.dropBomb();
-			}
-
-		}
-
-	});
 
 }
