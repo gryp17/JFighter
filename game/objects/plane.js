@@ -168,30 +168,6 @@ function Plane(gameContexts, background, planeType) {
 			var angle = this.angle;
 			this.shooting = true;
 
-			/*
-			//calculate the speed and angle if the plane is moving down or up
-			if (this.dy > 0) {
-				angle = this.dy * this.planeStats.DESCEND_SPEED;
-				bulletY = bulletY + angle * 1;
-				bulletDy = this.dy * (angle / 2);
-			} else if (this.dy < 0) {
-				angle = this.dy * this.planeStats.CLIMB_SPEED;
-				bulletY = bulletY + angle * 1;
-				bulletDy = this.dy * (angle / 2) * -1;
-			}
-			*/
-
-			/*
-			//extreme angles adjustments
-			if (angle === -45) {
-				bulletY = bulletY + 10;
-				bulletX = bulletX - 25;
-			} else if (angle === 45) {
-				bulletY = bulletY - 10;
-				bulletX = bulletX - 20;
-			}
-			*/
-						
 			this.bullets.push(new PlaneBullet(gameContexts, background, bulletX, bulletY, bulletDx, bulletDy, angle));
 		}
 	};

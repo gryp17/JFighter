@@ -20,11 +20,18 @@ function PlaneBullet(gameContexts, background, x, y, dx, dy, angle) {
 
 		//rotate the canvas in order to rotate the bullet... converting our angle from degrees to radians
         this.context.save();
-        this.context.translate(this.x, this.y);
+		
+		//if the plane is moving upwards apply manual horizontal adjustment to the bullets
+		var xAdjustment = 0;
+		if(this.angle < 0 && this.background.offset > 0){
+			xAdjustment = (background.offset / Math.PI) * -1;
+		}
+		
+        this.context.translate(this.x + xAdjustment, this.y);
         this.context.rotate(this.angle * Math.PI / 180);
         
 		//clear the area around the bullet
-        this.context.clearRect(this.distance - this.dx, -10, 50, 50);
+        this.context.clearRect(this.distance - 10, -10, 50, 50);
         //this.context.rect(this.distance - this.dx, -10, 10 + 50, 2 + 50);
         //this.context.stroke();		
 		
