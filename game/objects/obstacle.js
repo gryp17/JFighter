@@ -29,11 +29,9 @@ function Obstacle(gameContexts, background, plane, x, y) {
 			console.log("######## COLLISION ####### "+new Date().getTime());
 		}
 		
-		/* doesn't work...
 		if(this.checkForBulletsDamage()){
 			console.log("######## BULLET HIT ####### "+new Date().getTime());
 		}
-		*/
 
 		this.frames++;
 
@@ -86,40 +84,20 @@ function Obstacle(gameContexts, background, plane, x, y) {
 		return result;
 	};
 
-
-	//doesn't work....
+	
+	/**
+	 * Checks if the plane bullets have hit the obstacle
+	 * @returns {Boolean}
+	 */
 	this.checkForBulletsDamage = function (){
 		var result = false;
 		
 		this.plane.bullets.forEach(function (bullet){
 			
-			self.context.clearRect(0, 0, self.canvas.width, self.canvas.height);
-			
-			//rotate the canvas in order to rotate the bullet... converting our angle from degrees to radians
-			self.context.save();
-
-			//if the plane is moving upwards apply manual horizontal adjustment to the bullets
-			var xAdjustment = 0;
-			if(bullet.angle < 0 && background.offset > 0){
-				xAdjustment = (background.offset / Math.PI) * -1;
-			}
-			
-			//manually adjust the bullet Y depending on the angle in order to match the plane direction
-			var yAdjustment = background.offset + (bullet.angle * 1.2);
-
-			self.context.translate(bullet.x + xAdjustment, bullet.y);
-			self.context.rotate(bullet.angle * Math.PI / 180);
-			
-			//manually adjust the bullet Y depending on the angle in order to match the plane direction
-			//var yAdjustment = background.offset + (bullet.angle * 1.2);
-			//this.context.drawImage(bullet.bulletImage, bullet.distance, yAdjustment);
-			
-			var bulletLeft = bullet.x + bullet.distance;
-			//var bulletTop = bullet.y + background.offset;
-			var bulletTop = yAdjustment;
+			var bulletLeft = bullet.x;
+			var bulletTop = bullet.y + background.offset;
 			var bulletRight = bulletLeft + bullet.bulletImage.width;
-			//var bulletBottom = bullet.y + background.offset + bullet.bulletImage.height;
-			var bulletBottom = yAdjustment + bullet.bulletImage.height;
+			var bulletBottom = bullet.y + background.offset + bullet.bulletImage.height;
 
 			var obsLeft = self.x;
 			var obsTop = self.y + background.offset;
@@ -132,14 +110,6 @@ function Obstacle(gameContexts, background, plane, x, y) {
 			if(horizontalOverlap !== 0 && verticalOverlap !== 0){
 				result = true;
 			}
-						
-			self.context.rect(bullet.x + bullet.distance, yAdjustment, bullet.bulletImage.width, bullet.bulletImage.height + 5);
-			//self.context.rect(self.x, self.y + background.offset, self.currentImage.width, self.currentImage.height);
-			
-			self.context.stroke();
-			
-			//and restore the co-ords to how they were when we began
-			self.context.restore();
 			
 		});
 		
