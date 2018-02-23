@@ -26,9 +26,11 @@ function PlaneBullet(gameContexts, background, x, y, dx, dy, angle) {
 		//clear the area around the bullet
         this.context.clearRect(this.distance - this.dx, -10, 50, 50);
         //this.context.rect(this.distance - this.dx, -10, 10 + 50, 2 + 50);
-        //this.context.stroke();
-        
-		this.context.drawImage(this.bulletImage, this.distance, background.offset);
+        //this.context.stroke();		
+		
+		//manually adjust the bullet Y depending on the angle in order to match the plane direction
+		var yAdjustment = background.offset + (this.angle * 1.2);
+		this.context.drawImage(this.bulletImage, this.distance, yAdjustment);
 		
         //and restore the co-ords to how they were when we began
         this.context.restore();

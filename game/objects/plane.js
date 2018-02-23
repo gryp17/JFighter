@@ -90,7 +90,8 @@ function Plane(gameContexts, background, planeType) {
 
 		//destroy bullets that are outside of the canvas
 		this.bullets = _.filter(this.bullets, function (bullet) {
-			return bullet.x < self.canvas.width;
+			//check the distance instead of the X value because of the bullet rotation logic...
+			return bullet.distance < self.canvas.width;
 		});
 
 		//destroy bombs that are outside of the canvas
@@ -178,7 +179,9 @@ function Plane(gameContexts, background, planeType) {
 				bulletY = bulletY + angle * 1;
 				bulletDy = this.dy * (angle / 2) * -1;
 			}
+			*/
 
+			/*
 			//extreme angles adjustments
 			if (angle === -45) {
 				bulletY = bulletY + 10;
@@ -188,7 +191,7 @@ function Plane(gameContexts, background, planeType) {
 				bulletX = bulletX - 20;
 			}
 			*/
-			
+						
 			this.bullets.push(new PlaneBullet(gameContexts, background, bulletX, bulletY, bulletDx, bulletDy, angle));
 		}
 	};
