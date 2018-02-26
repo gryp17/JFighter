@@ -197,7 +197,7 @@ function Plane(gameContexts, background, planeType) {
 
 		//draw it up and to the left by half the width and height of the image 
 		this.context.drawImage(this.currentImage, -(this.currentImage.width / 2), -(this.currentImage.height / 2));
-
+		
 		//and restore the co-ords to how they were when we began
 		this.context.restore();
 	};
@@ -209,7 +209,8 @@ function Plane(gameContexts, background, planeType) {
 
 		//shoot only if the bullets are not on cooldown
 		if (this.shooting === false) {
-			var bulletX = this.x + this.currentImage.width - 10;
+			//var bulletX = this.x + this.currentImage.width - 10;
+			var bulletX = this.x + (this.currentImage.width / 2);
 			var bulletY = this.y - this.background.offset + (this.currentImage.height / 2);
 			var bulletDx = 25;
 			var bulletDy = 0;
@@ -219,15 +220,14 @@ function Plane(gameContexts, background, planeType) {
 			//calculate the speed and angle if the plane is moving down or up
 			if (this.dy > 0) {
 				angle = this.dy * this.planeStats.DESCEND_SPEED;
-				bulletY = bulletY + angle * 1.6;
 				bulletDy = this.dy * (angle / 4.5);
 			} else if (this.dy < 0) {
 				angle = this.dy * this.planeStats.CLIMB_SPEED;
-				bulletY = bulletY + angle * 2;
 				bulletDy = this.dy * (angle / 4.5) * -1;
 			}
-
+			
 			//extreme angles adjustments
+			/*
 			if (angle <= -45) {
 				bulletY = bulletY + 10;
 				bulletX = bulletX - 25;
@@ -235,7 +235,14 @@ function Plane(gameContexts, background, planeType) {
 				bulletY = bulletY - 10;
 				bulletX = bulletX - 20;
 			}
-
+			*/
+			
+			//additional fix for the KI84 at extreme climb angles
+			if (planeType === "KI84" && angle <= -20 && background.offset > 0) {				
+				bulletX = bulletX - background.offset / 2.5;
+				bulletY = bulletY - background.offset / 7;
+			}
+						
 			this.bullets.push(new PlaneBullet(gameContexts, background, bulletX, bulletY, bulletDx, bulletDy, angle));
 		}
 	};
