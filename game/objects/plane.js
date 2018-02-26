@@ -137,9 +137,9 @@ function Plane(gameContexts, background, planeType) {
 			}
 		}
 
-		//destroy bullets that are outside of the canvas
+		//destroy bullets that are outside of the canvas or have hit the ground
 		this.bullets = _.filter(this.bullets, function (bullet) {
-			return bullet.x < self.canvas.width;
+			return bullet.x < self.canvas.width && bullet.y < self.canvas.height - 30;
 		});
 
 		//destroy bombs that are outside of the canvas
@@ -279,8 +279,8 @@ function Plane(gameContexts, background, planeType) {
 		}
 
 		//bottom end of screen
-		if (this.y + this.currentImage.height > this.canvas.height - 50) {
-			this.y = this.canvas.height - this.currentImage.height - 50;
+		if (this.y + this.currentImage.height > this.canvas.height - 40) {
+			this.y = this.canvas.height - this.currentImage.height - 40;
 			this.dy = 0;
 			this.dx = -2;
 			this.disabled = true;
