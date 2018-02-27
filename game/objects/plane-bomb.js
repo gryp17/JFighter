@@ -24,8 +24,7 @@ function PlaneBomb(gameContexts, background, x, y, dx, dy) {
 	this.y = y;
 
 	//sprite variables
-	//this.sprite = new Sprite(this.explosionImages.SPRITE, 2);
-	//this.currentImage;
+	this.sprite = new Sprite(this.explosionImages, 5, false);
 
 	//sprite variables
 	this.spriteIndex = 0;
@@ -59,41 +58,24 @@ function PlaneBomb(gameContexts, background, x, y, dx, dy) {
 				this.explosionActive = true;
 			}
 
-			this.frames++;
-
-			//if the limit has been reached show the next sprite image
-			if (this.frames > this.limit) {
-
-				//increment/decrement the sprite index
-				if (this.reverseOrder) {
-					this.spriteIndex--;
-				} else {
-					this.spriteIndex++;
-				}
-
-				//if all sprites have been looped thru
-				if (_.isUndefined(this.explosionImages[this.spriteIndex])) {
-
-					//if the sprites have been looped thru in reverse order as well - disable the explosion and show the bomb hole
-					if (this.reverseOrder) {
-						this.explosionActive = false;
-						this.currentImage = IMAGE_REPOSITORY.images.BOMB_HOLE;
-					}
-					//otherwise reverse the order and make the explosion smaller slowly
-					else {
-						this.reverseOrder = true;
-						this.limit = 10;
-					}
-
-				} else {
-					this.currentImage = this.explosionImages[this.spriteIndex];
-				}
-
-				this.frames = 0;
-			}
+			//update the "currentImage" with the correct sprite image
+			this.updateSprite();
 		}
 
 		this.context.drawImage(this.currentImage, this.x, this.y + background.offset);
+	};
+	
+	/**
+	 * Updates the "currentImage" with the correct sprite image
+	 */
+	this.updateSprite = function () {
+		this.currentImage = this.sprite.move();
+
+		//if we have reached the end of the sprite images - display the bomb hole
+		if (this.currentImage === null) {
+			this.explosionActive = false;
+			this.currentImage = IMAGE_REPOSITORY.images.BOMB_HOLE;
+		}
 	};
 
 }

@@ -28,7 +28,7 @@ function Bomber(gameContexts, background, plane, x, y) {
 	this.angle = 0;
 
 	//sprite variables
-	this.sprite = new Sprite(this.images.SPRITE, 2);
+	this.sprite = new Sprite(this.images.SPRITE, 2, true);
 	this.currentImage;
 
 	/**
