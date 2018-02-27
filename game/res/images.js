@@ -43,5 +43,16 @@ var GAME_IMAGES = {
 		"img/explosion/6.png",
 		"img/explosion/7.png"
 	],
-	BOMB_HOLE: "img/bomb_hole.png"
+	BOMB_HOLE: "img/bomb_hole.png",
+	//enemies
+	ENEMIES: {
+		//bomber
+		B17: {
+			SPRITE: [
+				"img/enemies/b17/1.png",
+				"img/enemies/b17/2.png"
+			],
+			CRASHED: "img/enemies/b17/3.png"
+		}
+	}
 };

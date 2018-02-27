@@ -91,28 +91,9 @@ function Plane(gameContexts, background, planeType) {
 			this.processInputs(inputs);
 		}
 		
-		//if the plane has crashed show the crashed image
-		if (this.crashed === true) {
-			this.currentImage = this.planeImages.CRASHED;
-		}
-		//otherwise loop thru the sprite images
-		else {
-			this.frames++;
-
-			//if the limit has been reached show the next sprite image
-			if (this.frames > this.limit) {
-				this.spriteIndex++;
-
-				if (_.isUndefined(this.planeImages.SPRITE[this.spriteIndex])) {
-					this.spriteIndex = 0;
-				}
-
-				this.currentImage = this.planeImages.SPRITE[this.spriteIndex];
-
-				this.frames = 0;
-			}
-		}
-
+		//update the "currentImage" with the correct sprite image
+		this.updateSprite();
+		
 		//if the plane is too damaged disable it and crash it (only do this if it hasn't crashed yet)
 		if (this.currentHealth <= 0 && this.crashed === false) {
 			this.disabled = true;
@@ -180,6 +161,32 @@ function Plane(gameContexts, background, planeType) {
 			bomb.draw();
 		});
 
+	};
+	
+	/**
+	 * Updates the "currentImage" with the correct sprite image
+	 */
+	this.updateSprite = function () {
+		//if the plane has crashed show the crashed image
+		if (this.crashed === true) {
+			this.currentImage = this.planeImages.CRASHED;
+		}
+		//otherwise loop thru the sprite images
+		else {
+			this.frames++;
+
+			//if the limit has been reached show the next sprite image
+			if (this.frames > this.limit) {
+				this.spriteIndex++;
+
+				if (_.isUndefined(this.planeImages.SPRITE[this.spriteIndex])) {
+					this.spriteIndex = 0;
+				}
+
+				this.currentImage = this.planeImages.SPRITE[this.spriteIndex];
+				this.frames = 0;
+			}
+		}
 	};
 
 	/**

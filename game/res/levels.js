@@ -3,23 +3,23 @@ var LEVELS_DATA = {
 		WEATHER: "normal",
 		ENEMIES: [
 			{
-				objectType: "Obstacle",
+				objectType: "Bomber",
 				arguments: {
-					x: 700,
-					y: 300
+					x: 1100,
+					y: 0
 				}
 			},
 			{
-				objectType: "Obstacle",
+				objectType: "Bomber",
 				arguments: {
-					x: 1200,
-					y: 400
+					x: 1800,
+					y: 100
 				}
 			},
 			{
-				objectType: "Obstacle",
+				objectType: "Bomber",
 				arguments: {
-					x: 1400,
+					x: 2500,
 					y: 150
 				}
 			}
@@ -29,14 +29,14 @@ var LEVELS_DATA = {
 		WEATHER: "normal",
 		ENEMIES: [
 			{
-				objectType: "Obstacle",
+				objectType: "Bomber",
 				arguments: {
 					x: 700,
 					y: 300
 				}
 			},
 			{
-				objectType: "Obstacle",
+				objectType: "Bomber",
 				arguments: {
 					x: 1200,
 					y: 400
@@ -48,14 +48,14 @@ var LEVELS_DATA = {
 		WEATHER: "snow",
 		ENEMIES: [
 			{
-				objectType: "Obstacle",
+				objectType: "Bomber",
 				arguments: {
 					x: 700,
 					y: 300
 				}
 			},
 			{
-				objectType: "Obstacle",
+				objectType: "Bomber",
 				arguments: {
 					x: 1200,
 					y: 400
