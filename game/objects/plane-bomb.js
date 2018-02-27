@@ -1,3 +1,13 @@
+/**
+ * Class used for the plane bombs
+ * @param {Object} gameContexts
+ * @param {Background} background
+ * @param {Number} x
+ * @param {Number} y
+ * @param {Number} dx
+ * @param {Number} dy
+ * @returns {PlaneBomb}
+ */
 function PlaneBomb(gameContexts, background, x, y, dx, dy) {
 	this.context = gameContexts["PLANE"].context;
 	this.canvas = gameContexts["PLANE"].canvas;
@@ -5,11 +15,17 @@ function PlaneBomb(gameContexts, background, x, y, dx, dy) {
 	//background object that is used mostly for accessing the background vertical offset
 	this.background = background;
 
+	this.explosionImages = IMAGE_REPOSITORY.images.EXPLOSION;
+
 	//positioning and speed
 	this.dx = dx;
 	this.x = x;
 	this.dy = dy;
 	this.y = y;
+
+	//sprite variables
+	//this.sprite = new Sprite(this.explosionImages.SPRITE, 2);
+	//this.currentImage;
 
 	//sprite variables
 	this.spriteIndex = 0;
@@ -22,6 +38,9 @@ function PlaneBomb(gameContexts, background, x, y, dx, dy) {
 	this.exploded = false; //the bomb has reached the floor and has exploded
 	this.explosionActive = false; //the explosion is still active and does damage
 
+	/**
+	 * Draws the plane bomb
+	 */
 	this.draw = function () {
 		this.x = this.x + this.dx;
 		this.y = this.y + this.dy;
@@ -33,8 +52,8 @@ function PlaneBomb(gameContexts, background, x, y, dx, dy) {
 
 			//if the bomb hasn't exploded yet - adjust the explosion coordinates based on the bomb coordinates
 			if (this.exploded === false) {
-				this.x = this.x - IMAGE_REPOSITORY.images.EXPLOSION[0].width / 3;
-				this.y = this.y - IMAGE_REPOSITORY.images.EXPLOSION[0].height + 10;
+				this.x = this.x - this.explosionImages[0].width / 3;
+				this.y = this.y - this.explosionImages[0].height + 10;
 
 				this.exploded = true;
 				this.explosionActive = true;
@@ -53,7 +72,7 @@ function PlaneBomb(gameContexts, background, x, y, dx, dy) {
 				}
 
 				//if all sprites have been looped thru
-				if (_.isUndefined(IMAGE_REPOSITORY.images.EXPLOSION[this.spriteIndex])) {
+				if (_.isUndefined(this.explosionImages[this.spriteIndex])) {
 
 					//if the sprites have been looped thru in reverse order as well - disable the explosion and show the bomb hole
 					if (this.reverseOrder) {
@@ -67,7 +86,7 @@ function PlaneBomb(gameContexts, background, x, y, dx, dy) {
 					}
 
 				} else {
-					this.currentImage = IMAGE_REPOSITORY.images.EXPLOSION[this.spriteIndex];
+					this.currentImage = this.explosionImages[this.spriteIndex];
 				}
 
 				this.frames = 0;

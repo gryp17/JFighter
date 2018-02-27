@@ -1,3 +1,14 @@
+/**
+ * Class used for the player's plane bullets
+ * @param {Object} gameContexts
+ * @param {Background} background
+ * @param {Number} x
+ * @param {Number} y
+ * @param {Number} dx
+ * @param {Number} dy
+ * @param {Number} angle
+ * @returns {PlaneBullet}
+ */
 function PlaneBullet(gameContexts, background, x, y, dx, dy, angle) {
 	this.context = gameContexts["PLANE"].context;
 	this.canvas = gameContexts["PLANE"].canvas;
@@ -12,6 +23,9 @@ function PlaneBullet(gameContexts, background, x, y, dx, dy, angle) {
 	this.y = y;
 	this.angle = angle;
 
+	/**
+	 * Draws the plane bullet
+	 */
 	this.draw = function () {
 		this.x = this.x + this.dx;
 		this.y = this.y + this.dy;

@@ -1,3 +1,12 @@
+/**
+ * Class that represents the enemy bombers
+ * @param {Object} gameContexts
+ * @param {Background} background
+ * @param {Plane} plane
+ * @param {Number} x
+ * @param {Number} y
+ * @returns {Bomber}
+ */
 function Bomber(gameContexts, background, plane, x, y) {
 	var self = this;
 	this.context = gameContexts["ENEMIES"].context;
@@ -19,15 +28,16 @@ function Bomber(gameContexts, background, plane, x, y) {
 	this.angle = 0;
 
 	//sprite variables
-	this.spriteIndex = 0;
-	this.currentImage = this.images.SPRITE[0];
-	this.frames = 0;
-	this.limit = 2;
+	this.sprite = new Sprite(this.images.SPRITE, 2);
+	this.currentImage;
 
 	/**
 	 * Draws the plane object
 	 */
 	this.draw = function () {
+		
+		//update the "currentImage" with the correct sprite image
+		this.updateSprite();
 		
 		if(this.checkForCollisions()){
 			console.log("######## COLLISION ####### "+new Date().getTime());
@@ -36,10 +46,7 @@ function Bomber(gameContexts, background, plane, x, y) {
 		if(this.checkForBulletsDamage()){
 			console.log("######## BULLET HIT ####### "+new Date().getTime());
 		}
-
-		//update the "currentImage" with the correct sprite image
-		this.updateSprite();
-
+		
 		this.x = this.x + this.dx;
 		this.y = this.y + this.dy;
 		
@@ -54,19 +61,7 @@ function Bomber(gameContexts, background, plane, x, y) {
 	 * Updates the "currentImage" with the correct sprite image
 	 */
 	this.updateSprite = function () {
-		this.frames++;
-
-		//if the limit has been reached show the next sprite image
-		if (this.frames > this.limit) {
-			this.spriteIndex++;
-
-			if (_.isUndefined(this.images.SPRITE[this.spriteIndex])) {
-				this.spriteIndex = 0;
-			}
-
-			this.currentImage = this.images.SPRITE[this.spriteIndex];
-			this.frames = 0;
-		}
+		this.currentImage = this.sprite.move();
 	};
 	
 	/**

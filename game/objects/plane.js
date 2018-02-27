@@ -1,3 +1,10 @@
+/**
+ * Class that represents the player's plane
+ * @param {Object} gameContexts
+ * @param {Background} background
+ * @param {String} planeType
+ * @returns {Plane}
+ */
 function Plane(gameContexts, background, planeType) {
 	var self = this;
 	this.context = gameContexts["PLANE"].context;
@@ -8,7 +15,7 @@ function Plane(gameContexts, background, planeType) {
 
 	this.planeStats = PLANES_STATS[planeType];
 	this.currentHealth = this.planeStats.HEALTH;
-	this.planeImages = IMAGE_REPOSITORY.images.PLANES[planeType];
+	this.images = IMAGE_REPOSITORY.images.PLANES[planeType];
 	this.disabled = false; //the plane is disabled and can't be controlled anymore
 	this.crashed = false; //the plane has crashed to the ground
 
@@ -20,10 +27,8 @@ function Plane(gameContexts, background, planeType) {
 	this.angle = 0;
 
 	//sprite variables
-	this.spriteIndex = 0;
-	this.currentImage = this.planeImages.SPRITE[this.spriteIndex];
-	this.frames = 0;
-	this.limit = 2;
+	this.sprite = new Sprite(this.images.SPRITE, 2);
+	this.currentImage;
 	
 	//bullets
 	this.shooting = false;
@@ -36,50 +41,6 @@ function Plane(gameContexts, background, planeType) {
 	this.bombCooldown = 20;
 	this.bombTimer = 0;
 	this.bombs = [];
-
-	/**
-	 * Processes the keyboard inputs and responds to them
-	 * @param {Object} inputs
-	 */
-	this.processInputs = function (inputs) {
-		//up
-		if (inputs.UP) {
-			if (this.dy > -3) {
-				this.dy = this.dy - 0.1;
-			}
-		}
-
-		//down
-		if (inputs.DOWN) {
-			if (this.dy < 3) {
-				this.dy = this.dy + 0.1;
-			}
-		}
-
-		//left
-		if (inputs.LEFT) {
-			if (this.dx > -1) {
-				this.dx = this.dx - 0.1;
-			}
-		}
-
-		//right
-		if (inputs.RIGHT) {
-			if (this.dx < this.planeStats.MAX_SPEED) {
-				this.dx = this.dx + 0.1;
-			}
-		}
-
-		//shoot
-		if (inputs.SHOOT) {
-			this.shoot();
-		}
-
-		//bomb
-		if (inputs.BOMB) {
-			this.dropBomb();
-		}
-	};
 
 	/**
 	 * Draws the plane object and all it's bullets and bombs
@@ -164,28 +125,58 @@ function Plane(gameContexts, background, planeType) {
 	};
 	
 	/**
+	 * Processes the keyboard inputs and responds to them
+	 * @param {Object} inputs
+	 */
+	this.processInputs = function (inputs) {
+		//up
+		if (inputs.UP) {
+			if (this.dy > -3) {
+				this.dy = this.dy - 0.1;
+			}
+		}
+
+		//down
+		if (inputs.DOWN) {
+			if (this.dy < 3) {
+				this.dy = this.dy + 0.1;
+			}
+		}
+
+		//left
+		if (inputs.LEFT) {
+			if (this.dx > -1) {
+				this.dx = this.dx - 0.1;
+			}
+		}
+
+		//right
+		if (inputs.RIGHT) {
+			if (this.dx < this.planeStats.MAX_SPEED) {
+				this.dx = this.dx + 0.1;
+			}
+		}
+
+		//shoot
+		if (inputs.SHOOT) {
+			this.shoot();
+		}
+
+		//bomb
+		if (inputs.BOMB) {
+			this.dropBomb();
+		}
+	};
+	
+	/**
 	 * Updates the "currentImage" with the correct sprite image
 	 */
 	this.updateSprite = function () {
 		//if the plane has crashed show the crashed image
 		if (this.crashed === true) {
-			this.currentImage = this.planeImages.CRASHED;
-		}
-		//otherwise loop thru the sprite images
-		else {
-			this.frames++;
-
-			//if the limit has been reached show the next sprite image
-			if (this.frames > this.limit) {
-				this.spriteIndex++;
-
-				if (_.isUndefined(this.planeImages.SPRITE[this.spriteIndex])) {
-					this.spriteIndex = 0;
-				}
-
-				this.currentImage = this.planeImages.SPRITE[this.spriteIndex];
-				this.frames = 0;
-			}
+			this.currentImage = this.images.CRASHED;
+		}else{
+			this.currentImage = this.sprite.move();
 		}
 	};
 

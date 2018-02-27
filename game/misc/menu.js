@@ -1,3 +1,7 @@
+/**
+ * Class used for handling the game menu
+ * @returns {Menu}
+ */
 function Menu() {
 	var self = this;
 	this.selectedPlane = null;

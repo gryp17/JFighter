@@ -1,3 +1,9 @@
+/**
+ * Class that handles the game background
+ * @param {Object} gameContexts
+ * @param {String} selectedLevel
+ * @returns {Background}
+ */
 function Background(gameContexts, selectedLevel) {
 	this.context = gameContexts["BACKGROUND"].context;
 	this.canvas = gameContexts["BACKGROUND"].canvas;
@@ -9,7 +15,11 @@ function Background(gameContexts, selectedLevel) {
 	this.y = this.canvas.height - this.backgroundImage.height;
 	this.offset = 0;
 
-	this.draw = function (planeObject) {
+	/**
+	 * Draws the background
+	 * @param {Plane} plane
+	 */
+	this.draw = function (plane) {
 		this.x = this.x + this.dx;
 		this.y = this.y + this.dy;
 
@@ -19,7 +29,7 @@ function Background(gameContexts, selectedLevel) {
 		}
 		
 		//move the background up or down (vertically) depending on the plane movement
-		this.moveBackgroundVertically(planeObject);
+		this.moveBackgroundVertically(plane);
 
 		//top end of canvas
 		if (this.y > 0) {
@@ -44,21 +54,21 @@ function Background(gameContexts, selectedLevel) {
 
 	/**
 	 * Moves the background up or down depending on the plane movement/direction
-	 * @param {Object} planeObject
+	 * @param {Plane} plane
 	 */
-	this.moveBackgroundVertically = function (planeObject) {
+	this.moveBackgroundVertically = function (plane) {
 		//if the plane is moving up or down
-		if (planeObject.dy !== 0) {
-			//var difference = planeObject.y - (this.canvas.height / 2);
+		if (plane.dy !== 0) {
+			//var difference = plane.y - (this.canvas.height / 2);
 			var middle = this.canvas.height / 2;
 
 			//if the plane is moving up - move the background up
-			if ((planeObject.y < middle) && planeObject.dy < 0) {
-				this.dy = planeObject.dy * -1.3;
+			if ((plane.y < middle) && plane.dy < 0) {
+				this.dy = plane.dy * -1.3;
 			}
 			//if the plane is moving down - move the background down
-			else if (planeObject.dy > 0) {
-				this.dy = planeObject.dy * -1.3;
+			else if (plane.dy > 0) {
+				this.dy = plane.dy * -1.3;
 			}
 		}
 		//otherwise stop moving the background
