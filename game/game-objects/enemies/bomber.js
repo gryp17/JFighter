@@ -35,9 +35,7 @@ function Bomber(game, x, y) {
 			console.log("######## COLLISION ####### "+new Date().getTime());
 		}
 		
-		if(this.checkForBulletsDamage()){
-			console.log("######## BULLET HIT ####### "+new Date().getTime());
-		}
+		this.checkForBulletsDamage();
 		
 		this.x = this.x + this.dx;
 		this.y = this.y + this.dy;
@@ -57,62 +55,51 @@ function Bomber(game, x, y) {
 	};
 	
 	/**
-	 * Checks if the plane has collided with the obstacle
+	 * Checks if the plane has collided with the bomber
 	 * @returns {Boolean}
 	 */
-	this.checkForCollisions = function (){
-		var result = false;
-		
-		var planeLeft = game.plane.x;
-		var planeTop = game.plane.y;
-		var planeRight = planeLeft + game.plane.currentImage.width;
-		var planeBottom = game.plane.y + game.plane.currentImage.height;
-		
-		var obsLeft = this.x;
-		var obsTop = this.y + game.background.offset;
-		var obsRight = obsLeft + this.currentImage.width;
-		var obsBottom = this.y + game.background.offset + this.currentImage.height;
-		
-		var horizontalOverlap = Math.max(0, Math.min(planeRight, obsRight) - Math.max(planeLeft, obsLeft));
-        var verticalOverlap = Math.max(0, Math.min(planeBottom, obsBottom) - Math.max(planeTop, obsTop));
-		
-		if(horizontalOverlap !== 0 && verticalOverlap !== 0){
-			result = true;
-		}
-		
-		return result;
+	this.checkForCollisions = function (){		
+		return Utils.intersect({
+			x: game.plane.x,
+			y: game.plane.y,
+			width: game.plane.currentImage.width,
+			height: game.plane.currentImage.height,
+			offset: 0
+		}, {
+			x: this.x,
+			y: this.y,
+			width: this.currentImage.width,
+			height: this.currentImage.height,
+			offset: game.background.offset
+		});
 	};
 
 	
 	/**
-	 * Checks if the plane bullets have hit the obstacle
-	 * @returns {Boolean}
+	 * Checks if the plane bullets have hit the bomber
 	 */
 	this.checkForBulletsDamage = function (){
-		var result = false;
 		
 		game.plane.bullets.forEach(function (bullet){
 			
-			var bulletLeft = bullet.x;
-			var bulletTop = bullet.y + game.background.offset;
-			var bulletRight = bulletLeft + bullet.bulletImage.width;
-			var bulletBottom = bullet.y + game.background.offset + bullet.bulletImage.height;
-
-			var obsLeft = self.x;
-			var obsTop = self.y + game.background.offset;
-			var obsRight = obsLeft + self.currentImage.width;
-			var obsBottom = self.y + game.background.offset + self.currentImage.height;
-
-			var horizontalOverlap = Math.max(0, Math.min(bulletRight, obsRight) - Math.max(bulletLeft, obsLeft));
-			var verticalOverlap = Math.max(0, Math.min(bulletBottom, obsBottom) - Math.max(bulletTop, obsTop));
-
-			if(horizontalOverlap !== 0 && verticalOverlap !== 0){
-				result = true;
+			if(Utils.intersect({
+				x: bullet.x,
+				y: bullet.y,
+				width: bullet.currentImage.width,
+				height: bullet.currentImage.height,
+				offset: game.background.offset
+			}, {
+				x: self.x,
+				y: self.y,
+				width: self.currentImage.width,
+				height: self.currentImage.height,
+				offset: game.background.offset
+			})){
+				console.log("######## BULLET HIT ####### "+new Date().getTime());
 			}
 			
 		});
 		
-		return result;
 	};
 
 }
