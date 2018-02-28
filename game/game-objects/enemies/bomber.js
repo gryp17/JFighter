@@ -12,6 +12,12 @@ function Bomber(game, x, y) {
 			
 	this.images = game.images.ENEMIES["B17"];
 	
+	//stats
+	this.health = game.enemyStats["B17"].HEALTH;
+	
+	this.disabled = false; //the plane is disabled and can't be controlled anymore
+	this.crashed = false; //the plane has crashed to the ground
+	
 	//positioning and speed
 	this.dx = -3;
 	this.x = x;
@@ -31,15 +37,20 @@ function Bomber(game, x, y) {
 		//update the "currentImage" with the correct sprite image
 		this.updateSprite();
 		
-		//always fly higher than the fighter plane
-		this.avoidFighters();
+		//check if the bomber has crashed into the ground
+		this.checkForGroundCollision();
 		
-		if(this.checkForCollisions()){
+		if(this.disabled === false){
+			//always fly higher than the fighter plane
+			this.avoidFighters();
+		}
+		
+		if(this.checkForFighterCollisions()){
 			console.log("######## COLLISION ####### "+new Date().getTime());
 		}
 		
 		this.checkForBulletsDamage();
-		
+				
 		//rotate the bomber if it's ascending or descending
 		if (this.dy > 0) {
 			this.angle = this.dy * -1;
@@ -60,7 +71,7 @@ function Bomber(game, x, y) {
 	 */
 	this.drawBomber = function () {
 		//clear the rectangle around the plane/obstacle
-		this.context.clearRect(this.x - 5, this.y + game.background.offset - 5, this.currentImage.width + 10, this.currentImage.height + 10);
+		this.context.clearRect(this.x - 10, this.y + game.background.offset - 10, this.currentImage.width + 20, this.currentImage.height + 20);
 		
 		this.context.save();
 
@@ -81,14 +92,33 @@ function Bomber(game, x, y) {
 	 * Updates the "currentImage" with the correct sprite image
 	 */
 	this.updateSprite = function () {
-		this.currentImage = this.sprite.move();
+		//if the plane has crashed show the crashed image
+		if (this.crashed === true) {
+			this.currentImage = this.images.CRASHED;
+		}else{
+			this.currentImage = this.sprite.move();
+		}
+	};
+	
+	/**
+	 * Checks if the bomber has crashed into the ground
+	 */
+	this.checkForGroundCollision = function (){
+		//when the bomber touches the ground raise the disabled and crashed flags and "anchor" it to the ground
+		if (this.y + this.currentImage.height > this.canvas.height - 40) {
+			this.y = this.canvas.height - this.currentImage.height - 40;
+			this.dy = 0;
+			this.dx = -2;
+			this.disabled = true;
+			this.crashed = true;
+		}
 	};
 	
 	/**
 	 * Checks if the plane has collided with the bomber
 	 * @returns {Boolean}
 	 */
-	this.checkForCollisions = function (){		
+	this.checkForFighterCollisions = function (){		
 		return Utils.intersect({
 			x: game.plane.x,
 			y: game.plane.y,
@@ -110,8 +140,8 @@ function Bomber(game, x, y) {
 	 */
 	this.checkForBulletsDamage = function (){
 		
-		game.plane.bullets.forEach(function (bullet){
-			
+		//if a bullet hit's the bomber - filter it out
+		game.plane.bullets = _.filter(game.plane.bullets, function (bullet){
 			if(Utils.intersect({
 				x: bullet.x,
 				y: bullet.y,
@@ -125,9 +155,18 @@ function Bomber(game, x, y) {
 				height: self.currentImage.height,
 				offset: game.background.offset
 			})){
-				console.log("######## BULLET HIT ####### "+new Date().getTime());
+				self.health = self.health - bullet.damage;
+				
+				//if the plane is too damaged disable it and crash it (only do this if it hasn't crashed yet)
+				if (self.health <= 0 && self.crashed === false) {
+					self.disabled = true;
+					self.dy = 2;
+				}
+
+				return false;
+			}else{
+				return true;
 			}
-			
 		});
 		
 	};

@@ -13,6 +13,11 @@ function PlaneBullet(game, x, y, dx, dy, angle) {
 	this.canvas = game.contexts["PLANE"].canvas;
 		
 	this.currentImage = game.images.PROJECTILES.BULLET;
+	
+	//stats
+	this.damage = game.plane.planeStats.DAMAGE;
+	
+	//positioning and speed
 	this.dx = dx;
 	this.x = x;
 	this.dy = dy;

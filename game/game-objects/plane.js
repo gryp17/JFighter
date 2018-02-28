@@ -9,8 +9,9 @@ function Plane(game) {
 	this.canvas = game.contexts["PLANE"].canvas;
 
 	this.planeStats = game.planeStats[game.selectedPlane];
-	this.currentHealth = this.planeStats.HEALTH;
 	this.images = game.images.PLANES[game.selectedPlane];
+	
+	this.health = this.planeStats.HEALTH;
 	this.disabled = false; //the plane is disabled and can't be controlled anymore
 	this.crashed = false; //the plane has crashed to the ground
 
@@ -51,7 +52,7 @@ function Plane(game) {
 		this.updateSprite();
 		
 		//if the plane is too damaged disable it and crash it (only do this if it hasn't crashed yet)
-		if (this.currentHealth <= 0 && this.crashed === false) {
+		if (this.health <= 0 && this.crashed === false) {
 			this.disabled = true;
 			this.dy = 2;
 		}

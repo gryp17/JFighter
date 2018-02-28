@@ -2,14 +2,16 @@
  * Main game class that initializes the game and all the game objects
  * @param {Object} images
  * @param {Object} planeStats
+ * @param {Object} enemyStats
  * @param {Object} levelsData
  * @returns {Game}
  */
-function Game(images, planeStats, levelsData) {
+function Game(images, planeStats, enemyStats, levelsData) {
 	var self = this;
 
 	this.images = images;
 	this.planeStats = planeStats;
+	this.enemyStats = enemyStats;
 	this.levelsData = levelsData;
 	this.selectedPlane;
 	this.selectedLevel;
