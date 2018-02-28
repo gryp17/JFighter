@@ -1,25 +1,25 @@
 /**
  * Class that handles the game background
- * @param {Object} gameContexts
- * @param {String} selectedLevel
+ * @param {Game} game
  * @returns {Background}
  */
-function Background(gameContexts, selectedLevel) {
-	this.context = gameContexts["BACKGROUND"].context;
-	this.canvas = gameContexts["BACKGROUND"].canvas;
-	this.backgroundImage = IMAGE_REPOSITORY.images.LEVELS[selectedLevel];
+function Background(game) {
+	this.context = game.CONTEXTS["BACKGROUND"].context;
+	this.canvas = game.CONTEXTS["BACKGROUND"].canvas;
+	
+	this.backgroundImage = game.images.LEVELS[game.selectedLevel];
 	this.dx = -2;
 	this.x = 0;
 	this.dy = 0;
+	
 	//calculate the difference between the image height and the canvas height and pin the background to the bottom
 	this.y = this.canvas.height - this.backgroundImage.height;
 	this.offset = 0;
 
 	/**
 	 * Draws the background
-	 * @param {Plane} plane
 	 */
-	this.draw = function (plane) {
+	this.draw = function () {
 		this.x = this.x + this.dx;
 		this.y = this.y + this.dy;
 
@@ -29,7 +29,7 @@ function Background(gameContexts, selectedLevel) {
 		}
 		
 		//move the background up or down (vertically) depending on the plane movement
-		this.moveBackgroundVertically(plane);
+		this.moveBackgroundVertically(game.plane);
 
 		//top end of canvas
 		if (this.y > 0) {

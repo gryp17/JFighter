@@ -1,12 +1,14 @@
 /**
  * Main game class that initializes the game and all the game objects
- * @param {Object} gameImages
+ * @param {Object} images
  * @returns {Game}
  */
-function Game(gameImages) {
+function Game(images) {
 	var self = this;
 
-	this.gameImages = gameImages;
+	this.images = images;
+	this.selectedPlane;
+	this.selectedLevel;
 
 	this.GAME_STATE = CONSTANTS.GAME_STATE.MAIN_MENU;
 
@@ -26,10 +28,13 @@ function Game(gameImages) {
 	 * @param {String} selectedLevel
 	 */
 	this.start = function (selectedPlane, selectedLevel) {
+		this.selectedPlane = selectedPlane;
+		this.selectedLevel = selectedLevel;
+		
 		this.CONTEXTS["BACKGROUND"].canvas.focus();
-
+		
 		//game objects
-		this.background = new Background(this.CONTEXTS, selectedLevel);
+		this.background = new Background(this);
 		this.plane = new Plane(this.CONTEXTS, this.background, selectedPlane);
 		this.enemies = LEVELS_DATA[selectedLevel].ENEMIES.map(function (enemy) {
 
@@ -63,7 +68,7 @@ function Game(gameImages) {
 		var inputs = self.keyboard.getInputs();
 
 		//draw the background
-		self.background.draw(self.plane);
+		self.background.draw();
 
 		//draw the plane
 		self.plane.draw(inputs);
