@@ -6,9 +6,12 @@
 function Keyboard (inputs){
 	var self = this;
 	
+	//custom inputs
 	if (inputs) {
 		this.inputs = inputs;
-	} else {
+	} 
+	//default inputs
+	else {
 		this.inputs = {
 			LEFT: {
 				status: false,

@@ -1,21 +1,17 @@
 /**
  * Class used for the plane bombs
- * @param {Object} gameContexts
- * @param {Background} background
+ * @param {Game} game
  * @param {Number} x
  * @param {Number} y
  * @param {Number} dx
  * @param {Number} dy
  * @returns {PlaneBomb}
  */
-function PlaneBomb(gameContexts, background, x, y, dx, dy) {
-	this.context = gameContexts["PLANE"].context;
-	this.canvas = gameContexts["PLANE"].canvas;
+function PlaneBomb(game, x, y, dx, dy) {
+	this.context = game.contexts["PLANE"].context;
+	this.canvas = game.contexts["PLANE"].canvas;
 
-	//background object that is used mostly for accessing the background vertical offset
-	this.background = background;
-
-	this.explosionImages = IMAGE_REPOSITORY.images.EXPLOSION;
+	this.explosionImages = game.images.EXPLOSION;
 
 	//positioning and speed
 	this.dx = dx;
@@ -28,7 +24,7 @@ function PlaneBomb(gameContexts, background, x, y, dx, dy) {
 
 	//sprite variables
 	this.spriteIndex = 0;
-	this.currentImage = IMAGE_REPOSITORY.images.PROJECTILES.PLANE_BOMB;
+	this.currentImage = game.images.PROJECTILES.PLANE_BOMB;
 	this.frames = 5;
 	this.limit = 5;
 	this.reverseOrder = false;
@@ -62,7 +58,7 @@ function PlaneBomb(gameContexts, background, x, y, dx, dy) {
 			this.updateSprite();
 		}
 
-		this.context.drawImage(this.currentImage, this.x, this.y + background.offset);
+		this.context.drawImage(this.currentImage, this.x, this.y + game.background.offset);
 	};
 	
 	/**
@@ -74,7 +70,7 @@ function PlaneBomb(gameContexts, background, x, y, dx, dy) {
 		//if we have reached the end of the sprite images - display the bomb hole
 		if (this.currentImage === null) {
 			this.explosionActive = false;
-			this.currentImage = IMAGE_REPOSITORY.images.BOMB_HOLE;
+			this.currentImage = game.images.BOMB_HOLE;
 		}
 	};
 

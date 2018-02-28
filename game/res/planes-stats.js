@@ -1,4 +1,4 @@
-var PLANES_STATS = {
+var PLANE_STATS = {
 	BF109: {
 		DAMAGE: 60,
 		HEALTH: 120,

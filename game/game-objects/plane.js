@@ -1,21 +1,16 @@
 /**
  * Class that represents the player's plane
- * @param {Object} gameContexts
- * @param {Background} background
- * @param {String} planeType
+ * @param {Game} game
  * @returns {Plane}
  */
-function Plane(gameContexts, background, planeType) {
+function Plane(game) {
 	var self = this;
-	this.context = gameContexts["PLANE"].context;
-	this.canvas = gameContexts["PLANE"].canvas;
+	this.context = game.contexts["PLANE"].context;
+	this.canvas = game.contexts["PLANE"].canvas;
 
-	//background object that is used mostly for accessing the background vertical offset
-	this.background = background;
-
-	this.planeStats = PLANES_STATS[planeType];
+	this.planeStats = game.planeStats[game.selectedPlane];
 	this.currentHealth = this.planeStats.HEALTH;
-	this.images = IMAGE_REPOSITORY.images.PLANES[planeType];
+	this.images = game.images.PLANES[game.selectedPlane];
 	this.disabled = false; //the plane is disabled and can't be controlled anymore
 	this.crashed = false; //the plane has crashed to the ground
 
@@ -45,11 +40,11 @@ function Plane(gameContexts, background, planeType) {
 	/**
 	 * Draws the plane object and all it's bullets and bombs
 	 */
-	this.draw = function (inputs) {
+	this.draw = function () {
 
 		//respond to the controls only if the plane is not disabled
-		if (self.disabled === false) {
-			this.processInputs(inputs);
+		if (this.disabled === false) {
+			this.processInputs(game.inputs);
 		}
 		
 		//update the "currentImage" with the correct sprite image
@@ -86,7 +81,7 @@ function Plane(gameContexts, background, planeType) {
 
 		//destroy bombs that are outside of the canvas
 		this.bombs = _.filter(this.bombs, function (bomb) {
-			return bomb.x > IMAGE_REPOSITORY.images.EXPLOSION[0].width * -1;
+			return bomb.x > game.images.EXPLOSION[0].width * -1;
 		});
 
 		//clear the entire canvas
@@ -209,7 +204,7 @@ function Plane(gameContexts, background, planeType) {
 		if (this.shooting === false) {
 			//var bulletX = this.x + this.currentImage.width - 10;
 			var bulletX = this.x + (this.currentImage.width / 2);
-			var bulletY = this.y - this.background.offset + (this.currentImage.height / 2);
+			var bulletY = this.y - game.background.offset + (this.currentImage.height / 2);
 			var bulletDx = 25;
 			var bulletDy = 0;
 			var angle = this.angle;
@@ -236,12 +231,12 @@ function Plane(gameContexts, background, planeType) {
 			*/
 			
 			//additional fix for the KI84 at extreme climb angles
-			if (planeType === "KI84" && angle <= -20 && background.offset > 0) {				
-				bulletX = bulletX - background.offset / 2.5;
-				bulletY = bulletY - background.offset / 7;
+			if (game.selectedPlane === "KI84" && angle <= -20 && game.background.offset > 0) {				
+				bulletX = bulletX - game.background.offset / 2.5;
+				bulletY = bulletY - game.background.offset / 7;
 			}
 						
-			this.bullets.push(new PlaneBullet(gameContexts, background, bulletX, bulletY, bulletDx, bulletDy, angle));
+			this.bullets.push(new PlaneBullet(game, bulletX, bulletY, bulletDx, bulletDy, angle));
 		}
 	};
 
@@ -252,12 +247,12 @@ function Plane(gameContexts, background, planeType) {
 		//drop bomb only if the bomb is not on cooldown
 		if (this.bombing === false) {
 			var bombX = this.x + (this.currentImage.width / 1.3);
-			var bombY = this.y - this.background.offset + (this.currentImage.height / 2);
+			var bombY = this.y - game.background.offset + (this.currentImage.height / 2);
 			var bombDx = this.dx - 2;
 			var bombDy = (this.dy > 0 ? this.dy : 0) + 3;
 			this.bombing = true;
 
-			this.bombs.push(new PlaneBomb(gameContexts, this.background, bombX, bombY, bombDx, bombDy));
+			this.bombs.push(new PlaneBomb(game, bombX, bombY, bombDx, bombDy));
 		}
 	};
 

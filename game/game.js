@@ -1,19 +1,24 @@
 /**
  * Main game class that initializes the game and all the game objects
  * @param {Object} images
+ * @param {Object} planeStats
+ * @param {Object} levelsData
  * @returns {Game}
  */
-function Game(images) {
+function Game(images, planeStats, levelsData) {
 	var self = this;
 
 	this.images = images;
+	this.planeStats = planeStats;
+	this.levelsData = levelsData;
 	this.selectedPlane;
 	this.selectedLevel;
+	this.inputs;
 
 	this.GAME_STATE = CONSTANTS.GAME_STATE.MAIN_MENU;
 
 	//canvas/context objects
-	this.CONTEXTS = {
+	this.contexts = {
 		BACKGROUND: new Context("background-canvas"),
 		PLANE: new Context("plane-canvas"),
 		ENEMIES: new Context("enemies-canvas")
@@ -31,15 +36,15 @@ function Game(images) {
 		this.selectedPlane = selectedPlane;
 		this.selectedLevel = selectedLevel;
 		
-		this.CONTEXTS["BACKGROUND"].canvas.focus();
+		this.contexts["BACKGROUND"].canvas.focus();
 		
 		//game objects
 		this.background = new Background(this);
-		this.plane = new Plane(this.CONTEXTS, this.background, selectedPlane);
-		this.enemies = LEVELS_DATA[selectedLevel].ENEMIES.map(function (enemy) {
+		this.plane = new Plane(this);
+		this.enemies = this.levelsData[selectedLevel].ENEMIES.map(function (enemy) {
 
 			//default arguments for each enemy object type
-			var arguments = [null, self.CONTEXTS, self.background, self.plane];
+			var arguments = [null, self.contexts, self.background, self.plane];
 
 			//additional arguments (x, y...)
 			var objectArguments = Object.values(enemy.arguments);
@@ -65,13 +70,13 @@ function Game(images) {
 		requestAnimFrame(self.animate);
 
 		//get the current inputs status 
-		var inputs = self.keyboard.getInputs();
+		self.inputs = self.keyboard.getInputs();
 
 		//draw the background
 		self.background.draw();
 
 		//draw the plane
-		self.plane.draw(inputs);
+		self.plane.draw();
 
 		//draw all enemies
 		self.enemies.forEach(function (enemy) {

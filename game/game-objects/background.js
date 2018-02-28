@@ -4,8 +4,8 @@
  * @returns {Background}
  */
 function Background(game) {
-	this.context = game.CONTEXTS["BACKGROUND"].context;
-	this.canvas = game.CONTEXTS["BACKGROUND"].canvas;
+	this.context = game.contexts["BACKGROUND"].context;
+	this.canvas = game.contexts["BACKGROUND"].canvas;
 	
 	this.backgroundImage = game.images.LEVELS[game.selectedLevel];
 	this.dx = -2;
