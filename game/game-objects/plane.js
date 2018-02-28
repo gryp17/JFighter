@@ -84,9 +84,11 @@ function Plane(game) {
 			return bomb.x > game.images.EXPLOSION[0].width * -1;
 		});
 
+		/*
 		//clear the entire canvas
 		//this.context.clearRect(this.x - 5, this.y - 5, this.currentImage.width + 5, this.currentImage.height + 5);
 		this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+		*/
 
 		this.x = this.x + this.dx;
 		this.y = this.y + this.dy;
@@ -96,16 +98,16 @@ function Plane(game) {
 		//if the plane is ascending or descending rotate it
 		if (this.dy > 0) {
 			this.angle = this.dy * this.planeStats.DESCEND_SPEED;
-			this.rotatePlane(this.angle);
 		} else if (this.dy < 0) {
 			this.angle = this.dy * this.planeStats.CLIMB_SPEED;
-			this.rotatePlane(this.angle);
 		}
 		//otherwise reset the angle and draw it in it's normal state
 		else {
 			this.angle = 0;
-			this.context.drawImage(this.currentImage, this.x, this.y);
 		}
+		
+		//draw the plane
+		this.drawPlane();
 
 		//draw all plane bullets
 		this.bullets.forEach(function (bullet) {
@@ -176,17 +178,20 @@ function Plane(game) {
 	};
 
 	/**
-	 * Rotates the plane
-	 * @param {Number} angle
+	 * Draws the plane and rotates it based on the angle property
 	 */
-	this.rotatePlane = function (angle) {
+	this.drawPlane = function () {
+		//clear the entire canvas
+		//this.context.clearRect(this.x - 5, this.y - 5, this.currentImage.width + 5, this.currentImage.height + 5);
+		this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+		
 		this.context.save();
 
 		//move to the middle of where we want to draw our image
 		this.context.translate(this.x + this.currentImage.width / 2, this.y + this.currentImage.height / 2);
 
 		//rotate around that point, converting our angle from degrees to radians 
-		this.context.rotate(angle * Math.PI / 180);
+		this.context.rotate(this.angle * Math.PI / 180);
 
 		//draw it up and to the left by half the width and height of the image 
 		this.context.drawImage(this.currentImage, -(this.currentImage.width / 2), -(this.currentImage.height / 2));
