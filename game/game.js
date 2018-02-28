@@ -44,7 +44,7 @@ function Game(images, planeStats, levelsData) {
 		this.enemies = this.levelsData[selectedLevel].ENEMIES.map(function (enemy) {
 
 			//default arguments for each enemy object type
-			var arguments = [null, self.contexts, self.background, self.plane];
+			var arguments = [null, self];
 
 			//additional arguments (x, y...)
 			var objectArguments = Object.values(enemy.arguments);

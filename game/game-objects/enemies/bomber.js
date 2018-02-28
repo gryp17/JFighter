@@ -1,24 +1,16 @@
 /**
  * Class that represents the enemy bombers
- * @param {Object} gameContexts
- * @param {Background} background
- * @param {Plane} plane
+ * @param {Object} game
  * @param {Number} x
  * @param {Number} y
  * @returns {Bomber}
  */
-function Bomber(gameContexts, background, plane, x, y) {
+function Bomber(game, x, y) {
 	var self = this;
-	this.context = gameContexts["ENEMIES"].context;
-	this.canvas = gameContexts["ENEMIES"].canvas;
-	
-	//background object that is used mostly for accessing the background vertical offset
-	this.background = background;
-	
-	//reference to the player's plane
-	this.plane = plane;
-	
-	this.images = IMAGE_REPOSITORY.images.ENEMIES["B17"];
+	this.context = game.contexts["ENEMIES"].context;
+	this.canvas = game.contexts["ENEMIES"].canvas;
+			
+	this.images = game.images.ENEMIES["B17"];
 	
 	//positioning and speed
 	this.dx = -3;
@@ -51,10 +43,10 @@ function Bomber(gameContexts, background, plane, x, y) {
 		this.y = this.y + this.dy;
 		
 		//clear the rectangle around the plane/obstacle
-		this.context.clearRect(this.x - 5, this.y + background.offset - 5, this.currentImage.width + 10, this.currentImage.height + 10);
+		this.context.clearRect(this.x - 5, this.y + game.background.offset - 5, this.currentImage.width + 10, this.currentImage.height + 10);
 		
 		//draw the image
-		this.context.drawImage(this.currentImage, this.x, this.y + background.offset);
+		this.context.drawImage(this.currentImage, this.x, this.y + game.background.offset);
 	};
 	
 	/**
@@ -71,15 +63,15 @@ function Bomber(gameContexts, background, plane, x, y) {
 	this.checkForCollisions = function (){
 		var result = false;
 		
-		var planeLeft = this.plane.x;
-		var planeTop = this.plane.y;
-		var planeRight = planeLeft + this.plane.currentImage.width;
-		var planeBottom = this.plane.y + this.plane.currentImage.height;
+		var planeLeft = game.plane.x;
+		var planeTop = game.plane.y;
+		var planeRight = planeLeft + game.plane.currentImage.width;
+		var planeBottom = game.plane.y + game.plane.currentImage.height;
 		
 		var obsLeft = this.x;
-		var obsTop = this.y + background.offset;
+		var obsTop = this.y + game.background.offset;
 		var obsRight = obsLeft + this.currentImage.width;
-		var obsBottom = this.y + background.offset + this.currentImage.height;
+		var obsBottom = this.y + game.background.offset + this.currentImage.height;
 		
 		var horizontalOverlap = Math.max(0, Math.min(planeRight, obsRight) - Math.max(planeLeft, obsLeft));
         var verticalOverlap = Math.max(0, Math.min(planeBottom, obsBottom) - Math.max(planeTop, obsTop));
@@ -99,17 +91,17 @@ function Bomber(gameContexts, background, plane, x, y) {
 	this.checkForBulletsDamage = function (){
 		var result = false;
 		
-		this.plane.bullets.forEach(function (bullet){
+		game.plane.bullets.forEach(function (bullet){
 			
 			var bulletLeft = bullet.x;
-			var bulletTop = bullet.y + background.offset;
+			var bulletTop = bullet.y + game.background.offset;
 			var bulletRight = bulletLeft + bullet.bulletImage.width;
-			var bulletBottom = bullet.y + background.offset + bullet.bulletImage.height;
+			var bulletBottom = bullet.y + game.background.offset + bullet.bulletImage.height;
 
 			var obsLeft = self.x;
-			var obsTop = self.y + background.offset;
+			var obsTop = self.y + game.background.offset;
 			var obsRight = obsLeft + self.currentImage.width;
-			var obsBottom = self.y + background.offset + self.currentImage.height;
+			var obsBottom = self.y + game.background.offset + self.currentImage.height;
 
 			var horizontalOverlap = Math.max(0, Math.min(bulletRight, obsRight) - Math.max(bulletLeft, obsLeft));
 			var verticalOverlap = Math.max(0, Math.min(bulletBottom, obsBottom) - Math.max(bulletTop, obsTop));
