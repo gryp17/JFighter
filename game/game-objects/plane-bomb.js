@@ -11,7 +11,9 @@ function PlaneBomb(game, x, y, dx, dy) {
 	this.context = game.contexts.plane.context;
 	this.canvas = game.contexts.plane.canvas;
 
+	this.bombImages = game.images.PROJECTILES.PLANE_BOMB;
 	this.explosionImages = game.images.EXPLOSION;
+	this.bombHole = game.images.BOMB_HOLE;
 
 	//positioning and speed
 	this.dx = dx;
@@ -20,13 +22,9 @@ function PlaneBomb(game, x, y, dx, dy) {
 	this.y = y;
 
 	//sprite variables
-	this.sprite = new Sprite(this.explosionImages, 5, false);
-
-	//sprite variables
-	this.spriteIndex = 0;
-	this.currentImage = game.images.PROJECTILES.PLANE_BOMB;
-	this.frames = 5;
-	this.limit = 5;
+	this.bombSprite = new Sprite(this.bombImages, 10, true);
+	this.explosionSprite = new Sprite(this.explosionImages, 5, false);
+	this.currentImage;
 
 	//bomb state
 	this.exploded = false; //the bomb has reached the floor and has exploded
@@ -52,10 +50,10 @@ function PlaneBomb(game, x, y, dx, dy) {
 				this.exploded = true;
 				this.explosionActive = true;
 			}
-
-			//update the "currentImage" with the correct sprite image
-			this.updateSprite();
 		}
+		
+		//update the "currentImage" with the correct sprite image
+		this.updateSprite();
 
 		this.context.drawImage(this.currentImage, this.x, this.y + game.background.offset);
 	};
@@ -64,12 +62,17 @@ function PlaneBomb(game, x, y, dx, dy) {
 	 * Updates the "currentImage" with the correct sprite image
 	 */
 	this.updateSprite = function () {
-		this.currentImage = this.sprite.move();
+		
+		if(this.exploded === false){
+			this.currentImage = this.bombSprite.move();
+		}else{
+			this.currentImage = this.explosionSprite.move();
+		}
 
 		//if we have reached the end of the sprite images - display the bomb hole
 		if (this.currentImage === null) {
 			this.explosionActive = false;
-			this.currentImage = game.images.BOMB_HOLE;
+			this.currentImage = this.bombHole;
 		}
 	};
 
