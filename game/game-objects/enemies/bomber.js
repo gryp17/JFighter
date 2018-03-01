@@ -118,20 +118,34 @@ function Bomber(game, x, y) {
 	 * Checks if the plane has collided with the bomber
 	 * @returns {Boolean}
 	 */
-	this.checkForFighterCollisions = function (){		
-		return Utils.intersect({
+	this.checkForFighterCollisions = function (){
+		
+		var planeHitbox = {
 			x: game.plane.x,
 			y: game.plane.y,
 			width: game.plane.currentImage.width,
 			height: game.plane.currentImage.height,
 			offset: 0
-		}, {
+		};
+		
+		//the bomber has 2 hitboxes - body and tail
+		var bomberBody = {
 			x: this.x,
-			y: this.y,
+			y: this.y + this.currentImage.height / 2,
 			width: this.currentImage.width,
-			height: this.currentImage.height,
+			height: this.currentImage.height / 2,
 			offset: game.background.offset
-		});
+		};
+		
+		var bomberTail = {
+			x: this.x + 270,
+			y: this.y,
+			width: 55,
+			height: this.currentImage.height / 2,
+			offset: game.background.offset
+		};
+		
+		return Utils.intersect(planeHitbox, bomberBody) || Utils.intersect(planeHitbox, bomberTail);
 	};
 
 	
@@ -140,33 +154,53 @@ function Bomber(game, x, y) {
 	 */
 	this.checkForBulletsDamage = function (){
 		
+		//the bomber has 2 hitboxes - body and tail
+		var bomberBody = {
+			x: this.x,
+			y: this.y + this.currentImage.height / 2,
+			width: this.currentImage.width,
+			height: this.currentImage.height / 2,
+			offset: game.background.offset
+		};
+		
+		var bomberTail = {
+			x: this.x + 270,
+			y: this.y,
+			width: 55,
+			height: this.currentImage.height / 2,
+			offset: game.background.offset
+		};
+		
 		//if a bullet hit's the bomber - filter it out
 		game.plane.bullets = _.filter(game.plane.bullets, function (bullet){
-			if(Utils.intersect({
+			var miss = true;
+			
+			var bulletHitbox = {
 				x: bullet.x,
 				y: bullet.y,
 				width: bullet.currentImage.width,
 				height: bullet.currentImage.height,
 				offset: game.background.offset
-			}, {
-				x: self.x,
-				y: self.y,
-				width: self.currentImage.width,
-				height: self.currentImage.height,
-				offset: game.background.offset
-			})){
+			};
+			
+			//check if the bullet hits the body
+			if(Utils.intersect(bulletHitbox, bomberBody)){
 				self.health = self.health - bullet.damage;
-				
-				//if the plane is too damaged disable it and crash it (only do this if it hasn't crashed yet)
-				if (self.health <= 0 && self.crashed === false) {
-					self.disabled = true;
-					self.dy = 2;
-				}
-
-				return false;
-			}else{
-				return true;
+				miss = false;
 			}
+			//check if the bullet hits the bomber tail (in this case it does double damage!)
+			else if(Utils.intersect(bulletHitbox, bomberTail)){
+				self.health = self.health - bullet.damage * 2;
+				miss = false;
+			}
+			
+			//if the plane is too damaged disable it and crash it (only do this if it hasn't crashed yet)
+			if (self.health <= 0 && self.crashed === false) {
+				self.disabled = true;
+				self.dy = 2;
+			}
+			
+			return miss;
 		});
 		
 	};
