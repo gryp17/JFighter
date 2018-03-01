@@ -9,8 +9,8 @@
  * @returns {PlaneBullet}
  */
 function PlaneBullet(game, x, y, dx, dy, angle) {
-	this.context = game.contexts["PLANE"].context;
-	this.canvas = game.contexts["PLANE"].canvas;
+	this.context = game.contexts.plane.context;
+	this.canvas = game.contexts.plane.canvas;
 		
 	this.currentImage = game.images.PROJECTILES.BULLET;
 	

@@ -21,9 +21,9 @@ function Game(images, planeStats, enemyStats, levelsData) {
 
 	//canvas/context objects
 	this.contexts = {
-		BACKGROUND: new Context("background-canvas"),
-		PLANE: new Context("plane-canvas"),
-		ENEMIES: new Context("enemies-canvas")
+		background: new Context("background-canvas"),
+		plane: new Context("plane-canvas"),
+		enemies: new Context("enemies-canvas")
 	};
 
 	//initialize the keyboard controls
@@ -38,7 +38,7 @@ function Game(images, planeStats, enemyStats, levelsData) {
 		this.selectedPlane = selectedPlane;
 		this.selectedLevel = selectedLevel;
 		
-		this.contexts["BACKGROUND"].canvas.focus();
+		this.contexts.background.canvas.focus();
 		
 		//game objects
 		this.background = new Background(this);
@@ -80,9 +80,17 @@ function Game(images, planeStats, enemyStats, levelsData) {
 		//draw the plane
 		self.plane.draw();
 
-		//draw all enemies
-		self.enemies.forEach(function (enemy) {
-			enemy.draw(self.background);
+		//clear the entire enemies context before drawing any of the enemies
+		self.contexts.enemies.context.clearRect(0, 0, self.contexts.enemies.canvas.width, self.contexts.enemies.canvas.height);
+
+		//draw all enemies that are still on the screen
+		self.enemies = _.filter(self.enemies, function (enemy){
+			if(enemy.x > -800){
+				enemy.draw();
+				return true;
+			}else{
+				return false;
+			}
 		});
 	};
 

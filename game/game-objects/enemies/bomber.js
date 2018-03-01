@@ -7,14 +7,13 @@
  */
 function Bomber(game, x, y) {
 	var self = this;
-	this.context = game.contexts["ENEMIES"].context;
-	this.canvas = game.contexts["ENEMIES"].canvas;
+	this.context = game.contexts.enemies.context;
+	this.canvas = game.contexts.enemies.canvas;
 			
 	this.images = game.images.ENEMIES["B17"];
 	
-	//stats
+	//state
 	this.health = game.enemyStats["B17"].HEALTH;
-	
 	this.disabled = false; //the plane is disabled and can't be controlled anymore
 	this.crashed = false; //the plane has crashed to the ground
 	
@@ -24,6 +23,13 @@ function Bomber(game, x, y) {
 	this.dy = 0;
 	this.y = y;
 	this.angle = 0;
+	
+	//bombs
+	this.bombing = false;
+	this.bombCooldown = game.enemyStats["B17"].BOMB_COOLDOWN;
+	this.bombDelay = game.enemyStats["B17"].BOMB_DELAY;
+	this.bombTimer = 0;
+	this.bombs = [];
 
 	//sprite variables
 	this.sprite = new Sprite(this.images.SPRITE, 2, true);
@@ -45,11 +51,14 @@ function Bomber(game, x, y) {
 			this.avoidFighters();
 		}
 		
-		if(this.checkForFighterCollisions()){
-			console.log("######## COLLISION ####### "+new Date().getTime());
-		}
+		//check if the plane and the bomber have collided
+		this.checkForFighterCollisions();
 		
+		//check if any of the plane bullets have hit the bomber
 		this.checkForBulletsDamage();
+		
+		//drop bombs periodically
+		this.dropBombs();
 				
 		//rotate the bomber if it's ascending or descending
 		if (this.dy > 0) {
@@ -63,16 +72,25 @@ function Bomber(game, x, y) {
 		this.x = this.x + this.dx;
 		this.y = this.y + this.dy;
 		
+		//draw the bomber
 		this.drawBomber();
+		
+		//draw the bombs that are still inside the canvas
+		this.bombs = _.filter(this.bombs, function (bomb) {
+			if(bomb.x > game.images.EXPLOSION[0].width * -1){
+				bomb.draw();
+				return true;
+			}else{
+				return false;
+			}
+		});
+		
 	};
 	
 	/**
 	 * Helper function that draws the bomber and rotates it depending on the angle property
 	 */
 	this.drawBomber = function () {
-		//clear the rectangle around the plane/obstacle
-		this.context.clearRect(this.x - 10, this.y + game.background.offset - 10, this.currentImage.width + 20, this.currentImage.height + 20);
-		
 		this.context.save();
 
 		//move to the middle of where we want to draw our image
@@ -116,7 +134,6 @@ function Bomber(game, x, y) {
 	
 	/**
 	 * Checks if the plane has collided with the bomber
-	 * @returns {Boolean}
 	 */
 	this.checkForFighterCollisions = function (){
 		
@@ -145,7 +162,12 @@ function Bomber(game, x, y) {
 			offset: game.background.offset
 		};
 		
-		return Utils.intersect(planeHitbox, bomberBody) || Utils.intersect(planeHitbox, bomberTail);
+		//if the plane and the bomber are colliding - reduce their health
+		if(Utils.intersect(planeHitbox, bomberBody) || Utils.intersect(planeHitbox, bomberTail)){
+			this.health--;
+			game.plane.health = game.plane.health - 2;
+		}
+		
 	};
 
 	
@@ -217,6 +239,35 @@ function Bomber(game, x, y) {
 			this.dy = -1;
 		}else{
 			this.dy = 0;
+		}
+	};
+
+	this.dropBombs = function (){
+		
+		//bombs cooldown
+		if (this.bombing === true) {
+			this.bombTimer++;
+			if (this.bombTimer > this.bombCooldown) {
+				this.bombing = false;
+				this.bombTimer = 0;
+			}
+		}
+		
+		//if the bomber is inside the screen and is not disabled
+		if(this.x < this.canvas.width && this.disabled === false){
+			
+			//drop bomb only if the bomb is not on cooldown
+			if (this.bombing === false) {
+				var bombX = this.x + (this.currentImage.width / 2.2);
+				//var bombY = this.y - game.background.offset + (this.currentImage.height / 2);
+				var bombY = this.y + this.currentImage.height;
+				var bombDx = this.dx + 1;
+				var bombDy = 2;
+				this.bombing = true;
+
+				this.bombs.push(new BomberBomb(game, bombX, bombY, bombDx, bombDy));
+			}
+			
 		}
 	};
 

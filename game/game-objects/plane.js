@@ -5,8 +5,8 @@
  */
 function Plane(game) {
 	var self = this;
-	this.context = game.contexts["PLANE"].context;
-	this.canvas = game.contexts["PLANE"].canvas;
+	this.context = game.contexts.plane.context;
+	this.canvas = game.contexts.plane.canvas;
 
 	this.planeStats = game.planeStats[game.selectedPlane];
 	this.images = game.images.PLANES[game.selectedPlane];

@@ -1,15 +1,15 @@
 /**
- * Class used for the plane bombs
+ * Class used for the bomber bombs
  * @param {Game} game
  * @param {Number} x
  * @param {Number} y
  * @param {Number} dx
  * @param {Number} dy
- * @returns {PlaneBomb}
+ * @returns {BomberBomb}
  */
-function PlaneBomb(game, x, y, dx, dy) {
-	this.context = game.contexts.plane.context;
-	this.canvas = game.contexts.plane.canvas;
+function BomberBomb(game, x, y, dx, dy) {
+	this.context = game.contexts.enemies.context;
+	this.canvas = game.contexts.enemies.canvas;
 
 	this.explosionImages = game.images.EXPLOSION;
 
@@ -24,7 +24,7 @@ function PlaneBomb(game, x, y, dx, dy) {
 
 	//sprite variables
 	this.spriteIndex = 0;
-	this.currentImage = game.images.PROJECTILES.PLANE_BOMB;
+	this.currentImage = game.images.PROJECTILES.BOMBER_BOMB;
 	this.frames = 5;
 	this.limit = 5;
 

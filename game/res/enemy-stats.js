@@ -1,5 +1,7 @@
 var ENEMY_STATS = {
 	B17: {
-		HEALTH: 1000
+		HEALTH: 1000,
+		BOMB_COOLDOWN: 50,
+		BOMB_DELAY: 20
 	}
 };
