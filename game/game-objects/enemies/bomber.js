@@ -10,10 +10,13 @@ function Bomber(game, x, y) {
 	this.context = game.contexts.enemies.context;
 	this.canvas = game.contexts.enemies.canvas;
 			
-	this.images = game.images.ENEMIES["B17"];
+	this.images = game.images.ENEMIES.B17;
+	
+	//stats
+	this.stats = game.enemyStats.B17;
 	
 	//state
-	this.health = game.enemyStats["B17"].HEALTH;
+	this.health = this.stats.HEALTH;
 	this.disabled = false; //the plane is disabled and can't be controlled anymore
 	this.crashed = false; //the plane has crashed to the ground
 	
@@ -26,8 +29,8 @@ function Bomber(game, x, y) {
 	
 	//bombs
 	this.bombing = false;
-	this.bombCooldown = game.enemyStats["B17"].BOMB_COOLDOWN;
-	this.bombDelay = game.enemyStats["B17"].BOMB_DELAY;
+	this.bombCarpetSize = this.stats.BOMB_CARPET_SIZE;
+	this.bombCooldown = this.stats.BOMB_COOLDOWN;
 	this.bombTimer = 0;
 	this.bombs = [];
 
@@ -256,11 +259,13 @@ function Bomber(game, x, y) {
 		//if the bomber is inside the screen and is not disabled
 		if(this.x < this.canvas.width && this.disabled === false){
 			
-			//drop bomb only if the bomb is not on cooldown
-			if (this.bombing === false) {
-				var bombX = this.x + (this.currentImage.width / 2.2);
-				//var bombY = this.y - game.background.offset + (this.currentImage.height / 2);
-				var bombY = this.y + this.currentImage.height;
+			//get the number of bombs that haven't exploded yet
+			var activeBombs = _.filter(this.bombs, {exploded: false});
+						
+			//drop bomb only if the bomb is not on cooldown and if the number of dropped bombs doesn't exceed the max carpet size
+			if (this.bombing === false && activeBombs.length < this.bombCarpetSize) {
+				var bombX = this.x + (this.currentImage.width / 1.5);
+				var bombY = this.y + this.currentImage.height - 25;
 				var bombDx = this.dx + 1;
 				var bombDy = 2;
 				this.bombing = true;

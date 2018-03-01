@@ -8,10 +8,13 @@ function Plane(game) {
 	this.context = game.contexts.plane.context;
 	this.canvas = game.contexts.plane.canvas;
 
-	this.planeStats = game.planeStats[game.selectedPlane];
+	//stats
+	this.stats = game.planeStats[game.selectedPlane];
+	
+	//images
 	this.images = game.images.PLANES[game.selectedPlane];
 	
-	this.health = this.planeStats.HEALTH;
+	this.health = this.stats.HEALTH;
 	this.disabled = false; //the plane is disabled and can't be controlled anymore
 	this.crashed = false; //the plane has crashed to the ground
 
@@ -75,22 +78,6 @@ function Plane(game) {
 			}
 		}
 
-		//destroy bullets that are outside of the canvas or have hit the ground
-		this.bullets = _.filter(this.bullets, function (bullet) {
-			return bullet.x < self.canvas.width && bullet.y < self.canvas.height - 30;
-		});
-
-		//destroy bombs that are outside of the canvas
-		this.bombs = _.filter(this.bombs, function (bomb) {
-			return bomb.x > game.images.EXPLOSION[0].width * -1;
-		});
-
-		/*
-		//clear the entire canvas
-		//this.context.clearRect(this.x - 5, this.y - 5, this.currentImage.width + 5, this.currentImage.height + 5);
-		this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
-		*/
-
 		this.x = this.x + this.dx;
 		this.y = this.y + this.dy;
 
@@ -98,9 +85,9 @@ function Plane(game) {
 
 		//if the plane is ascending or descending rotate it
 		if (this.dy > 0) {
-			this.angle = this.dy * this.planeStats.DESCEND_SPEED;
+			this.angle = this.dy * this.stats.DESCEND_SPEED;
 		} else if (this.dy < 0) {
-			this.angle = this.dy * this.planeStats.CLIMB_SPEED;
+			this.angle = this.dy * this.stats.CLIMB_SPEED;
 		}
 		//otherwise reset the angle and draw it in it's normal state
 		else {
@@ -110,14 +97,24 @@ function Plane(game) {
 		//draw the plane
 		this.drawPlane();
 
-		//draw all plane bullets
-		this.bullets.forEach(function (bullet) {
-			bullet.draw();
+		//draw all plane bullets that are inside the canvas and haven't hit the ground
+		this.bullets = _.filter(this.bullets, function (bullet) {
+			if(bullet.x < self.canvas.width && bullet.y < self.canvas.height - 30){
+				bullet.draw();
+				return true;
+			}else{
+				return false;
+			}
 		});
 
-		//draw all plane bombs
-		this.bombs.forEach(function (bomb) {
-			bomb.draw();
+		//draw all plane bombs that are inside the canvas
+		this.bombs = _.filter(this.bombs, function (bomb) {
+			if(bomb.x > game.images.EXPLOSION[0].width * -1){
+				bomb.draw();
+				return true;
+			}else{
+				return false;
+			}
 		});
 
 	};
@@ -150,7 +147,7 @@ function Plane(game) {
 
 		//right
 		if (inputs.RIGHT) {
-			if (this.dx < this.planeStats.MAX_SPEED) {
+			if (this.dx < this.stats.MAX_SPEED) {
 				this.dx = this.dx + 0.1;
 			}
 		}
@@ -218,10 +215,10 @@ function Plane(game) {
 
 			//calculate the speed and angle if the plane is moving down or up
 			if (this.dy > 0) {
-				angle = this.dy * this.planeStats.DESCEND_SPEED;
+				angle = this.dy * this.stats.DESCEND_SPEED;
 				bulletDy = this.dy * (angle / 4.5);
 			} else if (this.dy < 0) {
-				angle = this.dy * this.planeStats.CLIMB_SPEED;
+				angle = this.dy * this.stats.CLIMB_SPEED;
 				bulletDy = this.dy * (angle / 4.5) * -1;
 			}
 			

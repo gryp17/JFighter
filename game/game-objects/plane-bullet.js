@@ -15,7 +15,7 @@ function PlaneBullet(game, x, y, dx, dy, angle) {
 	this.currentImage = game.images.PROJECTILES.BULLET;
 	
 	//stats
-	this.damage = game.plane.planeStats.DAMAGE;
+	this.damage = game.plane.stats.DAMAGE;
 	
 	//positioning and speed
 	this.dx = dx;
