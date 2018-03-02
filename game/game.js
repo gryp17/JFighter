@@ -16,8 +16,12 @@ function Game(images, planeStats, enemyStats, levelsData) {
 	this.selectedPlane;
 	this.selectedLevel;
 	this.inputs;
-
-	this.GAME_STATE = CONSTANTS.GAME_STATE.MAIN_MENU;
+	
+	//initialize the keyboard controls
+	this.keyboard = new Keyboard();
+	
+	//initialize the HUD object
+	this.HUD = new HUD(this, $("#HUD"));
 
 	//canvas/context objects
 	this.contexts = {
@@ -25,10 +29,7 @@ function Game(images, planeStats, enemyStats, levelsData) {
 		plane: new Context("plane-canvas"),
 		enemies: new Context("enemies-canvas")
 	};
-
-	//initialize the keyboard controls
-	this.keyboard = new Keyboard();
-
+	
 	/**
 	 * Starts the game
 	 * @param {String} selectedPlane
@@ -60,6 +61,9 @@ function Game(images, planeStats, enemyStats, levelsData) {
 
 		//listen for the keyboard events
 		this.keyboard.listen();
+		
+		//show the HUD
+		this.HUD.show();
 
 		//start the game loop
 		this.animate();
@@ -92,6 +96,9 @@ function Game(images, planeStats, enemyStats, levelsData) {
 				return false;
 			}
 		});
+		
+		//draw the HUD
+		self.HUD.draw();
 	};
 
 	/**
