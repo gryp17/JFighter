@@ -7,8 +7,9 @@
 function HUD(game, element) {	
 	this.visible = false;
 	
-	//the max hue value 
+	//color constants 
 	this.maxHue = 130;
+	this.maxPitchHue = 200;
 	
 	/**
 	 * Shows the HUD
@@ -93,7 +94,7 @@ function HUD(game, element) {
 	this.drawPitch = function () {
 		//increment the current pitch and the max pitch with + 3 because there can be negative (-3) pitch when climbing
 		var currentPitch = game.plane.dy + 3;
-		var maxPitch = 3 + 3;
+		var maxPitch = 6; //3 + 3
 		
 		var pitchBar = element.find(".pitch-bar");
 		var pitch = pitchBar.find(".current");
@@ -102,10 +103,15 @@ function HUD(game, element) {
 		var pixelsPerPitch = pitchBar.height() / maxPitch;
 		
 		//calculate the hue per pitch
-		var huePerPitch = this.maxHue / maxPitch;
+		var huePerPitch = this.maxPitchHue / maxPitch;
 		
-		//calculate the hue (green for higher pitch and red for lower pitch)
-		var hue = this.maxHue - (huePerPitch*currentPitch);
+		//calculate the hue (greenish for regular pitch and red for extremely high or low pitch)
+		var hue;
+		if(currentPitch >= maxPitch / 2){
+			hue = this.maxPitchHue - (huePerPitch*currentPitch);
+		}else{
+			hue = huePerPitch*currentPitch;
+		}
 		
 		pitch.css({
 			backgroundColor: "hsl("+hue+", 70%, 50%)",
