@@ -47,7 +47,7 @@ function HUD(game, element) {
 		var pixelsPerHP = healthBar.width() / maxHealth;
 		
 		//calculate the hue per HP
-		var huePerHP = maxHealth / 130;
+		var huePerHP = 130 / maxHealth;
 
 		health.css({
 			backgroundColor: "hsl("+huePerHP*currentHealth+", 70%, 50%)",
