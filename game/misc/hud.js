@@ -33,6 +33,7 @@ function HUD(game, element) {
 		if(this.visible){
 			this.drawHealth();
 			this.drawThrottle();
+			this.drawPitch();
 		}
 	};
 	
@@ -83,6 +84,32 @@ function HUD(game, element) {
 		throttle.css({
 			backgroundColor: "hsl("+hue+", 70%, 50%)",
 			width: currentThrottle * pixelsPerThrottle
+		});
+	};
+	
+	/**
+	 * Draws the plane pitch indicator
+	 */
+	this.drawPitch = function () {
+		//increment the current pitch and the max pitch with + 3 because there can be negative (-3) pitch when climbing
+		var currentPitch = game.plane.dy + 3;
+		var maxPitch = 3 + 3;
+		
+		var pitchBar = element.find(".pitch-bar");
+		var pitch = pitchBar.find(".current");
+		
+		//calculate the pixels per pitch
+		var pixelsPerPitch = pitchBar.height() / maxPitch;
+		
+		//calculate the hue per pitch
+		var huePerPitch = this.maxHue / maxPitch;
+		
+		//calculate the hue (green for higher pitch and red for lower pitch)
+		var hue = this.maxHue - (huePerPitch*currentPitch);
+		
+		pitch.css({
+			backgroundColor: "hsl("+hue+", 70%, 50%)",
+			height: pitchBar.height() - (currentPitch * pixelsPerPitch)
 		});
 	};
 }

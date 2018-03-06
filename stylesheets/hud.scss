@@ -30,4 +30,21 @@
 			opacity: 0.8;
 		}
 	}
+	
+	.pitch-bar{
+		float: left;
+		position: relative;
+		margin-left: 10px;
+		width: 30px;
+		height: 60px;
+		border: solid 1px gray;
+		
+		.current{
+			position: absolute;
+			bottom: 0px;
+			
+			width: 100%;
+			opacity: 0.8;
+		}
+	}
 }
