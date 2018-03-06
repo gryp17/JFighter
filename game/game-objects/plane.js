@@ -288,6 +288,7 @@ function Plane(game) {
 			this.dx = -2;
 			this.disabled = true;
 			this.crashed = true;
+			this.health = 0;
 		}
 	};
 
