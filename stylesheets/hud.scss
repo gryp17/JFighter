@@ -6,13 +6,11 @@
 	padding-top: 10px;
 	z-index: 999;
 	
-	//horizontal bars
-	.health-bar, .throttle-bar{
+	//common bar rules
+	.health-bar, .throttle-bar, .pitch-bar, .heat-bar{
 		float: left;
 		position: relative;
 		margin-left: 10px;
-		width: 140px;
-		height: 20px;
 		border: solid 1px gray;
 		text-align: center;
 		
@@ -32,26 +30,21 @@
 		}
 	}
 	
-	//vertical bar
+	.health-bar, .throttle-bar{
+		height: 20px;
+		width: 140px;
+	}
+	
 	.pitch-bar{
-		float: left;
-		position: relative;
-		margin-left: 10px;
 		width: 25px;
 		height: 80px;
-		border: solid 1px gray;
-		text-align: center;
 		
 		> span{
 			position: absolute;
 			height: 100%;
-			top: 0px;
 			left: 5px;
 			writing-mode: vertical-lr;
 			text-orientation: upright;
-			font-size: 13px;
-			color: #013243;
-			z-index: 1;
 		}
 		
 		.current{
@@ -59,7 +52,13 @@
 			bottom: 0px;
 			width: 100%;
 			border-top: solid 2px blue;
-			opacity: 0.8;
 		}
+	}
+	
+	.heat-bar{
+		position: absolute;
+		margin-top: 30px;
+		width: 292px;
+		height: 20px;
 	}
 }

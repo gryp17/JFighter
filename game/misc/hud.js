@@ -35,6 +35,7 @@ function HUD(game, element) {
 			this.drawHealth();
 			this.drawThrottle();
 			this.drawPitch();
+			this.drawHeat();
 		}
 	};
 	
@@ -59,7 +60,6 @@ function HUD(game, element) {
 			backgroundColor: "hsl("+huePerHP*currentHealth+", 70%, 50%)",
 			width: currentHealth * pixelsPerHP
 		});
-		
 	};
 	
 	/**
@@ -77,10 +77,10 @@ function HUD(game, element) {
 		var pixelsPerThrottle = throttleBar.width() / maxSpeed;
 		
 		//calculate the hue per throttle
-		var huePerThrottle = (this.maxHue / maxSpeed);
+		var huePerThrottle = this.maxHue / maxSpeed;
 		
 		//calculate the hue (green for low power and red for high power)
-		var hue = this.maxHue - (huePerThrottle*currentThrottle);
+		var hue = this.maxHue - (huePerThrottle * currentThrottle);
 		
 		throttle.css({
 			backgroundColor: "hsl("+hue+", 70%, 50%)",
@@ -117,5 +117,34 @@ function HUD(game, element) {
 			backgroundColor: "hsl("+hue+", 70%, 50%)",
 			height: pitchBar.height() - (currentPitch * pixelsPerPitch)
 		});
+	};
+	
+	this.drawHeat = function (){
+		//get the current plane heat and the max plane heat
+		var currentHeat = game.plane.machinegunHeat;
+		var maxHeat = game.planeStats[game.selectedPlane].MAX_MACHINEGUN_HEAT;
+
+		var heatBar = element.find(".heat-bar");
+		var span = heatBar.find("span");
+		var heat = heatBar.find(".current");
+
+		//show the correct text inside the bar
+		var text= game.plane.overheat ? "OVERHEAT" : "MACHINEGUN HEAT";
+
+		//calculate the pixels per heat
+		var pixelsPerHeat = heatBar.width() / maxHeat;
+		
+		//calculate the hue per heat
+		var huePerHeat = this.maxHue / maxHeat;
+		
+		///calculate the hue (green for low heat and red for high heat)
+		var hue = this.maxHue - (huePerHeat * currentHeat);
+
+		heat.css({
+			backgroundColor: "hsl("+hue+", 70%, 50%)",
+			width: currentHeat * pixelsPerHeat
+		});
+		
+		span.html(text);
 	};
 }

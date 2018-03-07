@@ -31,8 +31,10 @@ function Plane(game) {
 	
 	//bullets
 	this.shooting = false;
-	this.bulletsCooldown = 5;
-	this.bulletsTimer = 0;
+	this.overheat = false;
+	this.bulletDelay = 5;
+	this.bulletTimer = 0;
+	this.machinegunHeat = 0;
 	this.bullets = [];
 
 	//bomb
@@ -59,64 +61,27 @@ function Plane(game) {
 			this.disabled = true;
 			this.dy = 2;
 		}
-
-		//bullets cooldown
-		if (this.shooting === true) {
-			this.bulletsTimer++;
-			if (this.bulletsTimer > this.bulletsCooldown) {
-				this.shooting = false;
-				this.bulletsTimer = 0;
-			}
-		}
-
-		//bombs cooldown
-		if (this.bombing === true) {
-			this.bombTimer++;
-			if (this.bombTimer > this.bombCooldown) {
-				this.bombing = false;
-				this.bombTimer = 0;
-			}
-		}
-
+		
+		//checks/updates the machinegun/bullets cooldown and heat
+		this.updateMachinegunStatus();
+		
+		//checks/updates the bombs cooldown
+		this.updateBombsStatus();
+		
 		this.x = this.x + this.dx;
 		this.y = this.y + this.dy;
 
+		//check if the plane has reached the top, bottom, left or right end of the screen
 		this.checkForCollisions();
 
-		//if the plane is ascending or descending rotate it
-		if (this.dy > 0) {
-			this.angle = this.dy * this.stats.DESCEND_SPEED;
-		} else if (this.dy < 0) {
-			this.angle = this.dy * this.stats.CLIMB_SPEED;
-		}
-		//otherwise reset the angle and draw it in it's normal state
-		else {
-			this.angle = 0;
-		}
-		
 		//draw the plane
 		this.drawPlane();
 
-		//draw all plane bullets that are inside the canvas and haven't hit the ground
-		this.bullets = _.filter(this.bullets, function (bullet) {
-			if(bullet.x < self.canvas.width && bullet.y < self.canvas.height - 30){
-				bullet.draw();
-				return true;
-			}else{
-				return false;
-			}
-		});
-
-		//draw all plane bombs that are inside the canvas
-		this.bombs = _.filter(this.bombs, function (bomb) {
-			if(bomb.x > game.images.EXPLOSION[0].width * -1){
-				bomb.draw();
-				return true;
-			}else{
-				return false;
-			}
-		});
-
+		//draw the plane bullets
+		this.drawBullets();
+		
+		//draw the plane bombs
+		this.drawBombs();
 	};
 	
 	/**
@@ -179,6 +144,18 @@ function Plane(game) {
 	 * Draws the plane and rotates it based on the angle property
 	 */
 	this.drawPlane = function () {
+		
+		//if the plane is ascending or descending rotate it
+		if (this.dy > 0) {
+			this.angle = this.dy * this.stats.DESCEND_SPEED;
+		} else if (this.dy < 0) {
+			this.angle = this.dy * this.stats.CLIMB_SPEED;
+		}
+		//otherwise reset the angle and draw it in it's normal state
+		else {
+			this.angle = 0;
+		}
+		
 		//clear the entire canvas
 		//this.context.clearRect(this.x - 5, this.y - 5, this.currentImage.width + 5, this.currentImage.height + 5);
 		this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
@@ -197,14 +174,94 @@ function Plane(game) {
 		//and restore the co-ords to how they were when we began
 		this.context.restore();
 	};
+	
+	/**
+	 * Checks/updates the machinegun/bullet cooldown and heat status
+	 */
+	this.updateMachinegunStatus = function () {
+		//overheat the machinegun if it reaches the max heat
+		if (this.machinegunHeat === this.stats.MAX_MACHINEGUN_HEAT) {
+			this.overheat = true;
+		}
+
+		//reduce the machinegun heat slowly
+		if (this.machinegunHeat > 0) {
+			this.machinegunHeat--;
+
+			//if the machinegun is overheated and reaches 0 heat - it's ready for use again
+			if (this.overheat && this.machinegunHeat === 0) {
+				this.overheat = false;
+			}
+		}
+
+		//bullets cooldown
+		if (this.shooting === true) {
+			this.bulletTimer++;
+			
+			//increase the machinegun heat with each shot
+			this.machinegunHeat = this.machinegunHeat + this.stats.MACHINEGUN_HEATING;
+
+			//don't let the heat value go over the maximum
+			if (this.machinegunHeat > this.stats.MAX_MACHINEGUN_HEAT) {
+				this.machinegunHeat = this.stats.MAX_MACHINEGUN_HEAT;
+			}
+
+			if (this.bulletTimer > this.bulletDelay) {
+				this.shooting = false;
+				this.bulletTimer = 0;
+			}
+		}
+	};
+	
+	/**
+	 * Checks/updates the bombs cooldown status
+	 */
+	this.updateBombsStatus = function () {
+		//bombs cooldown
+		if (this.bombing === true) {
+			this.bombTimer++;
+			if (this.bombTimer > this.bombCooldown) {
+				this.bombing = false;
+				this.bombTimer = 0;
+			}
+		}
+	};
+	
+	/**
+	 * Draws all plane bullets that are inside the canvas and haven't hit the ground
+	 */
+	this.drawBullets = function (){
+		this.bullets = _.filter(this.bullets, function (bullet) {
+			if(bullet.x < self.canvas.width && bullet.y < self.canvas.height - 30){
+				bullet.draw();
+				return true;
+			}else{
+				return false;
+			}
+		});
+	};
+	
+	/**
+	 * Draws all plane bombs that are inside the canvas
+	 */
+	this.drawBombs = function (){
+		this.bombs = _.filter(this.bombs, function (bomb) {
+			if(bomb.x > game.images.EXPLOSION[0].width * -1){
+				bomb.draw();
+				return true;
+			}else{
+				return false;
+			}
+		});
+	};
 
 	/**
 	 * Makes the plane shoot bullets
 	 */
 	this.shoot = function () {
 
-		//shoot only if the bullets are not on cooldown
-		if (this.shooting === false) {
+		//shoot only if the bullets are not on cooldown and the machinegun is not overheated
+		if (this.shooting === false && this.overheat === false) {
 			//var bulletX = this.x + this.currentImage.width - 10;
 			var bulletX = this.x + (this.currentImage.width / 2);
 			var bulletY = this.y - game.background.offset + (this.currentImage.height / 2);
