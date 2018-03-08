@@ -243,7 +243,7 @@ function Plane(game) {
 				return true;
 			}else{
 				
-				//when the bullet hits the ground - show the impact (doesn't work...)
+				//when the bullet hits the ground - show the impact
 				if(bullet.y >= self.canvas.height - 30){
 					self.bulletImpacts.push(new BulletImpact(game, bullet.x + bullet.currentImage.width, bullet.y));
 				}
@@ -255,7 +255,6 @@ function Plane(game) {
 	
 	/**
 	 * Draws all plane bullet impacts that are still active
-	 * @returns {undefined}
 	 */
 	this.drawBulletImpacts = function (){
 		this.bulletImpacts = _.filter(this.bulletImpacts, function (bulletImpact){
