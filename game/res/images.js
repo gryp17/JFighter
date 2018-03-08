@@ -41,6 +41,11 @@ var GAME_IMAGES = {
 			"img/projectiles/bomber-bomb/2.png"
 		]
 	},
+	BULLET_IMPACT: [
+		"img/projectiles/bullet-impact/1.png",
+		"img/projectiles/bullet-impact/2.png",
+		"img/projectiles/bullet-impact/3.png"
+	],
 	EXPLOSION: [
 		"img/explosion/1.png",
 		"img/explosion/2.png",

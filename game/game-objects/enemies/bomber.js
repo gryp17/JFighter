@@ -225,6 +225,11 @@ function Bomber(game, x, y) {
 				self.dy = 2;
 			}
 			
+			//if the bomber was hit - add a bullet impact
+			if(miss === false){
+				game.plane.bulletImpacts.push(new BulletImpact(game, bullet.x + bullet.currentImage.width, bullet.y));
+			}
+			
 			return miss;
 		});
 		
