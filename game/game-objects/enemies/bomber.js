@@ -196,10 +196,9 @@ function Bomber(game, x, y) {
 			offset: game.background.offset
 		};
 		
-		//if a bullet hit's the bomber - filter it out
-		game.plane.bullets = _.filter(game.plane.bullets, function (bullet){
-			var miss = true;
-			
+		//check if a bullet has hit the bomber
+		game.plane.bullets.forEach(function (bullet) {
+
 			var bulletHitbox = {
 				x: bullet.x,
 				y: bullet.y,
@@ -207,30 +206,26 @@ function Bomber(game, x, y) {
 				height: bullet.currentImage.height,
 				offset: game.background.offset
 			};
+
+			var bodyHit = Utils.intersect(bulletHitbox, bomberBody);
+			var tailHit = Utils.intersect(bulletHitbox, bomberTail);
 			
-			//check if the bullet hits the body
-			if(Utils.intersect(bulletHitbox, bomberBody)){
-				self.health = self.health - bullet.damage;
-				miss = false;
+			//check if the bullet has hit the body or the tail of the bomber
+			if(bodyHit || tailHit){
+				//tail hits do double damage
+				var damage = tailHit ? bullet.damage * 2 : bullet.damage;
+				self.health = self.health - damage;
+				
+				//raise the impact flag that destroys the bullet and adds an impact animation
+				bullet.impact = true;				
 			}
-			//check if the bullet hits the bomber tail (in this case it does double damage!)
-			else if(Utils.intersect(bulletHitbox, bomberTail)){
-				self.health = self.health - bullet.damage * 2;
-				miss = false;
-			}
-			
+
 			//if the plane is too damaged disable it and crash it (only do this if it hasn't crashed yet)
 			if (self.health <= 0 && self.crashed === false) {
 				self.disabled = true;
 				self.dy = 2;
 			}
-			
-			//if the bomber was hit - add a bullet impact
-			if(miss === false){
-				game.plane.bulletImpacts.push(new BulletImpact(game, bullet.x + bullet.currentImage.width, bullet.y));
-			}
-			
-			return miss;
+
 		});
 		
 	};

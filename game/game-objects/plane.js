@@ -37,9 +37,6 @@ function Plane(game) {
 	this.machinegunHeat = 0;
 	this.bullets = [];
 	
-	//bullet impacts
-	this.bulletImpacts = [];
-
 	//bomb
 	this.bombing = false;
 	this.bombCooldown = 20;
@@ -82,10 +79,7 @@ function Plane(game) {
 
 		//draw the plane bullets
 		this.drawBullets();
-		
-		//draw the bullet impacts
-		this.drawBulletImpacts();
-		
+				
 		//draw the plane bombs
 		this.drawBombs();
 	};
@@ -234,39 +228,19 @@ function Plane(game) {
 	};
 	
 	/**
-	 * Draws all plane bullets that are inside the canvas and haven't hit the ground
+	 * Draws all plane bullets that are inside the canvas and haven't hit anything (ground, enemy...)
 	 */
 	this.drawBullets = function (){
 		this.bullets = _.filter(this.bullets, function (bullet) {
-			if(bullet.x < self.canvas.width && bullet.y < self.canvas.height - 30){
+			if (bullet.active === false) {
+				return false;
+			}else{
 				bullet.draw();
 				return true;
-			}else{
-				
-				//when the bullet hits the ground - show the impact
-				if(bullet.y >= self.canvas.height - 30){
-					self.bulletImpacts.push(new BulletImpact(game, bullet.x + bullet.currentImage.width, bullet.y));
-				}
-				
-				return false;
 			}
 		});
 	};
-	
-	/**
-	 * Draws all plane bullet impacts that are still active
-	 */
-	this.drawBulletImpacts = function (){
-		this.bulletImpacts = _.filter(this.bulletImpacts, function (bulletImpact){
-			if(bulletImpact.active){
-				bulletImpact.draw();
-				return true;
-			}else{
-				return false;
-			}
-		});
-	};
-	
+		
 	/**
 	 * Draws all plane bombs that are inside the canvas
 	 */

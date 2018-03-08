@@ -58,6 +58,7 @@ function Game(images, planeStats, enemyStats, levelsData) {
 			//create new dynamic Object (this[enemy.objectType]) passing the arguments
 			return new (Function.prototype.bind.apply(this[enemy.objectType], arguments));
 		});
+		this.bulletImpacts = [];
 
 		//listen for the keyboard events
 		this.keyboard.listen();
@@ -91,6 +92,16 @@ function Game(images, planeStats, enemyStats, levelsData) {
 		self.enemies = _.filter(self.enemies, function (enemy){
 			if(enemy.x > -800){
 				enemy.draw();
+				return true;
+			}else{
+				return false;
+			}
+		});
+		
+		//draw all bullet impacts that are still active
+		self.bulletImpacts = _.filter(self.bulletImpacts, function (bulletImpact){
+			if(bulletImpact.active){
+				bulletImpact.draw();
 				return true;
 			}else{
 				return false;

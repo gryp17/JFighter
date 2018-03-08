@@ -14,6 +14,12 @@ function PlaneBullet(game, x, y, dx, dy, angle) {
 		
 	this.currentImage = game.images.PROJECTILES.BULLET;
 	
+	//flag that indicates if the bullet has hit something
+	this.impact = false;
+	
+	//flag that indicates that the bullet is still active/flying/inside the screen
+	this.active = true;
+	
 	//stats
 	this.damage = game.plane.stats.DAMAGE;
 	
@@ -30,6 +36,23 @@ function PlaneBullet(game, x, y, dx, dy, angle) {
 	this.draw = function () {
 		this.x = this.x + this.dx;
 		this.y = this.y + this.dy;
+
+		//check if the bullet has hit the ground
+		if(this.y >= this.canvas.height - 30){
+			this.impact = true;
+			this.active = false;
+		}
+		
+		//check if the bullet has left the canvas
+		if(this.x > this.canvas.width){
+			this.active = false;
+		}
+		
+		//if the impact flag is raised - add a bullet impact object
+		if(this.impact){
+			game.bulletImpacts.push(new BulletImpact(game, this.x + this.currentImage.width, this.y));
+			this.active = false;
+		}
 
 		if (this.angle !== 0) {
 			this.rotateBullet(this.angle);
