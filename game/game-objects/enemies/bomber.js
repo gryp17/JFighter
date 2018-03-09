@@ -46,6 +46,9 @@ function Bomber(game, x, y) {
 		//update the "currentImage" with the correct sprite image
 		this.updateSprite();
 		
+		this.x = this.x + this.dx;
+		this.y = this.y + this.dy;
+		
 		//check if the bomber has crashed into the ground
 		this.checkForGroundCollision();
 		
@@ -62,38 +65,28 @@ function Bomber(game, x, y) {
 		
 		//drop bombs periodically
 		this.dropBombs();
-				
-		//rotate the bomber if it's ascending or descending
-		if (this.dy > 0) {
-			this.angle = this.dy * -1;
-		} else if (this.dy < 0) {
-			this.angle = this.dy * -1;
-		}else{
-			this.angle = 0;
-		}
-		
-		this.x = this.x + this.dx;
-		this.y = this.y + this.dy;
-		
+								
 		//draw the bomber
 		this.drawBomber();
 		
-		//draw the bombs that are still inside the canvas
-		this.bombs = _.filter(this.bombs, function (bomb) {
-			if(bomb.x > game.images.EXPLOSION[0].width * -1){
-				bomb.draw();
-				return true;
-			}else{
-				return false;
-			}
-		});
-		
+		//draw the bombs that are still active
+		this.drawBombs();
 	};
 	
 	/**
 	 * Helper function that draws the bomber and rotates it depending on the angle property
 	 */
 	this.drawBomber = function () {
+		
+		//rotate the bomber if it's ascending or descending
+		if (this.dy > 0) {
+			this.angle = this.dy * -1;
+		} else if (this.dy < 0) {
+			this.angle = this.dy * -1;
+		} else {
+			this.angle = 0;
+		}
+		
 		this.context.save();
 
 		//move to the middle of where we want to draw our image
@@ -107,6 +100,20 @@ function Bomber(game, x, y) {
 		
 		//and restore the co-ords to how they were when we began
 		this.context.restore();
+	};
+	
+	/**
+	 * Draws the bombs that are still active
+	 */
+	this.drawBombs = function () {
+		this.bombs = _.filter(this.bombs, function (bomb) {
+			if(bomb.active){
+				bomb.draw();
+				return true;
+			}else{
+				return false;
+			}
+		});
 	};
 	
 	/**

@@ -59,6 +59,7 @@ function Game(images, planeStats, enemyStats, levelsData) {
 			return new (Function.prototype.bind.apply(this[enemy.objectType], arguments));
 		});
 		this.bulletImpacts = [];
+		this.explosions = [];
 
 		//listen for the keyboard events
 		this.keyboard.listen();
@@ -102,6 +103,16 @@ function Game(images, planeStats, enemyStats, levelsData) {
 		self.bulletImpacts = _.filter(self.bulletImpacts, function (bulletImpact){
 			if(bulletImpact.active){
 				bulletImpact.draw();
+				return true;
+			}else{
+				return false;
+			}
+		});
+		
+		//draw all explosions that are still active
+		self.explosions = _.filter(self.explosions, function (explosion){
+			if(explosion.active){
+				explosion.draw();
 				return true;
 			}else{
 				return false;

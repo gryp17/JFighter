@@ -246,7 +246,7 @@ function Plane(game) {
 	 */
 	this.drawBombs = function (){
 		this.bombs = _.filter(this.bombs, function (bomb) {
-			if(bomb.x > game.images.EXPLOSION[0].width * -1){
+			if(bomb.active){
 				bomb.draw();
 				return true;
 			}else{
