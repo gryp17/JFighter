@@ -267,7 +267,7 @@ function Bomber(game, x, y) {
 		if(this.x < this.canvas.width && this.disabled === false){
 			
 			//get the number of bombs that haven't exploded yet
-			var activeBombs = _.filter(this.bombs, {exploded: false});
+			var activeBombs = _.filter(this.bombs, {active: true});
 						
 			//drop bomb only if the bomb is not on cooldown and if the number of dropped bombs doesn't exceed the max carpet size
 			if (this.bombing === false && activeBombs.length < this.bombCarpetSize) {
