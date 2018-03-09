@@ -88,5 +88,8 @@ var GAME_IMAGES = {
 			],
 			CRASHED: "img/enemies/b17/3.png"
 		}
+	},
+	HUD: {
+		BOMB_ICON: "img/hud/bomb_icon.png"
 	}
 };
