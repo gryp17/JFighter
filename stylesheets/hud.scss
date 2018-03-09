@@ -62,13 +62,22 @@
 		height: 20px;
 	}
 	
-	.bomb-ready{
+	.loaded-bombs{
 		position: absolute;
 		margin-top: 60px;
 		margin-left: 10px;
 		
 		img{
 			width: 36px;
+			opacity: 0.4;
+			
+			&:not(:first-child){
+				margin-left: 10px;
+			}
+			
+			&.loaded{
+				opacity: 1;
+			}
 		}
 	}
 }

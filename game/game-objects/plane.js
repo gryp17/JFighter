@@ -39,8 +39,11 @@ function Plane(game) {
 	
 	//bomb
 	this.bombing = false;
-	this.bombCooldown = 20;
+	this.bombCooldown = this.stats.BOMB_COOLDOWN;
+	this.bombDelay = this.stats.BOMB_DELAY;
+	this.loadedBombs = this.stats.MAX_BOMBS;
 	this.bombTimer = 0;
+	this.delayTimer = 0;
 	this.bombs = [];
 
 	/**
@@ -217,14 +220,25 @@ function Plane(game) {
 	 * Checks/updates the bombs cooldown status
 	 */
 	this.updateBombsStatus = function () {
-		//bombs cooldown
-		if (this.bombing === true) {
+		
+		//if at least one bomb is on cooldown
+		if(this.loadedBombs < this.stats.MAX_BOMBS){
 			this.bombTimer++;
-			if (this.bombTimer > this.bombCooldown) {
+			this.delayTimer++;
+			
+			//reset the bomb delay timer
+			if(this.delayTimer > this.bombDelay){
 				this.bombing = false;
+				this.delayTimer = 0;
+			}
+			
+			//increment the loaded bombs and reset the bomb cooldown timer
+			if (this.bombTimer > this.bombCooldown) {
+				this.loadedBombs++;
 				this.bombTimer = 0;
 			}
 		}
+		
 	};
 	
 	/**
@@ -304,14 +318,18 @@ function Plane(game) {
 	 * Makes the plane drop bombs
 	 */
 	this.dropBomb = function () {
-		//drop bomb only if the bomb is not on cooldown
-		if (this.bombing === false) {
+		//drop the bomb only if there are loaded bombs and the bomb delay is not active
+		if (this.loadedBombs > 0 && this.bombing === false) {
+			
+			//start the bomb delay and decrement the loadedBombs counter
+			this.bombing = true;
+			this.loadedBombs--;
+			
 			var bombX = this.x + (this.currentImage.width / 1.3);
 			var bombY = this.y - game.background.offset + (this.currentImage.height / 2);
 			var bombDx = this.dx - 2;
 			var bombDy = (this.dy > 0 ? this.dy : 0) + 3;
-			this.bombing = true;
-
+			
 			this.bombs.push(new PlaneBomb(game, bombX, bombY, bombDx, bombDy));
 		}
 	};

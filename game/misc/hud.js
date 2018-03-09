@@ -36,6 +36,7 @@ function HUD(game, element) {
 			this.drawThrottle();
 			this.drawPitch();
 			this.drawHeat();
+			this.drawLoadedBombs();
 		}
 	};
 	
@@ -119,6 +120,9 @@ function HUD(game, element) {
 		});
 	};
 	
+	/**
+	 * Draws the plane machine gun heat indicator
+	 */
 	this.drawHeat = function (){
 		//get the current plane heat and the max plane heat
 		var currentHeat = game.plane.machinegunHeat;
@@ -146,5 +150,26 @@ function HUD(game, element) {
 		});
 		
 		span.html(text);
+	};
+	
+	/**
+	 * Draws the loaded bombs indicator
+	 */
+	this.drawLoadedBombs = function (){		
+		var currentBombs = game.plane.loadedBombs;
+		var maxLoadedBombs = game.plane.stats.MAX_BOMBS;
+		
+		var loadedBombsIndicator = element.find(".loaded-bombs");
+		
+		//generate the correct number of bombs with their classes
+		loadedBombsIndicator.empty();
+		for(var i = 0; i < maxLoadedBombs; i++){
+			var bomb = $("<img>", {
+				src: "img/hud/bomb_icon.png",
+				class: i + 1 <= currentBombs ? "loaded" : ""
+			});
+			
+			loadedBombsIndicator.append(bomb);
+		}
 	};
 }
