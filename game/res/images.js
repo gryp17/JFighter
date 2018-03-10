@@ -89,6 +89,19 @@ var GAME_IMAGES = {
 			CRASHED: "img/enemies/b17/3.png"
 		}
 	},
+	CIVILIAN: {
+		SPRITE: [
+			"img/civilian/1.png",
+			"img/civilian/2.png",
+			"img/civilian/3.png",
+			"img/civilian/4.png",
+			"img/civilian/5.png",
+			"img/civilian/6.png",
+			"img/civilian/7.png",
+			"img/civilian/8.png"
+		],
+		DEAD: "img/civilian/9.png"
+	},
 	HUD: {
 		BOMB_ICON: "img/hud/bomb_icon.png"
 	}

@@ -1,6 +1,29 @@
 var LEVELS_DATA = {
 	GRASSLAND: {
 		WEATHER: "normal",
+		CIVILIANS: [
+			{
+				objectType: "Civilian",
+				arguments: {
+					x: 1000,
+					y: 550
+				}
+			},
+			{
+				objectType: "Civilian",
+				arguments: {
+					x: 1050,
+					y: 550
+				}
+			},
+			{
+				objectType: "Civilian",
+				arguments: {
+					x: 1110,
+					y: 550
+				}
+			}
+		],
 		ENEMIES: [
 			{
 				objectType: "Bomber",

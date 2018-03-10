@@ -58,6 +58,20 @@ function Game(images, planeStats, enemyStats, levelsData) {
 			//create new dynamic Object (this[enemy.objectType]) passing the arguments
 			return new (Function.prototype.bind.apply(this[enemy.objectType], arguments));
 		});
+		this.civilians = this.levelsData[selectedLevel].CIVILIANS.map(function (civilian) {
+
+			//default arguments for each enemy object type
+			var arguments = [null, self];
+
+			//additional arguments (x, y...)
+			var objectArguments = Object.values(civilian.arguments);
+
+			//merge all arguments
+			arguments = arguments.concat(objectArguments);
+
+			//create new dynamic Object (this[enemy.objectType]) passing the arguments
+			return new (Function.prototype.bind.apply(this[civilian.objectType], arguments));
+		});
 		this.bulletImpacts = [];
 		this.explosions = [];
 
@@ -97,6 +111,10 @@ function Game(images, planeStats, enemyStats, levelsData) {
 			}else{
 				return false;
 			}
+		});
+		
+		self.civilians.forEach(function (civilian){
+			civilian.draw();
 		});
 		
 		//draw all bullet impacts that are still active
