@@ -50,6 +50,14 @@ function PlaneBullet(game, x, y, dx, dy, angle) {
 	};
 
 	/**
+	 * Sets the bullet as inactive and adds a bullet impact object in it's place
+	 */
+	this.explode = function (){
+		this.active = false;
+		game.bulletImpacts.push(new BulletImpact(game, this.x + this.currentImage.width, this.y));
+	};
+
+	/**
 	 * Returns the bullet hitbox
 	 * @returns {Object}
 	 */

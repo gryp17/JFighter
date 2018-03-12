@@ -4,12 +4,13 @@
  * @returns {CollisionsManager}
  */
 function CollisionsManager(game) {
+	var self = this;
 
 	/**
 	 * Handles the collisions for all game objects
 	 */
 	this.handleCollisions = function () {
-		
+
 		//separate the bombers from the list of enemies
 		var bombers = _.filter(game.enemies, function (enemy) {
 			return enemy.constructor === Bomber;
@@ -17,13 +18,6 @@ function CollisionsManager(game) {
 
 		//handle the plane ground and canvas collisions
 		this.handlePlane();
-		
-		//handle the plane bullets ground and canvas collisions
-		this.handlePlaneBullets();
-		
-		//TODO:
-		//handlePlaneBombs...
-		//handleBomberBombs...
 
 		//handle all bombers collisions
 		this.handleBombers(bombers);
@@ -62,29 +56,70 @@ function CollisionsManager(game) {
 			plane.crashed = true;
 			plane.health = 0;
 		}
+		
+		//handle the plane bullets ground and canvas collisions
+		this.handlePlaneBullets();
+
+		//handle the plane bombs ground and canvas collisions
+		this.handlePlaneBombs();
 	};
-	
+
 	/**
 	 * Handles all plane bullets ground and canvas collisions
 	 */
-	this.handlePlaneBullets = function (){
-		
+	this.handlePlaneBullets = function () {
+
 		//for each plane bullet...
-		game.plane.bullets.forEach(function (bullet){
-			
+		game.plane.bullets.forEach(function (bullet) {
+
 			//check if the bullet has hit the ground
-			if(bullet.y >= bullet.canvas.height - 30){
-				//remove the bullet and add a bullet impact in it's place
-				bullet.active = false;
-				game.bulletImpacts.push(new BulletImpact(game, bullet.x + bullet.currentImage.width, bullet.y));
+			if (bullet.y >= bullet.canvas.height - 30) {
+				//make the bullet explode
+				bullet.explode();
 			}
 
 			//check if the bullet has left the canvas
-			if(bullet.x > bullet.canvas.width){
+			if (bullet.x > bullet.canvas.width) {
 				bullet.active = false;
 			}
 		});
-		
+
+	};
+
+	/**
+	 * Handles all plane bombs ground and canvas collisions
+	 */
+	this.handlePlaneBombs = function () {
+		//for each plane bomb...
+		game.plane.bombs.forEach(function (bomb) {
+			//check if the bomb has left the screen
+			if (bomb.x + bomb.currentImage.width < 0) {
+				bomb.active = false;
+			}
+
+			//make the bomb explode when it reaches the ground
+			if (bomb.y + bomb.currentImage.height > bomb.canvas.height - 15) {
+				bomb.explode();
+			}
+		});
+	};
+
+	/**
+	 * Handles all bomber bombs ground and canvas collisions
+	 * @param {Bomber} bomber
+	 */
+	this.handleBomberBombs = function (bomber) {
+		bomber.bombs.forEach(function (bomb) {
+			//check if the bomb has left the screen
+			if (bomb.x + bomb.currentImage.width < 0) {
+				bomb.active = false;
+			}
+
+			//make the bomb explode when it reaches the ground
+			if (bomb.y + bomb.currentImage.height > bomb.canvas.height - 15) {
+				bomb.explode();
+			}
+		});
 	};
 
 	/**
@@ -97,6 +132,9 @@ function CollisionsManager(game) {
 		//for each bomber...
 		bombers.forEach(function (bomber) {
 			var bomberHitboxes = bomber.getHitbox();
+
+			//handle all bombs ground and canvas collisions
+			self.handleBomberBombs(bomber);
 
 			//when the bomber touches the ground raise the disabled and crashed flags and "anchor" it to the ground
 			if (bomber.y + bomber.currentImage.height > bomber.canvas.height - 40) {
@@ -112,7 +150,7 @@ function CollisionsManager(game) {
 				bomber.health--;
 				game.plane.health = game.plane.health - 2;
 			}
-			
+
 			//check if any of the plane bullets has hit the bomber
 			game.plane.bullets.forEach(function (bullet) {
 
@@ -125,13 +163,12 @@ function CollisionsManager(game) {
 					var damage = tailHit ? bullet.damage * 2 : bullet.damage;
 					bomber.health = bomber.health - damage;
 
-					//remove the bullet and add a bullet impact in it's place
-					bullet.active = false;
-					game.bulletImpacts.push(new BulletImpact(game, bullet.x + bullet.currentImage.width, bullet.y));
+					//make the bullet explode
+					bullet.explode();
 				}
 
 			});
-			
+
 		});
 
 	};

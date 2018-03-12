@@ -37,16 +37,6 @@ function PlaneBomb(game, x, y, dx, dy) {
 		this.x = this.x + this.dx;
 		this.y = this.y + this.dy;
 
-		//check if the bomb has left the screen
-		if(this.x + this.currentImage.width < 0){
-			this.active = false;
-		}
-
-		//make the bomb explode when it reaches the ground
-		if (this.y + this.currentImage.height > this.canvas.height - 15) {
-			this.explode();
-		}
-
 		this.context.drawImage(this.currentImage, this.x, this.y + game.background.offset);
 	};
 	
