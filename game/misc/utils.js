@@ -1,7 +1,8 @@
 /**
- * Utils class containing static functions
+ * Utils class containing helper functions
  */
 var Utils = new function () {
+	var self = this;
 	
 	/**
 	 * Checks if the two rectangles intersect
@@ -27,6 +28,36 @@ var Utils = new function () {
 		return result;
 	};
 	
+	/**
+	 * Checks if the provided hitboxes collide
+	 * @param {Object|Array} hitboxA
+	 * @param {Object|Array} hitboxB
+	 * @returns {Boolean}
+	 */
+	this.collidesWith = function (hitboxA, hitboxB){
+		var result = false;
+		
+		//convert both hitboxes to arrays in case they are not arrays (some game objects might have more than 1 hitbox!)
+		if(hitboxA.constructor !== Array){
+			hitboxA = [hitboxA];
+		}
+		
+		if(hitboxB.constructor !== Array){
+			hitboxB = [hitboxB];
+		}
+		
+		//check if the hitboxes collide
+		hitboxA.forEach(function (a){
+			hitboxB.forEach(function (b){
+				if(self.intersect(a, b)){
+					result = true;
+				}
+			});
+		});
+		
+		return result;
+	};
+		
 	/**
 	 * Private function that calculates the top, right, bottom and left margins of the object
 	 * @param {Object} object

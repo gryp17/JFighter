@@ -27,7 +27,7 @@ function Plane(game) {
 
 	//sprite variables
 	this.sprite = new Sprite(this.images.SPRITE, 2, true);
-	this.currentImage;
+	this.currentImage = this.images.SPRITE[0];
 	
 	//bullets
 	this.shooting = false;
@@ -51,6 +51,12 @@ function Plane(game) {
 	 */
 	this.draw = function () {
 
+		//if the plane is too damaged disable it and crash it (only do this if it hasn't crashed yet)
+		if (this.health <= 0 && this.crashed === false) {
+			this.disabled = true;
+			this.dy = 2;
+		}
+
 		//respond to the controls only if the plane is not disabled
 		if (this.disabled === false) {
 			this.processInputs(game.inputs);
@@ -58,13 +64,7 @@ function Plane(game) {
 		
 		//update the "currentImage" with the correct sprite image
 		this.updateSprite();
-		
-		//if the plane is too damaged disable it and crash it (only do this if it hasn't crashed yet)
-		if (this.health <= 0 && this.crashed === false) {
-			this.disabled = true;
-			this.dy = 2;
-		}
-		
+				
 		//checks/updates the machinegun/bullets cooldown and heat
 		this.updateMachinegunStatus();
 		
@@ -73,9 +73,6 @@ function Plane(game) {
 		
 		this.x = this.x + this.dx;
 		this.y = this.y + this.dy;
-
-		//check if the plane has reached the top, bottom, left or right end of the screen
-		this.checkForCollisions();
 
 		//draw the plane
 		this.drawPlane();
@@ -335,36 +332,17 @@ function Plane(game) {
 	};
 
 	/**
-	 * Checks if the plane has reached the top, bottom, left or right end of the screen
+	 * Returns the plane hitbox
+	 * @returns {Object}
 	 */
-	this.checkForCollisions = function () {
-		//top end of screen
-		if (this.y < 0) {
-			this.y = 0;
-			this.dy = 0;
-		}
-
-		//left end of screen
-		if (this.x < 0 && this.crashed === false) {
-			this.x = 0;
-			this.dx = 0;
-		}
-
-		//right end of screen
-		if (this.x + this.currentImage.width > this.canvas.width) {
-			this.x = this.canvas.width - this.currentImage.width;
-			this.dx = -1;
-		}
-
-		//bottom end of screen
-		if (this.y + this.currentImage.height > this.canvas.height - 40) {
-			this.y = this.canvas.height - this.currentImage.height - 40;
-			this.dy = 0;
-			this.dx = -2;
-			this.disabled = true;
-			this.crashed = true;
-			this.health = 0;
-		}
+	this.getHitbox = function (){
+		return {
+			x: this.x,
+			y: this.y,
+			width: this.currentImage.width,
+			height: this.currentImage.height,
+			offset: 0
+		};
 	};
 
 }

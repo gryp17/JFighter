@@ -6,7 +6,6 @@
  * @returns {Bomber}
  */
 function Bomber(game, x, y) {
-	var self = this;
 	this.context = game.contexts.enemies.context;
 	this.canvas = game.contexts.enemies.canvas;
 			
@@ -36,33 +35,30 @@ function Bomber(game, x, y) {
 
 	//sprite variables
 	this.sprite = new Sprite(this.images.SPRITE, 2, true);
-	this.currentImage;
+	this.currentImage = this.images.SPRITE[0];
 
 	/**
 	 * Draws the plane object
 	 */
 	this.draw = function () {
 		
+		//if the bomber is too damaged disable it and crash it (only do this if it hasn't crashed yet)
+		if (this.health <= 0 && this.crashed === false) {
+			this.disabled = true;
+			this.dy = 2;
+		}
+		
 		//update the "currentImage" with the correct sprite image
 		this.updateSprite();
 		
 		this.x = this.x + this.dx;
 		this.y = this.y + this.dy;
-		
-		//check if the bomber has crashed into the ground
-		this.checkForGroundCollision();
-		
+				
 		if(this.disabled === false){
 			//always fly higher than the fighter plane
 			this.avoidFighters();
 		}
-		
-		//check if the plane and the bomber have collided
-		this.checkForFighterCollisions();
-		
-		//check if any of the plane bullets have hit the bomber
-		this.checkForBulletsDamage();
-		
+				
 		//drop bombs periodically
 		this.dropBombs();
 								
@@ -127,34 +123,12 @@ function Bomber(game, x, y) {
 			this.currentImage = this.sprite.move();
 		}
 	};
-	
-	/**
-	 * Checks if the bomber has crashed into the ground
-	 */
-	this.checkForGroundCollision = function (){
-		//when the bomber touches the ground raise the disabled and crashed flags and "anchor" it to the ground
-		if (this.y + this.currentImage.height > this.canvas.height - 40) {
-			this.y = this.canvas.height - this.currentImage.height - 40;
-			this.dy = 0;
-			this.dx = -2;
-			this.disabled = true;
-			this.crashed = true;
-		}
-	};
-	
-	/**
-	 * Checks if the plane has collided with the bomber
-	 */
-	this.checkForFighterCollisions = function (){
 		
-		var planeHitbox = {
-			x: game.plane.x,
-			y: game.plane.y,
-			width: game.plane.currentImage.width,
-			height: game.plane.currentImage.height,
-			offset: 0
-		};
-		
+	/**
+	 * Returns the bomber hitboxes
+	 * @returns {Array}
+	 */
+	this.getHitbox = function (){
 		//the bomber has 2 hitboxes - body and tail
 		var bomberBody = {
 			x: this.x,
@@ -172,69 +146,10 @@ function Bomber(game, x, y) {
 			offset: game.background.offset
 		};
 		
-		//if the plane and the bomber are colliding - reduce their health
-		if(Utils.intersect(planeHitbox, bomberBody) || Utils.intersect(planeHitbox, bomberTail)){
-			this.health--;
-			game.plane.health = game.plane.health - 2;
-		}
-		
-	};
-
-	
-	/**
-	 * Checks if the plane bullets have hit the bomber
-	 */
-	this.checkForBulletsDamage = function (){
-		
-		//the bomber has 2 hitboxes - body and tail
-		var bomberBody = {
-			x: this.x,
-			y: this.y + this.currentImage.height / 2,
-			width: this.currentImage.width,
-			height: this.currentImage.height / 2,
-			offset: game.background.offset
-		};
-		
-		var bomberTail = {
-			x: this.x + 270,
-			y: this.y,
-			width: 55,
-			height: this.currentImage.height / 2,
-			offset: game.background.offset
-		};
-		
-		//check if a bullet has hit the bomber
-		game.plane.bullets.forEach(function (bullet) {
-
-			var bulletHitbox = {
-				x: bullet.x,
-				y: bullet.y,
-				width: bullet.currentImage.width,
-				height: bullet.currentImage.height,
-				offset: game.background.offset
-			};
-
-			var bodyHit = Utils.intersect(bulletHitbox, bomberBody);
-			var tailHit = Utils.intersect(bulletHitbox, bomberTail);
-			
-			//check if the bullet has hit the body or the tail of the bomber
-			if(bodyHit || tailHit){
-				//tail hits do double damage
-				var damage = tailHit ? bullet.damage * 2 : bullet.damage;
-				self.health = self.health - damage;
-				
-				//raise the impact flag that destroys the bullet and adds an impact animation
-				bullet.impact = true;				
-			}
-
-			//if the plane is too damaged disable it and crash it (only do this if it hasn't crashed yet)
-			if (self.health <= 0 && self.crashed === false) {
-				self.disabled = true;
-				self.dy = 2;
-			}
-
-		});
-		
+		return [
+			bomberBody,
+			bomberTail
+		];
 	};
 	
 	/**

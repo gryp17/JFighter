@@ -20,6 +20,9 @@ function Game(images, planeStats, enemyStats, levelsData) {
 	//initialize the keyboard controls
 	this.keyboard = new Keyboard();
 	
+	//initialize the collisions manager
+	this.collisionsManager = new CollisionsManager(this);
+	
 	//initialize the HUD object
 	this.HUD = new HUD(this, $("#HUD"));
 
@@ -44,9 +47,12 @@ function Game(images, planeStats, enemyStats, levelsData) {
 		//game objects
 		this.background = new Background(this);
 		this.plane = new Plane(this);
+		this.bulletImpacts = [];
+		this.explosions = [];
+		
 		this.enemies = this.levelsData[selectedLevel].ENEMIES.map(function (enemy) {
 
-			//default arguments for each enemy object type
+			//default arguments for each object type
 			var arguments = [null, self];
 
 			//additional arguments (x, y...)
@@ -58,9 +64,10 @@ function Game(images, planeStats, enemyStats, levelsData) {
 			//create new dynamic Object (this[enemy.objectType]) passing the arguments
 			return new (Function.prototype.bind.apply(this[enemy.objectType], arguments));
 		});
+		
 		this.civilians = this.levelsData[selectedLevel].CIVILIANS.map(function (civilian) {
 
-			//default arguments for each enemy object type
+			//default arguments for each object type
 			var arguments = [null, self];
 
 			//additional arguments (x, y...)
@@ -69,12 +76,10 @@ function Game(images, planeStats, enemyStats, levelsData) {
 			//merge all arguments
 			arguments = arguments.concat(objectArguments);
 
-			//create new dynamic Object (this[enemy.objectType]) passing the arguments
+			//create new dynamic Object (this[civilian.objectType]) passing the arguments
 			return new (Function.prototype.bind.apply(this[civilian.objectType], arguments));
 		});
-		this.bulletImpacts = [];
-		this.explosions = [];
-
+		
 		//listen for the keyboard events
 		this.keyboard.listen();
 		
@@ -93,6 +98,9 @@ function Game(images, planeStats, enemyStats, levelsData) {
 
 		//get the current inputs status 
 		self.inputs = self.keyboard.getInputs();
+
+		//handle all game collisions
+		self.collisionsManager.handleCollisions();
 
 		//draw the background
 		self.background.draw();
@@ -140,7 +148,7 @@ function Game(images, planeStats, enemyStats, levelsData) {
 		//draw the HUD
 		self.HUD.draw();
 	};
-
+	
 	/**
 	 * requestAnim shim layer by Paul Irish
 	 * Finds the first API that works to optimize the animation loop,

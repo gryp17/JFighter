@@ -83,5 +83,19 @@ function PlaneBullet(game, x, y, dx, dy, angle) {
 		//and restore the co-ords to how they were when we began
 		this.context.restore();
 	};
+	
+	/**
+	 * Returns the bullet hitbox
+	 * @returns {Object}
+	 */
+	this.getHitbox = function () {
+		return {
+			x: this.x,
+			y: this.y,
+			width: this.currentImage.width,
+			height: this.currentImage.height,
+			offset: game.background.offset
+		};
+	};
 
 }
