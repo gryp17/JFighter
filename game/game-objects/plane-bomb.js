@@ -43,7 +43,7 @@ function PlaneBomb(game, x, y, dx, dy) {
 		}
 
 		//make the bomb explode when it reaches the ground
-		if (this.y > this.canvas.height - 30) {
+		if (this.y + this.currentImage.height > this.canvas.height - 15) {
 			this.explode();
 		}
 
@@ -58,7 +58,7 @@ function PlaneBomb(game, x, y, dx, dy) {
 
 		//calculate the explosion coordinates
 		var explosionX = this.x - this.explosionImages[0].width / 3;
-		var explosionY = this.y - this.explosionImages[0].height + 10;
+		var explosionY = this.y + this.currentImage.height - this.explosionImages[0].height;
 
 		game.explosions.push(new Explosion(game, explosionX, explosionY, -2, 0, true));
 	};
