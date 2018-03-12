@@ -15,10 +15,17 @@ function CollisionsManager(game) {
 			return enemy.constructor === Bomber;
 		});
 
-		//handle the plane collisions
+		//handle the plane ground and canvas collisions
 		this.handlePlane();
+		
+		//handle the plane bullets ground and canvas collisions
+		this.handlePlaneBullets();
+		
+		//TODO:
+		//handlePlaneBombs...
+		//handleBomberBombs...
 
-		//handle the bombers collisions
+		//handle all bombers collisions
 		this.handleBombers(bombers);
 	};
 
@@ -55,6 +62,29 @@ function CollisionsManager(game) {
 			plane.crashed = true;
 			plane.health = 0;
 		}
+	};
+	
+	/**
+	 * Handles all plane bullets ground and canvas collisions
+	 */
+	this.handlePlaneBullets = function (){
+		
+		//for each plane bullet...
+		game.plane.bullets.forEach(function (bullet){
+			
+			//check if the bullet has hit the ground
+			if(bullet.y >= bullet.canvas.height - 30){
+				//remove the bullet and add a bullet impact in it's place
+				bullet.active = false;
+				game.bulletImpacts.push(new BulletImpact(game, bullet.x + bullet.currentImage.width, bullet.y));
+			}
+
+			//check if the bullet has left the canvas
+			if(bullet.x > bullet.canvas.width){
+				bullet.active = false;
+			}
+		});
+		
 	};
 
 	/**
@@ -95,8 +125,9 @@ function CollisionsManager(game) {
 					var damage = tailHit ? bullet.damage * 2 : bullet.damage;
 					bomber.health = bomber.health - damage;
 
-					//raise the impact flag that destroys the bullet and adds an impact animation
-					bullet.impact = true;
+					//remove the bullet and add a bullet impact in it's place
+					bullet.active = false;
+					game.bulletImpacts.push(new BulletImpact(game, bullet.x + bullet.currentImage.width, bullet.y));
 				}
 
 			});

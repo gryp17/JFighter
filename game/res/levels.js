@@ -50,6 +50,7 @@ var LEVELS_DATA = {
 	},
 	DESERT: {
 		WEATHER: "normal",
+		CIVILIANS: [],
 		ENEMIES: [
 			{
 				objectType: "Bomber",
@@ -69,6 +70,7 @@ var LEVELS_DATA = {
 	},
 	WINTER: {
 		WEATHER: "snow",
+		CIVILIANS: [],
 		ENEMIES: [
 			{
 				objectType: "Bomber",
