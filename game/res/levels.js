@@ -5,21 +5,42 @@ var LEVELS_DATA = {
 			{
 				objectType: "Civilian",
 				arguments: {
-					x: 1000,
+					x: 1300,
 					y: 550
 				}
 			},
 			{
 				objectType: "Civilian",
 				arguments: {
-					x: 1050,
+					x: 1350,
 					y: 550
 				}
 			},
 			{
 				objectType: "Civilian",
 				arguments: {
-					x: 1110,
+					x: 1410,
+					y: 550
+				}
+			},
+			{
+				objectType: "Civilian",
+				arguments: {
+					x: 1510,
+					y: 550
+				}
+			},
+			{
+				objectType: "Civilian",
+				arguments: {
+					x: 1540,
+					y: 550
+				}
+			},
+			{
+				objectType: "Civilian",
+				arguments: {
+					x: 1590,
 					y: 550
 				}
 			}

@@ -20,6 +20,9 @@ function BomberBomb(game, x, y, dx, dy) {
 	this.dy = dy;
 	this.y = y;
 
+	//stats
+	this.explosionRadius = game.enemyStats.B17.BOMB_EXPLOSION_RADIUS;
+
 	//sprite variables
 	this.sprite = new Sprite(this.bombImages, 10, true);
 	this.currentImage;
@@ -58,6 +61,31 @@ function BomberBomb(game, x, y, dx, dy) {
 	 */
 	this.updateSprite = function () {
 		this.currentImage = this.sprite.move();
+	};
+	
+	/**
+	 * Returns the bomber bomb hitbox
+	 * @returns {Object}
+	 */
+	this.getHitbox = function () {
+		return {
+			x: this.x,
+			y: this.y,
+			width: this.currentImage.width,
+			height: this.currentImage.height,
+			offset: game.background.offset
+		};
+	};
+	
+	/**
+	 * Returns the bomber bomb explosion hitbox
+	 * @returns {Object}
+	 */
+	this.getExplosionHitbox = function (){
+		var hitbox = this.getHitbox();
+		hitbox.x = hitbox.x - this.explosionRadius;
+		hitbox.width = hitbox.width + this.explosionRadius;
+		return hitbox;
 	};
 
 }

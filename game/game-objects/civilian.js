@@ -18,9 +18,13 @@ function Civilian(game, x, y) {
 	this.dy = 0;
 	this.y = y;
 	
+	//status
+	this.active = true;
+	this.dead = false;
+	
 	//sprite variables
 	this.sprite = new Sprite(this.images.SPRITE, 7, true);
-	this.currentImage;
+	this.currentImage = this.images.SPRITE[0];
 
 	/**
 	 * Draws the civilian object
@@ -32,8 +36,7 @@ function Civilian(game, x, y) {
 		
 		this.x = this.x + this.dx;
 		this.y = this.y + this.dy;
-		
-								
+							
 		this.context.drawImage(this.currentImage, this.x, this.y + game.background.offset);
 	};
 	
@@ -42,13 +45,33 @@ function Civilian(game, x, y) {
 	 * Updates the "currentImage" with the correct sprite image
 	 */
 	this.updateSprite = function () {
-		if(this.x > 400){
+		if(this.dead === false){
 			this.currentImage = this.sprite.move();
-		}else{
-			this.y = 580;
-			this.dx = -2;
-			this.currentImage = this.images.DEAD;
 		}
+	};
+	
+	/**
+	 * Makes the civilian die
+	 */
+	this.die = function (){
+		this.dead = true;
+		this.y = 580;
+		this.dx = -2;
+		this.currentImage = this.images.DEAD;
+	};
+	
+	/**
+	 * Returns the civilian hitbox
+	 * @returns {Object}
+	 */
+	this.getHitbox = function () {
+		return {
+			x: this.x,
+			y: this.y,
+			width: this.currentImage.width,
+			height: this.currentImage.height,
+			offset: game.background.offset
+		};
 	};
 
 }

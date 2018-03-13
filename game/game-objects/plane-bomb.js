@@ -19,6 +19,9 @@ function PlaneBomb(game, x, y, dx, dy) {
 	this.x = x;
 	this.dy = dy;
 	this.y = y;
+	
+	//stats
+	this.explosionRadius = game.plane.stats.BOMB_EXPLOSION_RADIUS;
 
 	//sprite variables
 	this.sprite = new Sprite(this.bombImages, 10, true);
@@ -58,6 +61,31 @@ function PlaneBomb(game, x, y, dx, dy) {
 	 */
 	this.updateSprite = function () {
 		this.currentImage = this.sprite.move();
+	};
+	
+	/**
+	 * Returns the plane bomb hitbox
+	 * @returns {Object}
+	 */
+	this.getHitbox = function () {
+		return {
+			x: this.x,
+			y: this.y,
+			width: this.currentImage.width,
+			height: this.currentImage.height,
+			offset: game.background.offset
+		};
+	};
+	
+	/**
+	 * Returns the plane bomb explosion hitbox
+	 * @returns {Object}
+	 */
+	this.getExplosionHitbox = function (){
+		var hitbox = this.getHitbox();
+		hitbox.x = hitbox.x - this.explosionRadius;
+		hitbox.width = hitbox.width + this.explosionRadius;
+		return hitbox;
 	};
 
 }

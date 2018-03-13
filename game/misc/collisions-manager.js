@@ -10,17 +10,14 @@ function CollisionsManager(game) {
 	 * Handles the collisions for all game objects
 	 */
 	this.handleCollisions = function () {
-
-		//separate the bombers from the list of enemies
-		var bombers = _.filter(game.enemies, function (enemy) {
-			return enemy.constructor === Bomber;
-		});
-
 		//handle the plane ground and canvas collisions
 		this.handlePlane();
 
 		//handle all bombers collisions
-		this.handleBombers(bombers);
+		this.handleBombers();
+		
+		//handle all civilians collisions
+		this.handleCivilians();
 	};
 
 	/**
@@ -124,9 +121,14 @@ function CollisionsManager(game) {
 
 	/**
 	 * Handles all bombers collisions
-	 * @param {Array} bombers
 	 */
-	this.handleBombers = function (bombers) {
+	this.handleBombers = function () {
+		
+		//separate the bombers from the list of enemies
+		var bombers = _.filter(game.enemies, function (enemy) {
+			return enemy.constructor === Bomber;
+		});
+		
 		var planeHitbox = game.plane.getHitbox();
 
 		//for each bomber...
@@ -171,6 +173,49 @@ function CollisionsManager(game) {
 
 		});
 
+	};
+	
+	/**
+	 * Handles all civilians collisions
+	 */
+	this.handleCivilians = function (){
+		
+		//separate the bombers from the list of enemies
+		var bombers = _.filter(game.enemies, function (enemy) {
+			return enemy.constructor === Bomber;
+		});
+		
+		//for each civilian...
+		game.civilians.forEach(function (civilian){
+			var civilianHitbox = civilian.getHitbox();
+			
+			//check if the civilian has left the screen
+			if(civilian.x + civilian.currentImage.width < 0){
+				civilian.active = false;
+			}
+			
+			//check if the civilian has been hit by an enemy (or friendly bomb)
+			var bombs = game.plane.bombs;
+			bombers.forEach(function (bomber){
+				bombs = bombs.concat(bomber.bombs);
+			});
+			
+			bombs.forEach(function (bomb){
+				//kill the civilian right when the bomb touches the ground (active === false)
+				if(Utils.collidesWith(civilianHitbox, bomb.getExplosionHitbox()) && bomb.active === false){
+					civilian.die();
+				}
+			});
+			
+			//check if the civilian has been hit by the plane bullets
+			game.plane.bullets.forEach(function (bullet){
+				if(Utils.collidesWith(civilianHitbox, bullet.getHitbox())){
+					bullet.explode();
+					civilian.die();
+				}
+			});
+						
+		});
 	};
 
 }
