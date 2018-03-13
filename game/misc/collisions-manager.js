@@ -25,6 +25,12 @@ function CollisionsManager(game) {
 	 */
 	this.handlePlane = function () {
 		var plane = game.plane;
+		var planeHitbox = plane.getHitbox();
+		
+		//separate the bombers from the list of enemies
+		var bombers = _.filter(game.enemies, function (enemy) {
+			return enemy.constructor === Bomber;
+		});
 
 		//top end of screen
 		if (plane.y < 0) {
@@ -53,6 +59,17 @@ function CollisionsManager(game) {
 			plane.crashed = true;
 			plane.health = 0;
 		}
+		
+		//check if the plane has been hit by any of the bombers bombs
+		bombers.forEach(function (bomber) {
+			bomber.bombs.forEach(function (bomb){
+				if (Utils.collidesWith(planeHitbox, bomb.getHitbox())) {
+					bomb.explode(false);
+					plane.disabled = true;
+					plane.health = 0;
+				}
+			});
+		});
 		
 		//handle the plane bullets ground and canvas collisions
 		this.handlePlaneBullets();
@@ -96,13 +113,13 @@ function CollisionsManager(game) {
 
 			//make the bomb explode when it reaches the ground
 			if (bomb.y + bomb.currentImage.height > bomb.canvas.height - 15) {
-				bomb.explode();
+				bomb.explode(true);
 			}
 		});
 	};
 
 	/**
-	 * Handles all bomber bombs ground and canvas collisions
+	 * Handles the bomber bombs ground, canvas and plane bullets collisions
 	 * @param {Bomber} bomber
 	 */
 	this.handleBomberBombs = function (bomber) {
@@ -114,8 +131,17 @@ function CollisionsManager(game) {
 
 			//make the bomb explode when it reaches the ground
 			if (bomb.y + bomb.currentImage.height > bomb.canvas.height - 15) {
-				bomb.explode();
+				bomb.explode(true);
 			}
+			
+			//check if the bomb has been hit by any of the plane's bullets
+			game.plane.bullets.forEach(function (bullet){
+				if(Utils.collidesWith(bomb.getHitbox(), bullet.getHitbox())){
+					bullet.explode();
+					bomb.explode(false);
+				}
+			});
+			
 		});
 	};
 
@@ -170,7 +196,15 @@ function CollisionsManager(game) {
 				}
 
 			});
-
+			
+			//check if any of the plane bombs have hit the bomber
+			game.plane.bombs.forEach(function (bomb) {
+				if(Utils.collidesWith(bomberHitboxes, bomb.getHitbox())){
+					bomb.explode(false);
+					bomber.disabled = true;
+					bomber.health = 0;
+				}
+			});
 		});
 
 	};

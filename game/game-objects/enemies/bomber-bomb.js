@@ -45,15 +45,16 @@ function BomberBomb(game, x, y, dx, dy) {
 	
 	/**
 	 * Sets the bomb as inactive and adds an explosion object
+	 * @param {Boolean} showBombHole
 	 */
-	this.explode = function () {
+	this.explode = function (showBombHole) {
 		this.active = false;
 
 		//calculate the explosion coordinates
 		var explosionX = this.x - this.explosionImages[0].width / 3;
 		var explosionY = this.y + this.currentImage.height - this.explosionImages[0].height;
 
-		game.explosions.push(new Explosion(game, explosionX, explosionY, -2, 0, true));
+		game.explosions.push(new Explosion(game, explosionX, explosionY, -2, 0, showBombHole));
 	};
 	
 	/**
