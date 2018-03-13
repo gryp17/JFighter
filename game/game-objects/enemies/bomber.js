@@ -29,8 +29,11 @@ function Bomber(game, x, y) {
 	//bombs
 	this.bombing = false;
 	this.bombCarpetSize = this.stats.BOMB_CARPET_SIZE;
-	this.bombCooldown = this.stats.BOMB_COOLDOWN;
-	this.bombTimer = 0;
+	this.bombDelay = this.stats.BOMB_DELAY;
+	this.carpetCooldown = this.stats.BOMB_CARPET_COOLDOWN;
+	this.delayTimer = 0;
+	this.carpetTimer = 0;
+	this.droppedBombs = 0;
 	this.bombs = [];
 
 	//sprite variables
@@ -58,6 +61,9 @@ function Bomber(game, x, y) {
 			//always fly higher than the fighter plane
 			this.avoidFighters();
 		}
+		
+		//updates the bombs delay/cooldown values
+		this.updateBombsStatus();
 				
 		//drop bombs periodically
 		this.dropBombs();
@@ -166,31 +172,54 @@ function Bomber(game, x, y) {
 			this.dy = 0;
 		}
 	};
-
-	this.dropBombs = function (){
+	
+	/**
+	 * Updates the bomb cooldown/delay parameters
+	 */
+	this.updateBombsStatus = function (){
 		
-		//bombs cooldown
+		//bombs delay
 		if (this.bombing === true) {
-			this.bombTimer++;
-			if (this.bombTimer > this.bombCooldown) {
+			this.delayTimer++;
+			
+			//reset the bomb delay timer
+			if (this.delayTimer > this.bombDelay) {
 				this.bombing = false;
-				this.bombTimer = 0;
+				this.delayTimer = 0;
+			}
+			
+		}
+		
+		//carpet cooldown (start the cooldown timer only if all bombs have been dropped)
+		if(this.droppedBombs === this.bombCarpetSize){
+			this.carpetTimer++;
+
+			//reset the carpet timer
+			if (this.carpetTimer > this.carpetCooldown) {
+				this.droppedBombs = 0;
+				this.carpetTimer = 0;
 			}
 		}
 		
+	};
+
+	/**
+	 * Makes the bomber drop bombs if the correct parameter are set
+	 */
+	this.dropBombs = function (){
+		
 		//if the bomber is inside the screen and is not disabled
 		if(this.x < this.canvas.width && this.disabled === false){
-			
-			//get the number of bombs that haven't exploded yet
-			var activeBombs = _.filter(this.bombs, {active: true});
 						
 			//drop bomb only if the bomb is not on cooldown and if the number of dropped bombs doesn't exceed the max carpet size
-			if (this.bombing === false && activeBombs.length < this.bombCarpetSize) {
+			if (this.bombing === false && this.droppedBombs < this.bombCarpetSize) {
 				var bombX = this.x + (this.currentImage.width / 1.5);
 				var bombY = this.y + this.currentImage.height - 25;
 				var bombDx = this.dx + 1;
 				var bombDy = 2;
 				this.bombing = true;
+
+				this.droppedBombs++;
 
 				this.bombs.push(new BomberBomb(game, bombX, bombY, bombDx, bombDy));
 			}
