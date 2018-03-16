@@ -30,7 +30,9 @@ function Game(images, planeStats, enemyStats, levelsData) {
 	this.contexts = {
 		background: new Context("background-canvas"),
 		plane: new Context("plane-canvas"),
-		enemies: new Context("enemies-canvas")
+		civilians: new Context("civilians-canvas"),
+		enemies: new Context("enemies-canvas"),
+		projectiles: new Context("projectiles-canvas")
 	};
 	
 	/**
@@ -49,6 +51,7 @@ function Game(images, planeStats, enemyStats, levelsData) {
 		this.plane = new Plane(this);
 		this.bulletImpacts = [];
 		this.explosions = [];
+		this.bombHoles = [];
 		
 		this.enemies = this.levelsData[selectedLevel].ENEMIES.map(function (enemy) {
 
@@ -105,6 +108,9 @@ function Game(images, planeStats, enemyStats, levelsData) {
 		//draw the background
 		self.background.draw();
 
+		//clear the entire projectiles context before drawing any of the projectiles/explosions
+		self.contexts.projectiles.context.clearRect(0, 0, self.contexts.projectiles.canvas.width, self.contexts.projectiles.canvas.height);
+
 		//draw the plane
 		self.plane.draw();
 
@@ -113,7 +119,7 @@ function Game(images, planeStats, enemyStats, levelsData) {
 
 		//draw all enemies that are still on the screen
 		self.enemies = _.filter(self.enemies, function (enemy){
-			if(enemy.x > -800){
+			if(enemy.active){
 				enemy.draw();
 				return true;
 			}else{
@@ -121,6 +127,12 @@ function Game(images, planeStats, enemyStats, levelsData) {
 			}
 		});
 		
+		console.log(self.enemies.length);
+		
+		//clear the entire civilians context before drawing any of the civilians
+		self.contexts.civilians.context.clearRect(0, 0, self.contexts.civilians.canvas.width, self.contexts.civilians.canvas.height);
+		
+		//draw all civilians that are still active
 		self.civilians = _.filter(self.civilians, function (civilian){
 			if(civilian.active){
 				civilian.draw();
@@ -144,6 +156,16 @@ function Game(images, planeStats, enemyStats, levelsData) {
 		self.explosions = _.filter(self.explosions, function (explosion){
 			if(explosion.active){
 				explosion.draw();
+				return true;
+			}else{
+				return false;
+			}
+		});
+		
+		//draw all bomb holes that are still active
+		self.bombHoles = _.filter(self.bombHoles, function (bombHole){
+			if(bombHole.active){
+				bombHole.draw();
 				return true;
 			}else{
 				return false;

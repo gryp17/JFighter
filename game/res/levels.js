@@ -66,6 +66,20 @@ var LEVELS_DATA = {
 					x: 2500,
 					y: 150
 				}
+			},
+			{
+				objectType: "Sherman",
+				arguments: {
+					x: 1100,
+					y: 540
+				}
+			},
+			{
+				objectType: "Sherman",
+				arguments: {
+					x: 1700,
+					y: 540
+				}
 			}
 		]
 	},

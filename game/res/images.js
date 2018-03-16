@@ -87,6 +87,13 @@ var GAME_IMAGES = {
 				"img/enemies/b17/2.png"
 			],
 			CRASHED: "img/enemies/b17/3.png"
+		},
+		SHERMAN: {
+			SPRITE: [
+				"img/enemies/sherman/1.png",
+				"img/enemies/sherman/2.png"
+			],
+			DESTROYED: "img/enemies/sherman/3.png"
 		}
 	},
 	CIVILIAN: {

@@ -16,8 +16,9 @@ function Bomber(game, x, y) {
 	
 	//state
 	this.health = this.stats.HEALTH;
-	this.disabled = false; //the plane is disabled and can't be controlled anymore
-	this.crashed = false; //the plane has crashed to the ground
+	this.disabled = false; //the bomber is disabled and can't be controlled anymore
+	this.crashed = false; //the bomber has crashed to the ground
+	this.active = true; //draw the object as long as this is set to true
 	
 	//positioning and speed
 	this.dx = -3;

@@ -9,11 +9,11 @@
  * @returns {Explosion}
  */
 function Explosion(game, x, y, dx, dy, showBombHole) {
-	this.context = game.contexts.plane.context;
-	this.canvas = game.contexts.plane.canvas;
+	this.context = game.contexts.projectiles.context;
+	this.canvas = game.contexts.projectiles.canvas;
 
 	this.explosionImages = game.images.EXPLOSION;
-	this.bombHole = game.images.BOMB_HOLE;
+	this.bombHoleImage = game.images.BOMB_HOLE;
 
 	//positioning and speed
 	this.dx = dx;
@@ -28,6 +28,9 @@ function Explosion(game, x, y, dx, dy, showBombHole) {
 	//explosion state state
 	this.active = true; //the explosion is still active and does damage
 	this.showBombHole = showBombHole;
+	
+	//bomb hole
+	this.bombHole;
 
 	/**
 	 * Draws the explosion
@@ -57,12 +60,12 @@ function Explosion(game, x, y, dx, dy, showBombHole) {
 
 		//if we have reached the end of the sprite images
 		if (this.currentImage === null) {
-			//display the bomb hole if the option is enabled - otherwise set the explosion object as inactive
+			//display the bomb hole if the option is enabled
 			if(this.showBombHole){
-				this.currentImage = this.bombHole;
-			}else{
-				this.active = false;
+				game.bombHoles.push(new BombHole(game, this.x, this.y));
 			}
+			
+			this.active = false;
 		}
 	};
 

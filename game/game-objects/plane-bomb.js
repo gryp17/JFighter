@@ -8,8 +8,8 @@
  * @returns {PlaneBomb}
  */
 function PlaneBomb(game, x, y, dx, dy) {
-	this.context = game.contexts.plane.context;
-	this.canvas = game.contexts.plane.canvas;
+	this.context = game.contexts.projectiles.context;
+	this.canvas = game.contexts.projectiles.canvas;
 
 	this.bombImages = game.images.PROJECTILES.PLANE_BOMB;
 	this.explosionImages = game.images.EXPLOSION;

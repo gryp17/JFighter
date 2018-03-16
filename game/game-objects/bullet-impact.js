@@ -6,8 +6,8 @@
  * @returns {BulletImpact}
  */
 function BulletImpact(game, x, y) {
-	this.context = game.contexts.plane.context;
-	this.canvas = game.contexts.plane.canvas;
+	this.context = game.contexts.projectiles.context;
+	this.canvas = game.contexts.projectiles.canvas;
 	
 	this.impactImages = game.images.BULLET_IMPACT;
 	
