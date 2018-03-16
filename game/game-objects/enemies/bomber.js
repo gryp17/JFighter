@@ -46,9 +46,8 @@ function Bomber(game, x, y) {
 	this.draw = function () {
 		
 		//if the bomber is too damaged disable it and crash it (only do this if it hasn't crashed yet)
-		if (this.health <= 0 && this.crashed === false) {
-			this.disabled = true;
-			this.dy = 2;
+		if (this.health <= 0 && this.crashed === false && this.disabled === false) {
+			this.disable();
 		}
 		
 		//update the "currentImage" with the correct sprite image
@@ -60,6 +59,10 @@ function Bomber(game, x, y) {
 		if(this.disabled === false){
 			//always fly higher than the fighter plane
 			this.avoidFighters();
+		}
+		//slowly descend the bomber until it crashes
+		else{
+			this.freeFall();
 		}
 		
 		//updates the bombs delay/cooldown values
@@ -73,6 +76,33 @@ function Bomber(game, x, y) {
 		
 		//draw the bombs that are still active
 		this.drawBombs();
+	};
+	
+	/**
+	 * Disables the bomber
+	 */
+	this.disable = function (){
+		this.disabled = true;
+	};
+	
+	/**
+	 * Slowly descend the bomber until it crashes to the ground
+	 */
+	this.freeFall = function (){
+		if(this.dy < 3){
+			this.dy = this.dy + 0.05;
+		}
+	};
+	
+	/**
+	 * Crashes the bomber to the ground
+	 */
+	this.crash = function () {
+		this.y = this.canvas.height - this.currentImage.height - 40;
+		this.dy = 0;
+		this.dx = -2;
+		this.disabled = true;
+		this.crashed = true;
 	};
 	
 	/**

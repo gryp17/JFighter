@@ -52,12 +52,7 @@ function CollisionsManager(game) {
 
 		//bottom end of screen
 		if (plane.y + plane.currentImage.height > plane.canvas.height - 40) {
-			plane.y = plane.canvas.height - plane.currentImage.height - 40;
-			plane.dy = 0;
-			plane.dx = -2;
-			plane.disabled = true;
-			plane.crashed = true;
-			plane.health = 0;
+			plane.crash();
 		}
 		
 		//check if the plane has been hit by any of the bombers bombs
@@ -65,8 +60,7 @@ function CollisionsManager(game) {
 			bomber.bombs.forEach(function (bomb){
 				if (Utils.collidesWith(planeHitbox, bomb.getHitbox())) {
 					bomb.explode(false);
-					plane.disabled = true;
-					plane.health = 0;
+					plane.disable();
 				}
 			});
 		});
@@ -166,11 +160,7 @@ function CollisionsManager(game) {
 
 			//when the bomber touches the ground raise the disabled and crashed flags and "anchor" it to the ground
 			if (bomber.y + bomber.currentImage.height > bomber.canvas.height - 40) {
-				bomber.y = bomber.canvas.height - bomber.currentImage.height - 40;
-				bomber.dy = 0;
-				bomber.dx = -2;
-				bomber.disabled = true;
-				bomber.crashed = true;
+				bomber.crash();
 			}
 
 			//check if the bomber has collided with the plane
@@ -201,8 +191,7 @@ function CollisionsManager(game) {
 			game.plane.bombs.forEach(function (bomb) {
 				if(Utils.collidesWith(bomberHitboxes, bomb.getHitbox())){
 					bomb.explode(false);
-					bomber.disabled = true;
-					bomber.health = 0;
+					bomber.disable();
 				}
 			});
 		});
