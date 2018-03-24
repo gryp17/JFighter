@@ -25,6 +25,9 @@ function Game(images, planeStats, enemyStats, levelsData) {
 	
 	//initialize the HUD object
 	this.HUD = new HUD(this, $("#HUD"));
+	
+	//initialize the HARPP object
+	this.HARPP = new HARPP(this);
 
 	//canvas/context objects
 	this.contexts = {
@@ -32,7 +35,8 @@ function Game(images, planeStats, enemyStats, levelsData) {
 		plane: new Context("plane-canvas"),
 		civilians: new Context("civilians-canvas"),
 		enemies: new Context("enemies-canvas"),
-		projectiles: new Context("projectiles-canvas")
+		projectiles: new Context("projectiles-canvas"),
+		weather: new Context("weather-canvas")
 	};
 	
 	/**
@@ -43,7 +47,7 @@ function Game(images, planeStats, enemyStats, levelsData) {
 	this.start = function (selectedPlane, selectedLevel) {
 		this.selectedPlane = selectedPlane;
 		this.selectedLevel = selectedLevel;
-		
+				
 		this.contexts.background.canvas.focus();
 		
 		//game objects
@@ -52,7 +56,8 @@ function Game(images, planeStats, enemyStats, levelsData) {
 		this.bulletImpacts = [];
 		this.explosions = [];
 		this.bombHoles = [];
-		
+		this.weatherEffects = this.HARPP.generateWeather(this.levelsData[selectedLevel].WEATHER);
+				
 		this.enemies = this.levelsData[selectedLevel].ENEMIES.map(function (enemy) {
 
 			//default arguments for each object type
@@ -127,8 +132,6 @@ function Game(images, planeStats, enemyStats, levelsData) {
 			}
 		});
 		
-		console.log(self.enemies.length);
-		
 		//clear the entire civilians context before drawing any of the civilians
 		self.contexts.civilians.context.clearRect(0, 0, self.contexts.civilians.canvas.width, self.contexts.civilians.canvas.height);
 		
@@ -170,6 +173,14 @@ function Game(images, planeStats, enemyStats, levelsData) {
 			}else{
 				return false;
 			}
+		});
+		
+		//clear the entire weather context before drawing any of the weather effects
+		self.contexts.weather.context.clearRect(0, 0, self.contexts.weather.canvas.width, self.contexts.weather.canvas.height);
+
+		//draw all weather effects
+		self.weatherEffects.forEach(function (weatherEffect){
+			weatherEffect.draw();
 		});
 		
 		//draw the HUD

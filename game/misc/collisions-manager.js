@@ -24,6 +24,9 @@ function CollisionsManager(game) {
 		
 		//handle all civilians collisions
 		this.handleCivilians();
+		
+		//handle all weather collisions
+		this.handleWeatherEffects();
 	};
 
 	/**
@@ -304,6 +307,21 @@ function CollisionsManager(game) {
 			});
 						
 		});
+	};
+	
+	/**
+	 * Handles all weather effects collisions
+	 */
+	this.handleWeatherEffects = function (){
+		
+		//for each weather effect (snowflake...)
+		game.weatherEffects.forEach(function (weatherEffect){
+			//when the weather effect touches the ground - reset it
+			if(weatherEffect.y > weatherEffect.canvas.height - 40){
+				weatherEffect.reset();
+			}
+		});
+		
 	};
 
 }
