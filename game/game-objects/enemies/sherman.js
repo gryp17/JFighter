@@ -79,4 +79,19 @@ function Sherman(game, x, y) {
 			offset: game.background.offset
 		};
 	};
+	
+	/**
+	 * Returns the sherman hull hitbox (the hitbox without the turret)
+	 * @returns {Object}
+	 */
+	this.getHullHitbox = function () {
+		var turretWidth = this.currentImage.width / 4;
+		var hitbox = this.getHitbox();
+		
+		//modify the hitbox
+		hitbox.x = hitbox.x + turretWidth;
+		hitbox.width = hitbox.width - turretWidth;
+		
+		return hitbox;
+	};
 }

@@ -26,7 +26,7 @@ function Game(images, planeStats, enemyStats, levelsData) {
 	//initialize the HUD object
 	this.HUD = new HUD(this, $("#HUD"));
 	
-	//initialize the HARPP object
+	//initialize the HARPP (get it?) object
 	this.HARPP = new HARPP(this);
 
 	//canvas/context objects

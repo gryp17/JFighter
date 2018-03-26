@@ -271,9 +271,16 @@ function CollisionsManager(game) {
 	 */
 	this.handleCivilians = function (){
 		
-		//separate the bombers from the list of enemies
-		var bombers = _.filter(game.enemies, function (enemy) {
-			return enemy.constructor === Bomber;
+		//separate the enemies by type
+		var bombers = [];
+		var shermans = [];
+						
+		game.enemies.forEach(function (enemy){
+			if(enemy.constructor === Bomber){
+				bombers.push(enemy);
+			}else if(enemy.constructor === Sherman){
+				shermans.push(enemy);
+			}
 		});
 		
 		//for each civilian...
@@ -302,6 +309,13 @@ function CollisionsManager(game) {
 			game.plane.bullets.forEach(function (bullet){
 				if(Utils.collidesWith(civilianHitbox, bullet.getHitbox())){
 					bullet.explode();
+					civilian.die();
+				}
+			});
+			
+			//check if the civilian has been hit/ran over by an enemy tank (sherman)
+			shermans.forEach(function (sherman){
+				if(Utils.collidesWith(civilianHitbox, sherman.getHullHitbox())){
 					civilian.die();
 				}
 			});
