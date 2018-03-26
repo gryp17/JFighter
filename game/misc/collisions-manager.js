@@ -276,10 +276,12 @@ function CollisionsManager(game) {
 		var shermans = [];
 						
 		game.enemies.forEach(function (enemy){
-			if(enemy.constructor === Bomber){
-				bombers.push(enemy);
-			}else if(enemy.constructor === Sherman){
-				shermans.push(enemy);
+			switch(enemy.constructor){
+				case Bomber:
+					bombers.push(enemy);
+					break;
+				case Sherman:
+					shermans.push(enemy);
 			}
 		});
 		

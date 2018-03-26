@@ -1,6 +1,6 @@
 var LEVELS_DATA = {
 	GRASSLAND: {
-		WEATHER: "normal",
+		WEATHER: "rain",
 		GROUND_HEIGHT: 40,
 		CIVILIANS: [
 			{

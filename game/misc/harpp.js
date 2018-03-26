@@ -17,6 +17,8 @@ function HARPP (game) {
 			case "snow":
 				weatherEffects = this.generateSnow();
 				break;
+			case "rain":
+				weatherEffects = this.generateRain();
 		}
 		
 		return weatherEffects;
@@ -43,5 +45,29 @@ function HARPP (game) {
 		}
 		
 		return snowflakes;
+	};
+	
+	/**
+	 * Generates raindrops
+	 * @returns {Array}
+	 */
+	this.generateRain = function (){
+		var raindrops = [];
+		
+		var canvas = game.contexts.weather.canvas;
+		
+		//generate X raindrops with random properties
+		for(var i = 0; i < 300; i++){
+			var x = _.random(0, canvas.width * 2);
+			var y = _.random(canvas.height * -1, 0);
+			var dx = _.random(-4, -2.5, true);
+			var dy = _.random(8, 10, true);
+			var width = 1;
+			var height = _.random(5, 10);
+			
+			raindrops.push(new Raindrop(game, x, y, dx, dy, width, height));
+		}
+		
+		return raindrops;
 	};
 };
