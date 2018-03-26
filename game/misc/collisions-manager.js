@@ -60,7 +60,7 @@ function CollisionsManager(game) {
 		}
 
 		//bottom end of screen
-		if (plane.y + plane.currentImage.height > plane.canvas.height - 40) {
+		if (plane.y + plane.currentImage.height > plane.canvas.height - game.background.groundHeight) {
 			plane.crash();
 		}
 		
@@ -173,7 +173,7 @@ function CollisionsManager(game) {
 			}
 
 			//when the bomber touches the ground raise the disabled and crashed flags and "anchor" it to the ground
-			if (bomber.y + bomber.currentImage.height > bomber.canvas.height - 40) {
+			if (bomber.y + bomber.currentImage.height > bomber.canvas.height - game.background.groundHeight) {
 				bomber.crash();
 			}
 
@@ -317,7 +317,7 @@ function CollisionsManager(game) {
 		//for each weather effect (snowflake...)
 		game.weatherEffects.forEach(function (weatherEffect){
 			//when the weather effect touches the ground - reset it
-			if(weatherEffect.y > weatherEffect.canvas.height - 40){
+			if(weatherEffect.y > weatherEffect.canvas.height - game.background.groundHeight){
 				weatherEffect.reset();
 			}
 		});

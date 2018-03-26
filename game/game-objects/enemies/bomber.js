@@ -99,7 +99,7 @@ function Bomber(game, x, y) {
 	 * Crashes the bomber to the ground
 	 */
 	this.crash = function () {
-		this.y = this.canvas.height - this.currentImage.height - 40;
+		this.y = this.canvas.height - this.currentImage.height - game.background.groundHeight;
 		this.dy = 0;
 		this.dx = -2;
 		this.disabled = true;

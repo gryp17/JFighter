@@ -12,6 +12,9 @@ function Background(game) {
 	this.x = 0;
 	this.dy = 0;
 	
+	//the point where the ground begins (used mostly to check if any of the game objects has collided with the ground)
+	this.groundHeight = game.levelsData[game.selectedLevel].GROUND_HEIGHT;
+	
 	//calculate the difference between the image height and the canvas height and pin the background to the bottom
 	this.y = this.canvas.height - this.backgroundImage.height;
 	this.offset = 0;
