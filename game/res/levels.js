@@ -1,6 +1,9 @@
 var LEVELS_DATA = {
 	GRASSLAND: {
-		WEATHER: "rain",
+		WEATHER: {
+			TYPE: "rain",
+			INTERVAL: 1000
+		},
 		GROUND_HEIGHT: 40,
 		CIVILIANS: [
 			{
@@ -85,7 +88,9 @@ var LEVELS_DATA = {
 		]
 	},
 	DESERT: {
-		WEATHER: "normal",
+		WEATHER: {
+			TYPE: "normal"
+		},
 		GROUND_HEIGHT: 40,
 		CIVILIANS: [],
 		ENEMIES: [
@@ -106,7 +111,9 @@ var LEVELS_DATA = {
 		]
 	},
 	WINTER: {
-		WEATHER: "snow",
+		WEATHER: {
+			TYPE: "snow"
+		},
 		GROUND_HEIGHT: 40,
 		CIVILIANS: [],
 		ENEMIES: [

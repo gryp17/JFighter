@@ -4,21 +4,21 @@
  * @returns {HARPP}
  */
 function HARPP (game) {
-	
+		
 	/**
 	 * Generates weather effects for the specified weather type
-	 * @param {String} weatherType
+	 * @param {Object} levelData
 	 * @returns {Array}
 	 */
-	this.generateWeather = function (weatherType){
+	this.generateWeather = function (levelData){
 		var weatherEffects = [];
 		
-		switch(weatherType){
+		switch(levelData.WEATHER.TYPE){
 			case "snow":
-				weatherEffects = this.generateSnow();
+				weatherEffects = this.generateSnow(levelData);
 				break;
 			case "rain":
-				weatherEffects = this.generateRain();
+				weatherEffects = this.generateRain(levelData);
 		}
 		
 		return weatherEffects;
@@ -26,9 +26,10 @@ function HARPP (game) {
 	
 	/**
 	 * Generates snowflakes
+	 * @param {Object} levelData
 	 * @returns {Array}
 	 */
-	this.generateSnow = function (){
+	this.generateSnow = function (levelData){
 		var snowflakes = [];
 		
 		var canvas = game.contexts.weather.canvas;
@@ -43,15 +44,16 @@ function HARPP (game) {
 			
 			snowflakes.push(new Snowflake(game, x, y, dx, dy, radius));
 		}
-		
+			
 		return snowflakes;
 	};
 	
 	/**
 	 * Generates raindrops
+	 * @param {Object} levelData
 	 * @returns {Array}
 	 */
-	this.generateRain = function (){
+	this.generateRain = function (levelData){
 		var raindrops = [];
 		
 		var canvas = game.contexts.weather.canvas;

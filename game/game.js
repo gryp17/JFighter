@@ -56,7 +56,7 @@ function Game(images, planeStats, enemyStats, levelsData) {
 		this.bulletImpacts = [];
 		this.explosions = [];
 		this.bombHoles = [];
-		this.weatherEffects = this.HARPP.generateWeather(this.levelsData[selectedLevel].WEATHER);
+		this.weatherEffects = this.HARPP.generateWeather(this.levelsData[selectedLevel]);
 				
 		this.enemies = this.levelsData[selectedLevel].ENEMIES.map(function (enemy) {
 
