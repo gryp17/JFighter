@@ -5,7 +5,7 @@
  */
 function HARPP (game) {
 	this.weather;
-	this.showWeatherEffects = true;
+	this.showWeatherEffects = false;
 	this.clock = 0;
 		
 	/**

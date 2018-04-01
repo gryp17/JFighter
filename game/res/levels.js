@@ -2,7 +2,7 @@ var LEVELS_DATA = {
 	GRASSLAND: {
 		WEATHER: {
 			TYPE: "rain",
-			INTERVAL: 1000
+			INTERVAL: 4000
 		},
 		GROUND_HEIGHT: 40,
 		CIVILIANS: [
@@ -112,8 +112,7 @@ var LEVELS_DATA = {
 	},
 	WINTER: {
 		WEATHER: {
-			TYPE: "snow",
-			INTERVAL: 500
+			TYPE: "snow"
 		},
 		GROUND_HEIGHT: 40,
 		CIVILIANS: [],

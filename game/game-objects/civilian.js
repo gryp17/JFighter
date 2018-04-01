@@ -9,8 +9,9 @@ function Civilian(game, x, y) {
 	var self = this;
 	this.context = game.contexts.civilians.context;
 	this.canvas = game.contexts.civilians.canvas;
-			
-	this.images = game.images.CIVILIAN;
+	
+	//random civilian skin
+	this.images = game.images.CIVILIANS[_.random(0, game.images.CIVILIANS.length - 1)];
 	
 	//positioning and speed
 	this.dx = -2.5;

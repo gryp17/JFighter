@@ -96,19 +96,46 @@ var GAME_IMAGES = {
 			DESTROYED: "img/enemies/sherman/3.png"
 		}
 	},
-	CIVILIAN: {
-		SPRITE: [
-			"img/civilian/1.png",
-			"img/civilian/2.png",
-			"img/civilian/3.png",
-			"img/civilian/4.png",
-			"img/civilian/5.png",
-			"img/civilian/6.png",
-			"img/civilian/7.png",
-			"img/civilian/8.png"
-		],
-		DEAD: "img/civilian/9.png"
-	},
+	CIVILIANS: [
+		{
+			SPRITE: [
+				"img/civilian/green/1.png",
+				"img/civilian/green/2.png",
+				"img/civilian/green/3.png",
+				"img/civilian/green/4.png",
+				"img/civilian/green/5.png",
+				"img/civilian/green/6.png",
+				"img/civilian/green/7.png",
+				"img/civilian/green/8.png"
+			],
+			DEAD: "img/civilian/green/9.png"
+		},
+		{
+			SPRITE: [
+				"img/civilian/blue/1.png",
+				"img/civilian/blue/2.png",
+				"img/civilian/blue/3.png",
+				"img/civilian/blue/4.png",
+				"img/civilian/blue/5.png",
+				"img/civilian/blue/6.png",
+				"img/civilian/blue/7.png",
+				"img/civilian/blue/8.png"
+			],
+			DEAD: "img/civilian/blue/9.png"
+		},
+		{
+			SPRITE: [
+				"img/civilian/red/1.png",
+				"img/civilian/red/2.png",
+				"img/civilian/red/4.png",
+				"img/civilian/red/5.png",
+				"img/civilian/red/6.png",
+				"img/civilian/red/7.png",
+				"img/civilian/red/8.png"
+			],
+			DEAD: "img/civilian/red/9.png"
+		}
+	],
 	HUD: {
 		BOMB_ICON: "img/hud/bomb_icon.png"
 	}
