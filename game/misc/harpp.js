@@ -4,6 +4,9 @@
  * @returns {HARPP}
  */
 function HARPP (game) {
+	this.weather;
+	this.showWeatherEffects = true;
+	this.clock = 0;
 		
 	/**
 	 * Generates weather effects for the specified weather type
@@ -11,6 +14,8 @@ function HARPP (game) {
 	 * @returns {Array}
 	 */
 	this.generateWeather = function (levelData){
+		this.weather = levelData.WEATHER;
+		
 		var weatherEffects = [];
 		
 		switch(levelData.WEATHER.TYPE){
@@ -22,6 +27,28 @@ function HARPP (game) {
 		}
 		
 		return weatherEffects;
+	};
+	
+	/**
+	 * Updates the weather status
+	 */
+	this.updateWeatherStatus = function (){
+		
+		//if there is no weather interval
+		if(!this.weather.INTERVAL){
+			this.showWeatherEffects = true;
+		}
+		//otherwise enable/disable the weather periodically using the clock counter
+		else{
+			this.clock++;
+			
+			//reset the clock and toggle the weather
+			if(this.clock === this.weather.INTERVAL){
+				this.clock = 0;
+				this.showWeatherEffects = !this.showWeatherEffects;
+			}
+		}
+		
 	};
 	
 	/**

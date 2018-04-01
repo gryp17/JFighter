@@ -112,7 +112,8 @@ var LEVELS_DATA = {
 	},
 	WINTER: {
 		WEATHER: {
-			TYPE: "snow"
+			TYPE: "snow",
+			INTERVAL: 500
 		},
 		GROUND_HEIGHT: 40,
 		CIVILIANS: [],

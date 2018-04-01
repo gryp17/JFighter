@@ -178,6 +178,9 @@ function Game(images, planeStats, enemyStats, levelsData) {
 		//clear the entire weather context before drawing any of the weather effects
 		self.contexts.weather.context.clearRect(0, 0, self.contexts.weather.canvas.width, self.contexts.weather.canvas.height);
 
+		//updates the weather status
+		self.HARPP.updateWeatherStatus();
+		
 		//draw all weather effects
 		self.weatherEffects.forEach(function (weatherEffect){
 			weatherEffect.draw();

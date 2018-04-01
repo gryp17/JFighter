@@ -28,6 +28,12 @@ function Raindrop(game, x, y, dx, dy, width, height) {
 	 * Draws the raindrop
 	 */
 	this.draw = function () {
+		
+		//if the raindrop is outside of the canvas and the weather effects have been turned off - don't draw it
+		if(game.HARPP.showWeatherEffects === false && this.y < 0){
+			return;
+		}
+		
 		this.x = this.x + this.dx;
 		this.y = this.y + this.dy;
 
