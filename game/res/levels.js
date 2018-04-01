@@ -2,7 +2,7 @@ var LEVELS_DATA = {
 	GRASSLAND: {
 		WEATHER: {
 			TYPE: "rain",
-			INTERVAL: 4096 //(background.width / backgrond.dx) / 2
+			INTERVAL: 4096 //(background.width / background.dx) / 2
 		},
 		GROUND_HEIGHT: 40,
 		CIVILIANS: [
