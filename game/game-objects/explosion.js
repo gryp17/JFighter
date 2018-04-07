@@ -21,13 +21,14 @@ function Explosion(game, x, y, dx, dy, showBombHole) {
 	this.dy = dy;
 	this.y = y;
 
-	//sprite variables
-	this.sprite = new Sprite(this.explosionImages, 5, false);
-	this.currentImage;
-
 	//explosion state state
 	this.active = true; //the explosion is still active and does damage
 	this.showBombHole = showBombHole;
+	
+	//sprite variables
+	this.spriteDelay = showBombHole ? 5 : 2;
+	this.sprite = new Sprite(this.explosionImages, this.spriteDelay, false);
+	this.currentImage;
 	
 	//bomb hole
 	this.bombHole;
@@ -62,7 +63,7 @@ function Explosion(game, x, y, dx, dy, showBombHole) {
 		if (this.currentImage === null) {
 			//display the bomb hole if the option is enabled
 			if(this.showBombHole){
-				game.bombHoles.push(new BombHole(game, this.x, this.y));
+				game.bombHoles.push(new BombHole(game, this.x, this.y - 120));
 			}
 			
 			this.active = false;

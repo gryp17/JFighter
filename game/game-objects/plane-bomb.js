@@ -52,7 +52,7 @@ function PlaneBomb(game, x, y, dx, dy) {
 
 		//calculate the explosion coordinates
 		var explosionX = this.x - this.explosionImages[0].width / 3;
-		var explosionY = this.y + this.currentImage.height - this.explosionImages[0].height;
+		var explosionY = this.y - this.explosionImages[0].height / 2;
 
 		game.explosions.push(new Explosion(game, explosionX, explosionY, -2, 0, showBombHole));
 	};
