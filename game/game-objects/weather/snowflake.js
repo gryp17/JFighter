@@ -26,12 +26,7 @@ function Snowflake(game, x, y, dx, dy, radius) {
 	 * Draws the snowflake
 	 */
 	this.draw = function () {
-		
-		//if the snowflake is outside of the canvas and the weather effects have been turned off - don't draw it
-		if(game.HARPP.showWeatherEffects === false && this.y < 0){
-			return;
-		}
-		
+				
 		this.x = this.x + this.dx;
 		this.y = this.y + this.dy;
 

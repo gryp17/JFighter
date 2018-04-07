@@ -183,7 +183,10 @@ function Game(images, planeStats, enemyStats, levelsData) {
 		
 		//draw all weather effects
 		self.weatherEffects.forEach(function (weatherEffect){
-			weatherEffect.draw();
+			//if the showWeatherEffects flag is raised OR if the weather effect is still inside the canvas (vertically)
+			if(self.HARPP.showWeatherEffects || weatherEffect.y >= 0){
+				weatherEffect.draw();
+			}
 		});
 		
 		//draw the HUD
