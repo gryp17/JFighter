@@ -3,25 +3,43 @@ var GAME_IMAGES = {
 	//planes
 	PLANES: {
 		BF109: {
-			SPRITE: [
-				"img/planes/bf109/1.png",
-				"img/planes/bf109/2.png"
-			],
-			CRASHED: "img/planes/bf109/3.png"
+			SPRITE: {
+				DEFAULT: [
+					"img/planes/bf109/default/1.png",
+					"img/planes/bf109/default/2.png"
+				],
+				DAMAGED: [
+					"img/planes/bf109/damaged/1.png",
+					"img/planes/bf109/damaged/2.png"
+				]
+			},
+			CRASHED: "img/planes/bf109/crashed.png"
 		},
 		STUKA: {
-			SPRITE: [
-				"img/planes/stuka/1.png",
-				"img/planes/stuka/2.png"
-			],
-			CRASHED: "img/planes/stuka/3.png"
+			SPRITE: {
+				DEFAULT: [
+					"img/planes/stuka/default/1.png",
+					"img/planes/stuka/default/2.png"
+				],
+				DAMAGED: [
+					"img/planes/stuka/damaged/1.png",
+					"img/planes/stuka/damaged/2.png"
+				]
+			},
+			CRASHED: "img/planes/stuka/crashed.png"
 		},
 		KI84: {
-			SPRITE: [
-				"img/planes/ki84/1.png",
-				"img/planes/ki84/2.png"
-			],
-			CRASHED: "img/planes/ki84/3.png"
+			SPRITE: {
+				DEFAULT: [
+					"img/planes/ki84/default/1.png",
+					"img/planes/ki84/default/2.png"
+				],
+				DAMAGED: [
+					"img/planes/ki84/damaged/1.png",
+					"img/planes/ki84/damaged/2.png"
+				]
+			},
+			CRASHED: "img/planes/ki84/crashed.png"
 		}
 	},
 	//levels

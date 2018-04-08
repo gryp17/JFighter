@@ -15,6 +15,7 @@ function Plane(game) {
 	this.images = game.images.PLANES[game.selectedPlane];
 	
 	this.health = this.stats.HEALTH;
+	this.damaged = false; //the plane has received damage (50% health missing)
 	this.disabled = false; //the plane is disabled and can't be controlled anymore
 	this.crashed = false; //the plane has crashed to the ground
 
@@ -26,8 +27,8 @@ function Plane(game) {
 	this.angle = 0;
 
 	//sprite variables
-	this.sprite = new Sprite(this.images.SPRITE, 2, true);
-	this.currentImage = this.images.SPRITE[0];
+	this.sprite = new Sprite(this.images.SPRITE.DEFAULT, 2, true);
+	this.currentImage = this.images.SPRITE.DEFAULT[0];
 	
 	//bullets
 	this.shooting = false;
@@ -54,6 +55,12 @@ function Plane(game) {
 		//if the plane is too damaged disable it and crash it (only do this if it hasn't crashed yet)
 		if (this.health <= 0 && this.crashed === false && this.disabled === false) {
 			this.disable();
+		}
+		
+		//if the plane has received 50% damage - raise the damaged flag and change the sprite images
+		if (this.damaged === false && this.health < this.stats.HEALTH / 2) {
+			this.damaged = true;
+			this.sprite = new Sprite(this.images.SPRITE.DAMAGED, 2, true);
 		}
 
 		//respond to the controls only if the plane is not disabled
