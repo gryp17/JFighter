@@ -92,6 +92,7 @@ function Plane(game) {
 	 */
 	this.disable = function (){
 		this.disabled = true;
+		this.health = 0;
 	};
 	
 	/**

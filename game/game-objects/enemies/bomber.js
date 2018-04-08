@@ -16,6 +16,7 @@ function Bomber(game, x, y) {
 	
 	//state
 	this.health = this.stats.HEALTH;
+	this.damaged = false; //the bomber has received damage (50% health missing)
 	this.disabled = false; //the bomber is disabled and can't be controlled anymore
 	this.crashed = false; //the bomber has crashed to the ground
 	this.active = true; //draw the object as long as this is set to true
@@ -38,17 +39,23 @@ function Bomber(game, x, y) {
 	this.bombs = [];
 
 	//sprite variables
-	this.sprite = new Sprite(this.images.SPRITE, 2, true);
-	this.currentImage = this.images.SPRITE[0];
+	this.sprite = new Sprite(this.images.SPRITE.DEFAULT, 2, true);
+	this.currentImage = this.images.SPRITE.DEFAULT[0];
 
 	/**
-	 * Draws the plane object
+	 * Draws the bomber object
 	 */
 	this.draw = function () {
 		
 		//if the bomber is too damaged disable it and crash it (only do this if it hasn't crashed yet)
 		if (this.health <= 0 && this.crashed === false && this.disabled === false) {
 			this.disable();
+		}
+		
+		//if the bomber has received 50% damage - raise the damaged flag and change the sprite images
+		if (this.damaged === false && this.health < this.stats.HEALTH / 2) {
+			this.damaged = true;
+			this.sprite = new Sprite(this.images.SPRITE.DAMAGED, 2, true);
 		}
 		
 		//update the "currentImage" with the correct sprite image
@@ -84,6 +91,7 @@ function Bomber(game, x, y) {
 	 */
 	this.disable = function (){
 		this.disabled = true;
+		this.health = 0;
 	};
 	
 	/**

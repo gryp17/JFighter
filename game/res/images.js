@@ -90,11 +90,17 @@ var GAME_IMAGES = {
 	ENEMIES: {
 		//bomber
 		B17: {
-			SPRITE: [
-				"img/enemies/b17/1.png",
-				"img/enemies/b17/2.png"
-			],
-			CRASHED: "img/enemies/b17/3.png"
+			SPRITE: {
+				DEFAULT: [
+					"img/enemies/b17/default/1.png",
+					"img/enemies/b17/default/2.png"
+				],
+				DAMAGED: [
+					"img/enemies/b17/damaged/1.png",
+					"img/enemies/b17/damaged/2.png"
+				]
+			},
+			CRASHED: "img/enemies/b17/crashed.png"
 		},
 		SHERMAN: {
 			SPRITE: [
