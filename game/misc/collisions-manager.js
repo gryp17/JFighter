@@ -15,7 +15,7 @@ function CollisionsManager(game) {
 
 		//handle all bombers collisions
 		this.handleBombers();
-		
+				
 		//handle the bomb holes canvas collisions
 		this.handleBombHoles();
 		
@@ -211,14 +211,14 @@ function CollisionsManager(game) {
 		});
 
 	};
-	
+		
 	/**
 	 * Handles the bomb holes collisions with the canvas
 	 */
 	this.handleBombHoles = function (){
 		//for each bomb hole...
 		game.bombHoles.forEach(function (bombHole){
-			//check if the bomb has left the screen
+			//check if the bomb hole has left the screen
 			if (bombHole.x + bombHole.currentImage.width < 0) {
 				bombHole.active = false;
 			}

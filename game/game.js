@@ -135,6 +135,8 @@ function Game(images, planeStats, enemyStats, levelsData) {
 		//clear the entire civilians context before drawing any of the civilians
 		self.contexts.civilians.context.clearRect(0, 0, self.contexts.civilians.canvas.width, self.contexts.civilians.canvas.height);
 		
+		console.log(self.civilians.length);
+		
 		//draw all civilians that are still active
 		self.civilians = _.filter(self.civilians, function (civilian){
 			if(civilian.active){

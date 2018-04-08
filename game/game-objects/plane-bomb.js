@@ -55,6 +55,11 @@ function PlaneBomb(game, x, y, dx, dy) {
 		var explosionY = this.y - this.explosionImages[0].height / 2;
 
 		game.explosions.push(new Explosion(game, explosionX, explosionY, -2, 0, showBombHole));
+		
+		//add the bomb hole object
+		if(showBombHole){
+			game.bombHoles.push(new BombHole(game, explosionX, explosionY));
+		}
 	};
 	
 	/**
