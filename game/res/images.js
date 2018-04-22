@@ -125,7 +125,33 @@ var GAME_IMAGES = {
 				"img/enemies/sherman/1.png",
 				"img/enemies/sherman/2.png"
 			],
-			DESTROYED: "img/enemies/sherman/3.png"
+			DESTROYED: "img/enemies/sherman/destroyed.png"
+		},
+		MUSTANG: {
+			SPRITE: {
+				DEFAULT: [
+					"img/enemies/mustang/default/1.png",
+					"img/enemies/mustang/default/2.png"
+				],
+				DAMAGED: [
+					"img/enemies/mustang/damaged/1.png",
+					"img/enemies/mustang/damaged/2.png"
+				]
+			},
+			CRASHED: "img/enemies/mustang/crashed.png"
+		},
+		SPITFIRE: {
+			SPRITE: {
+				DEFAULT: [
+					"img/enemies/spitfire/default/1.png",
+					"img/enemies/spitfire/default/2.png"
+				],
+				DAMAGED: [
+					"img/enemies/spitfire/damaged/1.png",
+					"img/enemies/spitfire/damaged/2.png"
+				]
+			},
+			CRASHED: "img/enemies/spitfire/crashed.png"
 		}
 	},
 	CIVILIANS: [

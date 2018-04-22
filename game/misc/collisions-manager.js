@@ -22,6 +22,9 @@ function CollisionsManager(game) {
 		//handle all shermans collisions
 		this.handleShermans();
 		
+		//handles all fighters collisions
+		this.handleFighters();
+		
 		//handle all civilians collisions
 		this.handleCivilians();
 		
@@ -264,6 +267,59 @@ function CollisionsManager(game) {
 			
 		});
 		
+	};
+	
+	/**
+	 * Handles all fighters collisions
+	 */
+	this.handleFighters = function () {
+		
+		//separate the fighters from the list of enemies
+		var fighters = _.filter(game.enemies, function (enemy) {
+			return enemy.constructor === Fighter;
+		});
+		
+		var planeHitbox = game.plane.getHitbox();
+
+		//for each fighter...
+		fighters.forEach(function (fighter) {
+			var fighterHitbox = fighter.getHitbox();
+
+			//check if the fighter has left the screen
+			if (fighter.x < -800) {
+				fighter.active = false;
+			}
+
+			//when the fighter touches the ground raise the disabled and crashed flags and "anchor" it to the ground
+			if (fighter.y + fighter.currentImage.height > fighter.canvas.height - game.background.groundHeight) {
+				fighter.crash();
+			}
+
+			//check if the fighter has collided with the plane
+			if (Utils.collidesWith(fighterHitbox, planeHitbox)) {
+				fighter.health = fighter.health - 3;
+				game.plane.health = game.plane.health - 2;
+			}
+
+			//check if any of the plane bullets have hit the fighter
+			game.plane.bullets.forEach(function (bullet) {
+				if(Utils.collidesWith(fighterHitbox, bullet.getHitbox())){
+					fighter.health = fighter.health - bullet.damage;
+					
+					//make the bullet explode
+					bullet.explode();
+				}
+			});
+			
+			//check if any of the plane bombs have hit the fighter
+			game.plane.bombs.forEach(function (bomb) {
+				if(Utils.collidesWith(fighterHitbox, bomb.getHitbox())){
+					bomb.explode(false);
+					fighter.disable();
+				}
+			});
+		});
+
 	};
 	
 	/**

@@ -84,6 +84,13 @@ var LEVELS_DATA = {
 					x: 1700,
 					y: 540
 				}
+			},
+			{
+				objectType: "Fighter",
+				arguments: {
+					x: 1600,
+					y: 150
+				}
 			}
 		]
 	},
@@ -97,15 +104,43 @@ var LEVELS_DATA = {
 			{
 				objectType: "Bomber",
 				arguments: {
-					x: 700,
-					y: 300
+					x: 2700,
+					y: 200
 				}
 			},
 			{
 				objectType: "Bomber",
 				arguments: {
+					x: 1700,
+					y: 300
+				}
+			},
+			{
+				objectType: "Fighter",
+				arguments: {
 					x: 1200,
 					y: 400
+				}
+			},
+			{
+				objectType: "Fighter",
+				arguments: {
+					x: 1200,
+					y: 0
+				}
+			},
+			{
+				objectType: "Fighter",
+				arguments: {
+					x: 1400,
+					y: 100
+				}
+			},
+			{
+				objectType: "Fighter",
+				arguments: {
+					x: 1600,
+					y: 200
 				}
 			}
 		]
