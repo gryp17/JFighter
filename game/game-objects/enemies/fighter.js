@@ -25,7 +25,7 @@ function Fighter(game, x, y) {
 	this.active = true; //draw the object as long as this is set to true
 	
 	//positioning and speed
-	this.dx = -4;
+	this.dx = game.background.dx - 2;
 	this.x = x;
 	this.dy = 0;
 	this.y = y;
@@ -87,7 +87,7 @@ function Fighter(game, x, y) {
 	this.crash = function () {
 		this.y = this.canvas.height - this.currentImage.height - game.background.groundHeight;
 		this.dy = 0;
-		this.dx = -2;
+		this.dx = game.background.dx;
 		this.disabled = true;
 		this.crashed = true;
 	};

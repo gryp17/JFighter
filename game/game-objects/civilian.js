@@ -14,7 +14,7 @@ function Civilian(game, x, y) {
 	this.images = game.images.CIVILIANS[_.random(0, game.images.CIVILIANS.length - 1)];
 	
 	//positioning and speed
-	this.dx = -2.5;
+	this.dx = game.background.dx - 0.5;
 	this.x = x;
 	this.dy = 0;
 	this.y = y;
@@ -57,7 +57,7 @@ function Civilian(game, x, y) {
 	this.die = function (){
 		this.dead = true;
 		this.y = 580;
-		this.dx = -2;
+		this.dx = game.background.dx;
 		this.currentImage = this.images.DEAD;
 	};
 	

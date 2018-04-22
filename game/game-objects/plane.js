@@ -115,7 +115,7 @@ function Plane(game) {
 	this.crash = function () {
 		this.y = this.canvas.height - this.currentImage.height - game.background.groundHeight;
 		this.dy = 0;
-		this.dx = -2;
+		this.dx = game.background.dx;
 		this.disabled = true;
 		this.crashed = true;
 		this.health = 0;

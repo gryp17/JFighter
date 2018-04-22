@@ -20,7 +20,7 @@ function Sherman(game, x, y) {
 	this.active = true; //draw the object as long as this is set to true
 	
 	//positioning and speed
-	this.dx = -2.8;
+	this.dx = game.background.dx - 0.8;;
 	this.x = x;
 	this.dy = 0;
 	this.y = y;
@@ -63,7 +63,7 @@ function Sherman(game, x, y) {
 	this.destroy = function (){
 		this.health = 0;
 		this.destroyed = true;
-		this.dx = -2;
+		this.dx = game.background.dx;
 	};
 	
 	/**
