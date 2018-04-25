@@ -68,7 +68,7 @@ function Plane(game) {
 			this.processInputs(game.inputs);
 		}
 		//slowly descend the plane until it crashes
-		else{
+		else if(this.crashed === false){
 			this.freeFall();
 		}
 		
@@ -112,13 +112,20 @@ function Plane(game) {
 	/**
 	 * Crashes the plane into the ground
 	 */
-	this.crash = function () {
+	this.crash = function () {		
 		this.y = this.canvas.height - this.currentImage.height - game.background.groundHeight;
 		this.dy = 0;
 		this.dx = game.background.dx;
 		this.disabled = true;
 		this.crashed = true;
 		this.health = 0;
+		
+		//calculate the explosion coordinates		
+		var explosionX = this.x + 50;
+		var explosionY = this.y - 20;
+
+		//add an explosion
+		game.explosions.push(new Explosion(game, explosionX, explosionY, game.background.dx, 0, false));
 	};
 	
 	/**

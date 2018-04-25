@@ -69,7 +69,7 @@ function Bomber(game, x, y) {
 			this.avoidFighters();
 		}
 		//slowly descend the bomber until it crashes
-		else{
+		else if(this.crashed === false){
 			this.freeFall();
 		}
 		
@@ -112,6 +112,13 @@ function Bomber(game, x, y) {
 		this.dx = game.background.dx;
 		this.disabled = true;
 		this.crashed = true;
+		
+		//calculate the explosion coordinates		
+		var explosionX = this.x;
+		var explosionY = this.y + 50;
+
+		//add an explosion
+		game.explosions.push(new Explosion(game, explosionX, explosionY, game.background.dx, 0, false));
 	};
 	
 	/**

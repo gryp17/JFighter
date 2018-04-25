@@ -57,8 +57,11 @@ function Fighter(game, x, y) {
 		this.x = this.x + this.dx;
 		this.y = this.y + this.dy;
 
+		if(this.disabled === false){
+			//TODO:
+		}
 		//slowly descend the fighter until it crashes
-		if (this.disabled) {
+		else if(this.crashed === false){
 			this.freeFall();
 		}
 
@@ -90,6 +93,13 @@ function Fighter(game, x, y) {
 		this.dx = game.background.dx;
 		this.disabled = true;
 		this.crashed = true;
+		
+		//calculate the explosion coordinates		
+		var explosionX = this.x - 50;
+		var explosionY = this.y - 10;
+
+		//add an explosion
+		game.explosions.push(new Explosion(game, explosionX, explosionY, game.background.dx, 0, false));
 	};
 
 	/**

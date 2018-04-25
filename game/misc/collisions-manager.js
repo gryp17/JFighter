@@ -64,7 +64,9 @@ function CollisionsManager(game) {
 
 		//bottom end of screen
 		if (plane.y + plane.currentImage.height > plane.canvas.height - game.background.groundHeight) {
-			plane.crash();
+			if(plane.crashed === false){
+				plane.crash();
+			}
 		}
 		
 		//check if the plane has been hit by any of the bombers bombs
@@ -177,7 +179,9 @@ function CollisionsManager(game) {
 
 			//when the bomber touches the ground raise the disabled and crashed flags and "anchor" it to the ground
 			if (bomber.y + bomber.currentImage.height > bomber.canvas.height - game.background.groundHeight) {
-				bomber.crash();
+				if(bomber.crashed === false){
+					bomber.crash();
+				}
 			}
 
 			//check if the bomber has collided with the plane
@@ -292,7 +296,9 @@ function CollisionsManager(game) {
 
 			//when the fighter touches the ground raise the disabled and crashed flags and "anchor" it to the ground
 			if (fighter.y + fighter.currentImage.height > fighter.canvas.height - game.background.groundHeight) {
-				fighter.crash();
+				if(fighter.crashed === false){
+					fighter.crash();
+				}
 			}
 
 			//check if the fighter has collided with the plane
