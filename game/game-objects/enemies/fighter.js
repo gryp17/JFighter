@@ -58,7 +58,7 @@ function Fighter(game, x, y) {
 		this.y = this.y + this.dy;
 
 		if(this.disabled === false){
-			//TODO:
+			this.followFighter();
 		}
 		//slowly descend the fighter until it crashes
 		else if(this.crashed === false){
@@ -75,6 +75,61 @@ function Fighter(game, x, y) {
 	this.disable = function () {
 		this.disabled = true;
 		this.health = 0;
+	};
+	
+	/**
+	 * Try to follow the fighter (player) plane by staying on the same altitude
+	 */
+	this.followFighter = function (){
+		var horizontalDistance = this.x - game.plane.x + game.plane.currentImage.width;
+		var verticalDistance = (this.y + game.background.offset + this.currentImage.height) - game.plane.y;
+		
+		//if the player plane is close horizontally
+		if(horizontalDistance > 0 && horizontalDistance < this.canvas.width - 100){
+			//if the player plane is flying on lower altitude - descend
+			if(verticalDistance < 0){
+				this.descend();
+			}
+			//if the player plane is flying on highter altitude - climb
+			else if(verticalDistance > 50){
+				this.climb();
+			}
+			//the player plane is flying on similar altitude and the fighter can shoot
+			else{
+				this.level();
+			}
+		}else{
+			this.level();
+		}
+	};
+	
+	/**
+	 * Makes the fighter climb until it reaches it's max climb speed
+	 */
+	this.climb = function (){
+		if(this.dy > (this.stats.CLIMB_SPEED * -1)){
+			this.dy = this.dy - 0.1;
+		}
+	};
+	
+	/**
+	 * Makes the fighter descend until it reaches it's max descend speed
+	 */
+	this.descend = function (){
+		if(this.dy < this.stats.DESCEND_SPEED){
+			this.dy = this.dy + 0.1;
+		}
+	};
+	
+	/**
+	 * Ascends/Descends the plane slowly until it starts flying in straight line (dy = 0)
+	 */
+	this.level = function (){
+		if(this.dy < 0){
+			this.descend();
+		}else if(this.dy > 0){
+			this.climb();
+		}
 	};
 
 	/**

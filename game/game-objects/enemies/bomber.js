@@ -205,7 +205,7 @@ function Bomber(game, x, y) {
 	};
 	
 	/**
-	 * Try to avoid the fighter plane by always flying higher
+	 * Try to avoid the fighter (player) plane by always flying higher
 	 */
 	this.avoidFighters = function (){
 		var horizontalDistance = this.x - game.plane.x + game.plane.currentImage.width;
@@ -213,9 +213,40 @@ function Bomber(game, x, y) {
 		
 		//if the fighter gets too close - fly up
 		if(horizontalDistance > 0 && horizontalDistance < this.canvas.width - 300 && verticalDistance > -100){
-			this.dy = -1;
-		}else{
-			this.dy = 0;
+			this.climb();
+		}
+		//otherwise level the bomber
+		else{
+			this.level();
+		}
+	};
+	
+	/**
+	 * Makes the bomber climb until it reaches it's max climb speed
+	 */
+	this.climb = function (){
+		if(this.dy > (this.stats.CLIMB_SPEED * -1)){
+			this.dy = this.dy - 0.1;
+		}
+	};
+	
+	/**
+	 * Makes the bomber descend until it reaches it's max descend speed
+	 */
+	this.descend = function (){
+		if(this.dy < this.stats.DESCEND_SPEED){
+			this.dy = this.dy + 0.1;
+		}
+	};
+	
+	/**
+	 * Ascends/Descends the bomber slowly until it starts flying in straight line (dy = 0)
+	 */
+	this.level = function (){
+		if(this.dy < 0){
+			this.descend();
+		}else if(this.dy > 0){
+			this.climb();
 		}
 	};
 	
