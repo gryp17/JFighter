@@ -299,26 +299,6 @@ function Fighter(game, x, y) {
 			
 		}
 		
-		
-		/*
-		var bulletX = this.x + (this.currentImage.width / 2);
-		var bulletY = this.y + (this.currentImage.height / 2);
-		var bulletDx = -25;
-		var bulletDy = 0;
-		var angle = this.angle;
-		this.shooting = true;
-
-		//calculate the speed and angle if the plane is moving down or up
-		if (this.dy > 0) {
-			angle = this.dy;
-			bulletDy = this.dy * (angle / 1.5);
-		} else if (this.dy < 0) {
-			angle = this.dy;
-			bulletDy = this.dy * (angle / 1.5) * -1;
-		}
-
-		this.bullets.push(new Bullet(game, bulletX, bulletY, bulletDx, bulletDy, angle, this));
-		*/
 	};
 
 	/**
