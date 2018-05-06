@@ -66,7 +66,7 @@ function Bomber(game, x, y) {
 				
 		if(this.disabled === false){
 			//always fly higher than the fighter plane
-			this.avoidFighters();
+			this.avoidPlayer();
 		}
 		//slowly descend the bomber until it crashes
 		else if(this.crashed === false){
@@ -207,7 +207,7 @@ function Bomber(game, x, y) {
 	/**
 	 * Try to avoid the fighter (player) plane by always flying higher
 	 */
-	this.avoidFighters = function (){
+	this.avoidPlayer = function (){
 		var horizontalDistance = this.x - game.plane.x + game.plane.currentImage.width;
 		var verticalDistance = (this.y + game.background.offset + this.currentImage.height) - game.plane.y;
 		

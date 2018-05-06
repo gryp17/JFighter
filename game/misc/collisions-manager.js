@@ -39,11 +39,20 @@ function CollisionsManager(game) {
 		var plane = game.plane;
 		var planeHitbox = plane.getHitbox();
 		
-		//separate the bombers from the list of enemies
-		var bombers = _.filter(game.enemies, function (enemy) {
-			return enemy.constructor === Bomber;
+		//separate the enemies by type
+		var bombers = [];
+		var fighters = [];
+						
+		game.enemies.forEach(function (enemy){
+			switch(enemy.constructor){
+				case Bomber:
+					bombers.push(enemy);
+					break;
+				case Fighter:
+					fighters.push(enemy);
+			}
 		});
-
+		
 		//top end of screen
 		if (plane.y < 0) {
 			plane.y = 0;
@@ -79,6 +88,19 @@ function CollisionsManager(game) {
 			});
 		});
 		
+		//check if the plane has been hit by any of the fighters bullets
+		fighters.forEach(function (fighter){
+			fighter.bullets.forEach(function (bullet){
+				if (Utils.collidesWith(planeHitbox, bullet.getHitbox())) {	
+					//damage the plane
+					plane.health = plane.health - bullet.damage;
+
+					//make the bullet explode
+					bullet.explode();
+				}
+			});
+		});
+		
 		//handle the plane bullets ground and canvas collisions
 		this.handlePlaneBullets();
 
@@ -95,7 +117,7 @@ function CollisionsManager(game) {
 		game.plane.bullets.forEach(function (bullet) {
 
 			//check if the bullet has hit the ground
-			if (bullet.y >= bullet.canvas.height - 30) {
+			if (bullet.y >= bullet.canvas.height - game.background.groundHeight) {
 				//make the bullet explode
 				bullet.explode();
 			}
@@ -277,6 +299,7 @@ function CollisionsManager(game) {
 	 * Handles all fighters collisions
 	 */
 	this.handleFighters = function () {
+		var self = this;
 		
 		//separate the fighters from the list of enemies
 		var fighters = _.filter(game.enemies, function (enemy) {
@@ -324,6 +347,32 @@ function CollisionsManager(game) {
 					fighter.disable();
 				}
 			});
+			
+			//handle the fighter bullets ground and canvas collisions
+			self.handleFighterBullets(fighter);
+		});
+		
+	};
+	
+	/**
+	 * Handles all fighter bullets ground and canvas collisions
+	 * @param {Fighter} fighter
+	 */
+	this.handleFighterBullets = function (fighter) {
+
+		//for each fighter bullet...
+		fighter.bullets.forEach(function (bullet) {
+
+			//check if the bullet has hit the ground
+			if (bullet.y >= bullet.canvas.height - game.background.groundHeight) {
+				//make the bullet explode
+				bullet.explode();
+			}
+
+			//check if the bullet has left the canvas
+			if (bullet.x + bullet.currentImage.width < 0) {
+				bullet.active = false;
+			}
 		});
 
 	};

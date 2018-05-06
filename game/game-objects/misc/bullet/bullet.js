@@ -6,9 +6,10 @@
  * @param {Number} dx
  * @param {Number} dy
  * @param {Number} angle
- * @returns {PlaneBullet}
+ * @param {Plane|Fighter} plane
+ * @returns {Bullet}
  */
-function PlaneBullet(game, x, y, dx, dy, angle) {
+function Bullet(game, x, y, dx, dy, angle, plane) {
 	this.context = game.contexts.projectiles.context;
 	this.canvas = game.contexts.projectiles.canvas;
 		
@@ -18,7 +19,7 @@ function PlaneBullet(game, x, y, dx, dy, angle) {
 	this.active = true;
 	
 	//stats
-	this.damage = game.plane.stats.DAMAGE;
+	this.damage = plane.stats.DAMAGE;
 	
 	//positioning and speed
 	this.dx = dx;
@@ -28,7 +29,7 @@ function PlaneBullet(game, x, y, dx, dy, angle) {
 	this.angle = angle;
 
 	/**
-	 * Draws the plane bullet
+	 * Draws the bullet
 	 */
 	this.draw = function () {
 		this.x = this.x + this.dx;

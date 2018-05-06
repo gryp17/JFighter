@@ -351,7 +351,7 @@ function Plane(game) {
 				bulletY = bulletY - game.background.offset / 7;
 			}
 						
-			this.bullets.push(new PlaneBullet(game, bulletX, bulletY, bulletDx, bulletDy, angle));
+			this.bullets.push(new Bullet(game, bulletX, bulletY, bulletDx, bulletDy, angle, this));
 		}
 	};
 

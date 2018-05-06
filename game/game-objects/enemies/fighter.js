@@ -35,6 +35,16 @@ function Fighter(game, x, y) {
 	this.sprite = new Sprite(this.images.SPRITE.DEFAULT, 2, true);
 	this.currentImage = this.images.SPRITE.DEFAULT[0];
 
+	//bullets
+	this.shooting = false;
+	this.burstSize = this.stats.BULLET_BURST_SIZE;
+	this.bulletDelay = this.stats.BULLET_DELAY;
+	this.burstCooldown = this.stats.BULLET_BURST_COOLDOWN;
+	this.delayTimer = 0;
+	this.burstTimer = 0;
+	this.bulletsShot = 0;
+	this.bullets = [];
+
 	/**
 	 * Draws the fighter object
 	 */
@@ -57,16 +67,23 @@ function Fighter(game, x, y) {
 		this.x = this.x + this.dx;
 		this.y = this.y + this.dy;
 
+		//if the fighter is not disabled follow the player (fighter) and shoot at him
 		if(this.disabled === false){
-			this.followFighter();
+			this.engagePlayer();
 		}
 		//slowly descend the fighter until it crashes
 		else if(this.crashed === false){
 			this.freeFall();
 		}
+		
+		//updates the bullets delay/cooldown/burst values
+		this.updateBulletsStatus();
 
-		//draw the bomber
+		//draw the fighter
 		this.drawFighter();
+		
+		//draw the fighter bullets
+		this.drawBullets();
 	};
 
 	/**
@@ -76,16 +93,17 @@ function Fighter(game, x, y) {
 		this.disabled = true;
 		this.health = 0;
 	};
-	
+		
 	/**
-	 * Try to follow the fighter (player) plane by staying on the same altitude
+	 * Try to follow and shoot the fighter (player) plane by staying on the same altitude
 	 */
-	this.followFighter = function (){
+	this.engagePlayer = function (){
 		var horizontalDistance = this.x - game.plane.x + game.plane.currentImage.width;
 		var verticalDistance = (this.y + game.background.offset + this.currentImage.height) - game.plane.y;
 		
 		//if the player plane is close horizontally
-		if(horizontalDistance > 0 && horizontalDistance < this.canvas.width - 100){
+		if(horizontalDistance > 0 && horizontalDistance < this.canvas.width / 1.1){
+			
 			//if the player plane is flying on lower altitude - descend
 			if(verticalDistance < 0){
 				this.descend();
@@ -98,11 +116,17 @@ function Fighter(game, x, y) {
 			else{
 				this.level();
 			}
+			
+			//if the player plane within shooting range - shoot
+			if (verticalDistance > -100 && verticalDistance < 100) {
+				this.shoot();
+			}
+			
 		}else{
 			this.level();
 		}
 	};
-	
+		
 	/**
 	 * Makes the fighter climb until it reaches it's max climb speed
 	 */
@@ -185,6 +209,20 @@ function Fighter(game, x, y) {
 		//and restore the co-ords to how they were when we began
 		this.context.restore();
 	};
+	
+	/**
+	 * Draws all fighter bullets that are inside the canvas and haven't hit anything (ground, enemy...)
+	 */
+	this.drawBullets = function (){
+		this.bullets = _.filter(this.bullets, function (bullet) {
+			if (bullet.active === false) {
+				return false;
+			}else{
+				bullet.draw();
+				return true;
+			}
+		});
+	};
 
 	/**
 	 * Updates the "currentImage" with the correct sprite image
@@ -196,6 +234,91 @@ function Fighter(game, x, y) {
 		} else {
 			this.currentImage = this.sprite.move();
 		}
+	};
+	
+	/**
+	 * Updates the bullets burst cooldown/delay parameters
+	 */
+	this.updateBulletsStatus = function (){
+		
+		//bullet delay
+		if (this.shooting === true) {
+			this.delayTimer++;
+			
+			//reset the bullet delay timer
+			if (this.delayTimer > this.bulletDelay) {
+				this.shooting = false;
+				this.delayTimer = 0;
+			}
+			
+		}
+		
+		//burst cooldown (start the cooldown timer only if all burst bullets have been shot)
+		if(this.bulletsShot === this.burstSize){
+			this.burstTimer++;
+
+			//reset the burst timer
+			if (this.burstTimer > this.burstCooldown) {
+				this.bulletsShot = 0;
+				this.burstTimer = 0;
+			}
+		}
+		
+	};
+	
+	/**
+	 * Makes the fighter shoot a single bullet
+	 */
+	this.shoot = function () {
+		
+		//if the fighter is inside the screen and is not disabled
+		if(this.x < this.canvas.width && this.disabled === false){
+						
+			//shoot only if the bullet is not on cooldown and if the number of bullets per burst doesn't exceed the burst size
+			if (this.shooting === false && this.bulletsShot < this.burstSize) {
+				var bulletX = this.x + (this.currentImage.width / 2);
+				var bulletY = this.y + (this.currentImage.height / 2);
+				var bulletDx = -25;
+				var bulletDy = 0;
+				var angle = this.angle;
+				this.shooting = true;
+
+				//calculate the speed and angle if the plane is moving down or up
+				if (this.dy > 0) {
+					angle = this.dy;
+					bulletDy = this.dy * (angle / 1.5);
+				} else if (this.dy < 0) {
+					angle = this.dy;
+					bulletDy = this.dy * (angle / 1.5) * -1;
+				}
+
+				this.bulletsShot++;
+
+				this.bullets.push(new Bullet(game, bulletX, bulletY, bulletDx, bulletDy, angle, this));
+			}
+			
+		}
+		
+		
+		/*
+		var bulletX = this.x + (this.currentImage.width / 2);
+		var bulletY = this.y + (this.currentImage.height / 2);
+		var bulletDx = -25;
+		var bulletDy = 0;
+		var angle = this.angle;
+		this.shooting = true;
+
+		//calculate the speed and angle if the plane is moving down or up
+		if (this.dy > 0) {
+			angle = this.dy;
+			bulletDy = this.dy * (angle / 1.5);
+		} else if (this.dy < 0) {
+			angle = this.dy;
+			bulletDy = this.dy * (angle / 1.5) * -1;
+		}
+
+		this.bullets.push(new Bullet(game, bulletX, bulletY, bulletDx, bulletDy, angle, this));
+		*/
 	};
 
 	/**
