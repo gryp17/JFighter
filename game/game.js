@@ -16,6 +16,7 @@ function Game(images, planeStats, enemyStats, levelsData) {
 	this.selectedPlane;
 	this.selectedLevel;
 	this.inputs;
+	this.deadCivilians;
 	
 	//initialize the keyboard controls
 	this.keyboard = new Keyboard();
@@ -24,7 +25,7 @@ function Game(images, planeStats, enemyStats, levelsData) {
 	this.collisionsManager = new CollisionsManager(this);
 	
 	//initialize the HUD object
-	this.HUD = new HUD(this, $("#HUD"));
+	this.HUD = new HUD(this, "#HUD");
 	
 	//initialize the HARPP (get it?) object
 	this.HARPP = new HARPP(this);
@@ -48,6 +49,7 @@ function Game(images, planeStats, enemyStats, levelsData) {
 	this.start = function (selectedPlane, selectedLevel) {
 		this.selectedPlane = selectedPlane;
 		this.selectedLevel = selectedLevel;
+		this.deadCivilians = 0;
 				
 		this.contexts.background.canvas.focus();
 		

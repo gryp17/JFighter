@@ -437,14 +437,14 @@ function CollisionsManager(game) {
 			
 			bombs.forEach(function (bomb){
 				//kill the civilian right when the bomb touches the ground (active === false)
-				if(bomb.active === false && Utils.collidesWith(civilianHitbox, bomb.getExplosionHitbox())){
+				if(civilian.dead === false && bomb.active === false && Utils.collidesWith(civilianHitbox, bomb.getExplosionHitbox())){
 					civilian.die();
 				}
 			});
 			
 			//check if the civilian has been hit by the plane bullets
 			game.plane.bullets.forEach(function (bullet){
-				if(Utils.collidesWith(civilianHitbox, bullet.getHitbox())){
+				if(civilian.dead === false && Utils.collidesWith(civilianHitbox, bullet.getHitbox())){
 					bullet.explode();
 					civilian.die();
 				}
@@ -452,7 +452,7 @@ function CollisionsManager(game) {
 			
 			//check if the civilian has been hit/ran over by an enemy tank (sherman)
 			shermans.forEach(function (sherman){
-				if(Utils.collidesWith(civilianHitbox, sherman.getHullHitbox())){
+				if(civilian.dead === false && Utils.collidesWith(civilianHitbox, sherman.getHullHitbox())){
 					civilian.die();
 				}
 			});

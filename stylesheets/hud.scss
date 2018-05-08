@@ -80,4 +80,21 @@
 			}
 		}
 	}
+	
+	.civilians-status{
+		position: absolute;
+		right: 0px;
+		margin-right: 10px;
+		max-width: 470px;
+		text-align: right;
+		
+		img{
+			width: 24px;
+			vertical-align: top;
+			
+			&.dead{
+				opacity: 0.4;
+			}
+		}
+	}
 }

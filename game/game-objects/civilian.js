@@ -55,6 +55,9 @@ function Civilian(game, x, y) {
 	 * Makes the civilian die
 	 */
 	this.die = function (){
+		//increment the global dead civilians counter
+		game.deadCivilians++;
+		
 		this.dead = true;
 		this.y = 580;
 		this.dx = game.background.dx;

@@ -1,10 +1,11 @@
 /**
  * Class used for displaying the HUD elements of the game
  * @param {Game} game
- * @param {Object} element
+ * @param {String} selector
  * @returns {HUD}
  */
-function HUD(game, element) {	
+function HUD(game, selector) {
+	this.element = $(selector);
 	this.visible = false;
 	
 	//color constants 
@@ -29,7 +30,7 @@ function HUD(game, element) {
 	 * Draws the HUD using the Game parameters
 	 */
 	this.draw = function (){
-		element.css("display", this.visible ? "block": "none");
+		this.element.css("display", this.visible ? "block": "none");
 		
 		if(this.visible){
 			this.drawHealth();
@@ -37,6 +38,7 @@ function HUD(game, element) {
 			this.drawPitch();
 			this.drawHeat();
 			this.drawLoadedBombs();
+			this.drawCiviliansStatus();
 		}
 	};
 	
@@ -48,7 +50,7 @@ function HUD(game, element) {
 		var currentHealth = game.plane.health;
 		var maxHealth = game.planeStats[game.selectedPlane].HEALTH;
 
-		var healthBar = element.find(".health-bar");
+		var healthBar = this.element.find(".health-bar");
 		var health = healthBar.find(".current");
 
 		//calculate the pixels per HP
@@ -71,7 +73,7 @@ function HUD(game, element) {
 		var currentThrottle = game.plane.dx + 1;
 		var maxSpeed = game.planeStats[game.selectedPlane].MAX_SPEED + 1;
 		
-		var throttleBar = element.find(".throttle-bar");
+		var throttleBar = this.element.find(".throttle-bar");
 		var throttle = throttleBar.find(".current");
 		
 		//calculate the pixels per throttle
@@ -97,7 +99,7 @@ function HUD(game, element) {
 		var currentPitch = game.plane.dy + 3;
 		var maxPitch = 6; //3 + 3
 		
-		var pitchBar = element.find(".pitch-bar");
+		var pitchBar = this.element.find(".pitch-bar");
 		var pitch = pitchBar.find(".current");
 		
 		//calculate the pixels per pitch
@@ -128,7 +130,7 @@ function HUD(game, element) {
 		var currentHeat = game.plane.machinegunHeat;
 		var maxHeat = game.planeStats[game.selectedPlane].MAX_MACHINEGUN_HEAT;
 
-		var heatBar = element.find(".heat-bar");
+		var heatBar = this.element.find(".heat-bar");
 		var span = heatBar.find("span");
 		var heat = heatBar.find(".current");
 
@@ -159,7 +161,7 @@ function HUD(game, element) {
 		var currentBombs = game.plane.loadedBombs;
 		var maxLoadedBombs = game.plane.stats.MAX_BOMBS;
 		
-		var loadedBombsIndicator = element.find(".loaded-bombs");
+		var loadedBombsIndicator = this.element.find(".loaded-bombs");
 		
 		//generate the correct number of bombs with their classes
 		loadedBombsIndicator.empty();
@@ -170,6 +172,27 @@ function HUD(game, element) {
 			});
 			
 			loadedBombsIndicator.append(bomb);
+		}
+	};
+	
+	/**
+	 * Draws the civilians status indicator
+	 */
+	this.drawCiviliansStatus = function (){
+		var totalCivilians = game.levelsData[game.selectedLevel].CIVILIANS.length;
+		var deadCivilians = game.deadCivilians;
+		
+		var civiliansStatus = this.element.find(".civilians-status");
+				
+		//generate the correct number of dead/alive civilians
+		civiliansStatus.empty();
+		for(var i = 0; i < totalCivilians; i++){
+			var civilian = $("<img>", {
+				src: "img/hud/running_civilian_icon.png",
+				class: i + 1 <= deadCivilians ? "dead" : ""
+			});
+			
+			civiliansStatus.append(civilian);
 		}
 	};
 }
