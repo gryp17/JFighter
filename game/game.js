@@ -34,7 +34,8 @@ function Game(images, planeStats, enemyStats, levelsData) {
 		background: new Context("background-canvas"),
 		plane: new Context("plane-canvas"),
 		civilians: new Context("civilians-canvas"),
-		enemies: new Context("enemies-canvas"),
+		airEnemies: new Context("air-enemies-canvas"),
+		groundEnemies: new Context("ground-enemies-canvas"),
 		projectiles: new Context("projectiles-canvas"),
 		weather: new Context("weather-canvas")
 	};
@@ -119,8 +120,9 @@ function Game(images, planeStats, enemyStats, levelsData) {
 		//draw the plane
 		self.plane.draw();
 
-		//clear the entire enemies context before drawing any of the enemies
-		self.contexts.enemies.context.clearRect(0, 0, self.contexts.enemies.canvas.width, self.contexts.enemies.canvas.height);
+		//clear the entire enemies contexts before drawing any of the enemies
+		self.contexts.airEnemies.context.clearRect(0, 0, self.contexts.airEnemies.canvas.width, self.contexts.airEnemies.canvas.height);
+		self.contexts.groundEnemies.context.clearRect(0, 0, self.contexts.groundEnemies.canvas.width, self.contexts.groundEnemies.canvas.height);
 
 		//draw all enemies that are still on the screen
 		self.enemies = _.filter(self.enemies, function (enemy){

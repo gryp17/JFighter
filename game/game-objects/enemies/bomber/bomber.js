@@ -6,8 +6,8 @@
  * @returns {Bomber}
  */
 function Bomber(game, x, y) {
-	this.context = game.contexts.enemies.context;
-	this.canvas = game.contexts.enemies.canvas;
+	this.context = game.contexts.airEnemies.context;
+	this.canvas = game.contexts.airEnemies.canvas;
 			
 	this.images = game.images.ENEMIES.B17;
 	

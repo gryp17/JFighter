@@ -6,8 +6,8 @@
  * @returns {Bomber}
  */
 function Sherman(game, x, y) {
-	this.context = game.contexts.enemies.context;
-	this.canvas = game.contexts.enemies.canvas;
+	this.context = game.contexts.groundEnemies.context;
+	this.canvas = game.contexts.groundEnemies.canvas;
 			
 	this.images = game.images.ENEMIES.SHERMAN;
 	

@@ -6,8 +6,8 @@
  * @returns {Fighter}
  */
 function Fighter(game, x, y) {
-	this.context = game.contexts.enemies.context;
-	this.canvas = game.contexts.enemies.canvas;
+	this.context = game.contexts.airEnemies.context;
+	this.canvas = game.contexts.airEnemies.canvas;
 
 	this.models = ["MUSTANG", "SPITFIRE"];
 	this.model = this.models[_.random(0, this.models.length - 1)]; //pick one of the fighter models

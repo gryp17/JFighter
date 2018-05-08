@@ -89,7 +89,7 @@ var LEVELS_DATA = {
 				objectType: "Fighter",
 				arguments: {
 					x: 1600,
-					y: 150
+					y: 300
 				}
 			}
 		]
