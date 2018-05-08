@@ -42,6 +42,7 @@ function CollisionsManager(game) {
 		//separate the enemies by type
 		var bombers = [];
 		var fighters = [];
+		var shermans = [];
 						
 		game.enemies.forEach(function (enemy){
 			switch(enemy.constructor){
@@ -50,6 +51,10 @@ function CollisionsManager(game) {
 					break;
 				case Fighter:
 					fighters.push(enemy);
+					break;
+				case Sherman:
+					shermans.push(enemy);
+					break;
 			}
 		});
 		
@@ -88,9 +93,11 @@ function CollisionsManager(game) {
 			});
 		});
 		
-		//check if the plane has been hit by any of the fighters bullets
-		fighters.forEach(function (fighter){
-			fighter.bullets.forEach(function (bullet){
+		//check if the plane has been hit by any of the fighters or shermans bullets
+		var shooters = fighters.concat(shermans);
+		
+		shooters.forEach(function (shooter){
+			shooter.bullets.forEach(function (bullet){
 				if (Utils.collidesWith(planeHitbox, bullet.getHitbox())) {	
 					//damage the plane
 					plane.health = plane.health - bullet.damage;
@@ -291,8 +298,24 @@ function CollisionsManager(game) {
 				}
 			});
 			
+			//handle the fighter bullets ground and canvas collisions
+			self.handleShermanBullets(sherman);
 		});
 		
+	};
+	
+	/**
+	 * Handles all sherman bullets ground and canvas collisions
+	 * @param {Sherman} sherman
+	 */
+	this.handleShermanBullets = function (sherman) {
+		//for each sherman bullet...
+		sherman.bullets.forEach(function (bullet) {
+			//check if the bullet has left the canvas
+			if (bullet.x + bullet.currentImage.width < 0) {
+				bullet.active = false;
+			}
+		});
 	};
 	
 	/**
@@ -393,6 +416,7 @@ function CollisionsManager(game) {
 					break;
 				case Sherman:
 					shermans.push(enemy);
+					break;
 			}
 		});
 		

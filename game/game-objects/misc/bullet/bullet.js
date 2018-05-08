@@ -1,15 +1,15 @@
 /**
- * Class used for the player's plane bullets
+ * Class used for the game bullets
  * @param {Game} game
  * @param {Number} x
  * @param {Number} y
  * @param {Number} dx
  * @param {Number} dy
  * @param {Number} angle
- * @param {Plane|Fighter} plane
+ * @param {Plane|Fighter|Sherman} source
  * @returns {Bullet}
  */
-function Bullet(game, x, y, dx, dy, angle, plane) {
+function Bullet(game, x, y, dx, dy, angle, source) {
 	this.context = game.contexts.projectiles.context;
 	this.canvas = game.contexts.projectiles.canvas;
 		
@@ -19,7 +19,7 @@ function Bullet(game, x, y, dx, dy, angle, plane) {
 	this.active = true;
 	
 	//stats
-	this.damage = plane.stats.DAMAGE;
+	this.damage = source.stats.DAMAGE;
 	
 	//positioning and speed
 	this.dx = dx;
