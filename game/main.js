@@ -2,6 +2,13 @@
 var IMAGE_REPOSITORY = new ImageRepository(GAME_IMAGES, function () {
 	var menu = new Menu();
 	
+	//build the levels data object
+	var LEVELS_DATA = {
+		GRASSLAND: GRASSLAND,
+		DESERT: DESERT,
+		WINTER: WINTER
+	};
+	
 	//display the menu and start the game once a plane and level have been chosen
 	menu.showMenu(function (selectedPlane, selectedLevel){
 		var game = new Game(IMAGE_REPOSITORY.images, PLANE_STATS, ENEMY_STATS, LEVELS_DATA);
