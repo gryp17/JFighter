@@ -9,7 +9,7 @@
 	width: 300px;
 	padding: 10px;
 	border-radius: 5px;
-	background-color: rgba(0, 0, 0, 0.5);
+	background-color: rgba(0, 25, 57, 0.5);
 	color: #ffffff;
 	z-index: 2;
 	
@@ -17,13 +17,26 @@
 		text-align: center;
 	}
 	
+	hr{
+		margin-top: 5px;
+		border: none;
+		border-top: solid 1px #ffffff;
+	}
+	
 	.option{
-		margin: 10px 0px;
+		margin: 5px 0px;
+		padding: 10px;
 		text-align: center;
+		border-radius: 5px;
 		cursor: pointer;
 		
+		&:last-child{
+			margin-bottom: 0px;
+		}
+		
 		&:hover{
-			color: #27a2ff;
+			color: #026dbf;
+			background-color: rgba(255, 255, 255, 0.6);
 		}
 	}
 }
