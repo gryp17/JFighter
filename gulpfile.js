@@ -16,7 +16,7 @@ var AutoPrefixerOptions = {
 
 var cssAppSource = "./stylesheets/**/*.scss";
 var cssDestination = "./min/css";
-var jsAppSource = ["./game/res/**/*.js", "./game/**/*.js"];
+var jsAppSource = ["./game/resources/**/*.js", "./game/**/*.js"];
 var jsDestination = "./min/js";
 var jsLibsDestination = "./min/js";
 
