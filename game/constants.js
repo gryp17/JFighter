@@ -1,8 +1,7 @@
 var CONSTANTS = {
 	GAME_STATE: {
-		MAIN_MENU: 0,
-		PLAYING: 1,
-		GAME_OVER: 2,
-		PAUSED: 3
+		ACTIVE: 1,
+		PAUSED: 2,
+		GAME_OVER: 3
 	}
 };

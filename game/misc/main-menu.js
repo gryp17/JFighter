@@ -1,8 +1,8 @@
 /**
- * Class used for handling the game menu
- * @returns {Menu}
+ * Class used for handling the main menu
+ * @returns {MainMenu}
  */
-function Menu() {
+function MainMenu() {
 	var self = this;
 	this.selectedPlane = null;
 	this.selectedLevel = null;

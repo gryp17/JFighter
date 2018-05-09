@@ -1,6 +1,6 @@
 //load all the game images
 var IMAGE_REPOSITORY = new ImageRepository(GAME_IMAGES, function () {
-	var menu = new Menu();
+	var mainMenu = new MainMenu();
 	
 	//build the levels data object
 	var LEVELS_DATA = {
@@ -9,8 +9,8 @@ var IMAGE_REPOSITORY = new ImageRepository(GAME_IMAGES, function () {
 		WINTER: WINTER
 	};
 	
-	//display the menu and start the game once a plane and level have been chosen
-	menu.showMenu(function (selectedPlane, selectedLevel){
+	//display the main menu and start the game once a plane and level have been chosen
+	mainMenu.showMenu(function (selectedPlane, selectedLevel){
 		var game = new Game(IMAGE_REPOSITORY.images, PLANE_STATS, ENEMY_STATS, LEVELS_DATA);
 		game.start(selectedPlane, selectedLevel);
 	});

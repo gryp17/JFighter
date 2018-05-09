@@ -9,6 +9,8 @@
 function Game(images, planeStats, enemyStats, levelsData) {
 	var self = this;
 
+	this.frameId;
+	this.status;
 	this.images = images;
 	this.planeStats = planeStats;
 	this.enemyStats = enemyStats;
@@ -29,6 +31,9 @@ function Game(images, planeStats, enemyStats, levelsData) {
 	
 	//initialize the HARPP (get it?) object
 	this.HARPP = new HARPP(this);
+	
+	//initialize the (game) menu
+	this.menu = new GameMenu(this);
 
 	//canvas/context objects
 	this.contexts = {
@@ -47,6 +52,10 @@ function Game(images, planeStats, enemyStats, levelsData) {
 	 * @param {String} selectedLevel
 	 */
 	this.start = function (selectedPlane, selectedLevel) {
+		//clear the frame id before starting the game in case there is another timer running already
+		this.clearFrameId();
+		
+		this.status = CONSTANTS.GAME_STATE.ACTIVE;
 		this.selectedPlane = selectedPlane;
 		this.selectedLevel = selectedLevel;
 		this.deadCivilians = 0;
@@ -100,12 +109,29 @@ function Game(images, planeStats, enemyStats, levelsData) {
 		//start the game loop
 		this.animate();
 	};
+	
+	/**
+	 * Clears the frame id of the animation loop
+	 */
+	this.clearFrameId = function () {
+		if(this.frameId){
+			clearTimeout(this.frameId);
+			window.cancelAnimationFrame(this.frameId);
+			this.frameId = undefined;
+		}
+	};
 
 	/**
 	 * Starts the animation loop
 	 */
 	this.animate = function () {
-		requestAnimFrame(self.animate);
+		//save the frameId and use it when stopping/restarting the game
+		self.frameId = requestAnimFrame(self.animate);
+
+		//if the game is paused don't draw anything
+		if(self.status === CONSTANTS.GAME_STATE.PAUSED){
+			return;
+		}
 
 		//get the current inputs status 
 		self.inputs = self.keyboard.getInputs();
