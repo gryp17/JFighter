@@ -34,13 +34,23 @@ function GameMenu(game) {
 				location.reload();
 			}
 		});
-	});	
+	});
 	
 	/**
-	 * Shows the game menu
+	 * Shows the game pause/game over menu
 	 */
-	this.showMenu = function (){
-		game.status = CONSTANTS.GAME_STATE.PAUSED;
+	this.showMenu = function (gameOver){
+		var title;
+		
+		if(gameOver){
+			game.status = CONSTANTS.GAME_STATE.GAME_OVER;
+			title = "GAME OVER";
+		}else{
+			game.status = CONSTANTS.GAME_STATE.PAUSED;
+			title = "GAME PAUSED";
+		}
+		
+		$("#game-menu h4").html(title);
 		$("#game-menu").fadeIn(100);
 	};
 	

@@ -119,13 +119,16 @@ function Plane(game) {
 		this.disabled = true;
 		this.crashed = true;
 		this.health = 0;
-		
+				
 		//calculate the explosion coordinates		
 		var explosionX = this.x + 50;
 		var explosionY = this.y - 20;
 
 		//add an explosion
 		game.explosions.push(new Explosion(game, explosionX, explosionY, game.background.dx, 0, false));
+		
+		//display the game over menu
+		game.menu.showMenu(true);
 	};
 	
 	/**
