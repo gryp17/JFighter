@@ -14,9 +14,11 @@ var AutoPrefixerOptions = {
 	cascade: false
 };
 
-var cssAppSource = "./stylesheets/**/*.scss";
+var cssGameSource = "./stylesheets/game/**/*.scss";
+var cssLevelEditorSource = "./stylesheets/level-editor/**/*.scss";
 var cssDestination = "./min/css";
-var jsAppSource = ["./game/resources/**/*.js", "./game/**/*.js"];
+var jsGameSource = ["./game/resources/**/*.js", "./game/**/*.js"];
+var jsLevelEditorSource = "./level-editor/**/*.js";
 var jsDestination = "./min/js";
 var jsLibsDestination = "./min/js";
 
@@ -25,16 +27,18 @@ gulp.task("build", function() {
 	del([
 		cssDestination
 	]);
-	gulp.start("styles-min");
+	gulp.start("game-styles");
+	gulp.start("level-editor-styles");
 	gulp.start("js-libs");
-	gulp.start("scripts");
+	gulp.start("game-scripts");
+	gulp.start("level-editor-scripts");
 	gulp.start("watch");
 });
 
-//styles task
-gulp.task("styles-min", function() {
+//game styles task
+gulp.task("game-styles", function() {
 	return gulp.src([
-		cssAppSource
+		cssGameSource
 	]).pipe(sass({
 		precision: 4,
 		outputStyle: "compressed"
@@ -43,7 +47,24 @@ gulp.task("styles-min", function() {
 		return e;
 	})))
 	.pipe(autoprefixer(AutoPrefixerOptions))
-	.pipe(concat("./style.css"))
+	.pipe(concat("./game.css"))
+	.pipe(replace("\n", ""))
+	.pipe(gulp.dest(cssDestination));
+});
+
+//level editor styles task
+gulp.task("level-editor-styles", function() {
+	return gulp.src([
+		cssLevelEditorSource
+	]).pipe(sass({
+		precision: 4,
+		outputStyle: "compressed"
+	})
+	.on("error", notify.onError(function (e) {
+		return e;
+	})))
+	.pipe(autoprefixer(AutoPrefixerOptions))
+	.pipe(concat("./level-editor.css"))
 	.pipe(replace("\n", ""))
 	.pipe(gulp.dest(cssDestination));
 });
@@ -58,10 +79,20 @@ gulp.task("js-libs", function () {
 	.pipe(gulp.dest(jsLibsDestination));
 });
 
-//scripts task
-gulp.task("scripts", function() {
-	return gulp.src(jsAppSource)
+//game scripts task
+gulp.task("game-scripts", function() {
+	return gulp.src(jsGameSource)
 		.pipe(concat("game.js"))
+		.pipe(uglify({
+			mangle: true
+		}))
+		.pipe(gulp.dest(jsDestination));
+});
+
+//level editor scripts task
+gulp.task("level-editor-scripts", function() {
+	return gulp.src(jsLevelEditorSource)
+		.pipe(concat("level-editor.js"))
 		.pipe(uglify({
 			mangle: true
 		}))
@@ -70,6 +101,8 @@ gulp.task("scripts", function() {
 
 //watch task
 gulp.task("watch", function() {
-	gulp.watch(cssAppSource, ["styles-min"]);
-	gulp.watch(jsAppSource, ["scripts"]);
+	gulp.watch(cssGameSource, ["game-styles"]);
+	gulp.watch(cssLevelEditorSource, ["level-editor-styles"]);
+	gulp.watch(jsGameSource, ["game-scripts"]);
+	gulp.watch(jsLevelEditorSource, ["level-editor-scripts"]);
 });
