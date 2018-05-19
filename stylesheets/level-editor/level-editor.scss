@@ -3,6 +3,12 @@
 	padding: 0px;
 }
 
+.game-object{
+	img{
+		width: 76%; //calculated using the background image size and the background-container size
+	}
+}
+
 #container{
 	$controls-height: 150px;
 
@@ -51,6 +57,14 @@
 
 					select{
 						padding: 5px;
+					}
+					
+					.game-object{
+						cursor: pointer;
+						
+						img{
+							width: 75.44%; //calculated using the background image size and the background-container size
+						}
 					}
 
 				}
