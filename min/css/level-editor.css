@@ -1,1 +1,1 @@
-#level-editor{color:red}
+*{margin:0px;padding:0px}#container .background-container{height:600px;width:60000px;background-image:url("../../img/levels/grassland.jpg");background-size:contain}#container .controls-container{display:none;position:fixed;background-color:#e0e0e0}#container .controls-container .controls{width:800px;height:150px;margin:auto}@media (max-width: 800px){#container .controls-container .controls{width:100%}}
