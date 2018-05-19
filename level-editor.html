@@ -7,18 +7,65 @@
 		<link rel="stylesheet" type="text/css" href="min/css/level-editor.css">
 	</head>
 	<body>
-		
+
 		<div id="container">
 			<div class="background-container">
-				
+
 			</div>
-			
+
 			<div class="controls-container">
 				<div class="controls">
-					controls go here
+
+					<form autocomplete="off">
+
+						<!-- level options -->
+						<div class="section">
+							
+							<!-- theme/background -->
+							<div class="item">
+								<div class="label">
+									Theme:
+								</div>
+								<select class="theme">
+									<option value="grassland">GRASSLAND</option>
+									<option value="desert">DESERT</option>
+									<option value="winter">WINTER</option>
+								</select>
+							</div>
+
+							<!-- weather effects -->
+							<div class="item">
+								<div class="label">
+									Weather:
+								</div>
+								<select class="weather">
+									<option value="default">DEFAULT</option>
+									<option value="rain">RAINY</option>
+									<option value="heavy-rain">HEAVY RAIN</option>
+									<option value="snow">SNOW</option>
+								</select>
+							</div>
+						</div>
+						
+						<!-- game objects -->
+						<div class="section">
+							<div class="item">
+								<div class="label">
+									Enemies:
+								</div>
+								
+								game objects go here
+							</div>
+							
+						</div>
+						
+
+
+					</form>
+
 				</div>
 			</div>
-			
+
 		</div>
 
 		<script type="text/javascript" src="min/js/lib.js"></script>

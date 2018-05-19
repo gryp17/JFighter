@@ -4,6 +4,7 @@
 }
 
 #container{
+	$controls-height: 150px;
 
 	.background-container{
 		height: 600px;
@@ -11,20 +12,50 @@
 		background-image: url("../../img/levels/grassland.jpg");
 		background-size: contain;
 	}
-	
+
 	.controls-container{
 		display: none;
 		position: fixed;
 		background-color: #e0e0e0;
-		
+
 		.controls{
 			width: 800px;
-			height: 150px;
+			height: $controls-height;
 			margin: auto;
-			
+			padding: 10px;
+
 			@media (max-width: 800px){
 				width: 100%;
 			}
+
+			.section{
+				display: inline-block;
+				padding: 0px 10px;
+				vertical-align: top;
+				height: $controls-height;
+				
+				+ .section{
+					border-left: solid 1px #c6c6c6;
+				}
+
+				.item{
+					display: block;
+					margin-bottom: 10px;
+
+					.label{
+						display: block;
+						margin-bottom: 2px;
+						font-size: 18px;
+						font-weight: bold;
+					}
+
+					select{
+						padding: 5px;
+					}
+
+				}
+			}
+
 		}
 	}
 }
