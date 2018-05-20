@@ -7,19 +7,30 @@ function LevelEditor(container) {
 	this.controlsContainer = this.container.find(".controls-container");
 	this.controls = this.container.find(".controls");
 	
+	//heights
+	this.canvasHeight = 620;
+	this.backgroundImageHeight = this.backgroundContainer.height();
+	this.heightOffset = this.backgroundImageHeight - this.canvasHeight;
+	
 	//mouse status
 	this.dragging = false;
 	this.draggedObject;
+	
+	//objects that need to be placed on the ground
+	this.groundObjects = {
+		Sherman: {
+			groundDistance: 10
+		},
+		Civilian: {
+			groundDistance: 24
+		}
+	};
+	this.groundHeight = 40;
 
 	/**
 	 * Initialize the level editor by setting all event listeners
 	 */
 	this.init = function () {
-
-		//resize the controls container if the page resizes
-		$(window).resize(function () {
-			self.showControlsContainer();
-		});
 
 		//move the level background on mouse wheel scroll
 		this.backgroundContainer.on("mousewheel", function (e) {
@@ -61,9 +72,18 @@ function LevelEditor(container) {
 					return;
 				}
 				
+				var top = e.pageY;
+				var left = e.pageX;
+				
+				//if the object is a ground object - anchor it to the ground by setting the correct "top" parameter
+				if(self.groundObjects[self.draggedObject.attr("data-object")]){
+					var groundData = self.groundObjects[self.draggedObject.attr("data-object")];
+					top = self.backgroundImageHeight - groundData.groundDistance - self.draggedObject.height();
+				}
+								
 				self.draggedObject.css({
-					top: e.pageY,
-					left: e.pageX
+					top: top,
+					left: left
 				});
 
 				//move the object from the "body" to the background container when it needs to be dropped
@@ -71,8 +91,6 @@ function LevelEditor(container) {
 
 				self.draggedObject = null;
 				self.dragging = false;
-
-				console.log(e.pageX + " --- " + e.pageY);
 			}
 
 		});
@@ -100,10 +118,7 @@ function LevelEditor(container) {
 				var y = offset.top;
 				
 				//normalize the Y coordinate
-				var gameCanvasHeight = 620;
-				var backgroundImageHeight = 768;
-				var heightDifference = backgroundImageHeight - gameCanvasHeight;
-				y = y - heightDifference;
+				y = y - self.heightOffset;
 				
 				enemies.push({
 					objectType: enemy.attr("data-object"),
@@ -117,16 +132,6 @@ function LevelEditor(container) {
 			console.log(enemies);
 		});
 
-		//show the controls
-		this.showControlsContainer();
-	};
-
-	/**
-	 * Sets the controls container to the same width as the document and shows it
-	 */
-	this.showControlsContainer = function () {
-		this.controlsContainer.css("width", $(window).width());
-		this.controlsContainer.fadeIn(500);
 	};
 	
 	/**

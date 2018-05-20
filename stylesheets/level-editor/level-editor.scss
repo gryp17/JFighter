@@ -3,51 +3,53 @@
 	padding: 0px;
 }
 
-.game-object{
-	cursor: pointer;
-}
-
 #container{
 	$controls-height: 100px;
+	$background-container-height: 768px;
 
 	.background-container{
-		height: 768px;
+		height: $background-container-height;
 		width: 60000px; //maybe this should be configurable
 		background-image: url("../../img/levels/grassland.jpg");
 		background-size: contain;
+		
+		.game-object{
+			cursor: move;
+		}
 	}
 
 	.controls-container{
-		display: none;
 		position: fixed;
-		background-color: #e0e0e0;
+		width: 250px;
+		height: $background-container-height;
+		top: 0px;
+		right: 0px;
+		background-color: rgba(0, 0, 0, 0.4);
+		color: #ffffff;
 
 		.controls{
-			width: 800px;
-			height: $controls-height;
-			margin: auto;
-			padding: 10px;
-
-			@media (max-width: 800px){
-				width: 100%;
-			}
+			padding: 0px 10px;
 
 			.section{
-				display: inline-block;
-				padding: 0px 10px;
-				vertical-align: top;
-				height: $controls-height;
-				
+
 				+ .section{
-					border-left: solid 1px #c6c6c6;
+					border-top: solid 1px #c6c6c6;
 				}
 
 				.item{
-					display: block;
 					margin-bottom: 10px;
+
+					&.inline-block{
+						display: inline-block;
+
+						+ .item{
+							margin-left: 10px;
+						}
+					}
 
 					.label{
 						display: block;
+						margin-top: 5px;
 						margin-bottom: 2px;
 						font-size: 18px;
 						font-weight: bold;
@@ -56,20 +58,18 @@
 					select{
 						padding: 5px;
 					}
-					
-					/*
+
+
 					.game-object{
-						cursor: pointer;
-						
+						display: inline-block;
+						cursor: move;
+
 						img{
-							width: 75.44%; //calculated using the background image size and the background-container size
+							max-width: 230px;
 						}
 					}
-					*/
-
 				}
 			}
-
 		}
 	}
 }
