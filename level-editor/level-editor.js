@@ -94,14 +94,16 @@ function LevelEditor(container) {
 			
 			objects.each(function (){
 				var enemy = $(this);
+				var offset = enemy.offset();
 				
-				var x = parseInt(enemy.css("left").replace("px", ""));
-				var y = parseInt(enemy.css("top").replace("px", ""));
+				var x = offset.left;
+				var y = offset.top;
 				
-				//x = x + (x * 24.56/100); 
-				x = x + (x * 30/100); 
-				
-				//TODO: adjust Y as well
+				//normalize the Y coordinate
+				var gameCanvasHeight = 620;
+				var backgroundImageHeight = 768;
+				var heightDifference = backgroundImageHeight - gameCanvasHeight;
+				y = y - heightDifference;
 				
 				enemies.push({
 					objectType: enemy.attr("data-object"),

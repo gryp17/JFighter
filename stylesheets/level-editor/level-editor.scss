@@ -4,19 +4,14 @@
 }
 
 .game-object{
-	
-	&.fighter{
-		img{
-			width: 115px;
-		}
-	}
+	cursor: pointer;
 }
 
 #container{
-	$controls-height: 150px;
+	$controls-height: 100px;
 
 	.background-container{
-		height: 600px;
+		height: 768px;
 		width: 60000px; //maybe this should be configurable
 		background-image: url("../../img/levels/grassland.jpg");
 		background-size: contain;
