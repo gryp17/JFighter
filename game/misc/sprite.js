@@ -43,4 +43,15 @@ function Sprite(images, delay, loop) {
 		return this.currentImage;
 	};
 	
+	/**
+	 * Lets you start the sprite animation from a specified index
+	 * @param {Number} index
+	 * @returns {String}
+	 */
+	this.moveTo = function (index){
+		this.index = index;
+		this.currentImage = this.images[this.index];
+		return this.move();
+	};
+	
 }

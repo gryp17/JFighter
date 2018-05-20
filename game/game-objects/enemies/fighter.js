@@ -33,7 +33,7 @@ function Fighter(game, x, y) {
 
 	//sprite variables
 	this.sprite = new Sprite(this.images.SPRITE.DEFAULT, 2, true);
-	this.currentImage = this.images.SPRITE.DEFAULT[0];
+	this.currentImage = this.sprite.moveTo(_.random(0, this.images.SPRITE.DEFAULT.length - 1)); //start from a random sprite index
 
 	//bullets
 	this.shooting = false;

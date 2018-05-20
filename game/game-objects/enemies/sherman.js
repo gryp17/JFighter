@@ -27,7 +27,7 @@ function Sherman(game, x, y) {
 	
 	//sprite variables
 	this.sprite = new Sprite(this.images.SPRITE, 2, true);
-	this.currentImage = this.images.SPRITE[0];
+	this.currentImage = this.sprite.moveTo(_.random(0, this.images.SPRITE.length - 1)); //start from a random sprite index
 	
 	//bullets
 	this.shooting = false;
