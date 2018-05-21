@@ -1,3 +1,8 @@
+/**
+ * Class that handles all level editor actions
+ * @param {Object} container
+ * @returns {LevelEditor}
+ */
 function LevelEditor(container) {
 	var self = this;
 	
@@ -50,8 +55,14 @@ function LevelEditor(container) {
 		//on mouse move - move the dragged object to the mouse cursor position
 		this.container.mousemove(self.dragGameObject);
 		
+		//on load level select change load the selected level
+		$(".load-level").change(self.loadLevel);
+		
 		//on save button click get all objects and normalize their X and Y coordinates
 		$(".save-level-button").click(self.saveLevel);
+		
+		//generate a random level name when the level editor loads
+		$(".level-name").val("level_"+new Date().getTime());
 
 	};
 	
@@ -170,6 +181,20 @@ function LevelEditor(container) {
 				left: e.pageX
 			});
 		}
+	};
+		
+	/**
+	 * Loads the selected level from the cookies
+	 */
+	this.loadLevel = function () {
+		var selectedLevel = $(this).val();
+		console.log(selectedLevel);
+		
+		//TODO:
+		//load the data from the cookies
+		//set the correct weather and theme
+		//set the "save as" name as the current level name
+		
 	};
 	
 	/**

@@ -3,6 +3,14 @@
 	padding: 0px;
 }
 
+:focus {
+	outline:none;
+}
+
+::-moz-focus-inner {
+	border: 0;
+}
+
 #container{
 	$controls-height: 100px;
 	$background-container-height: 768px;
@@ -12,11 +20,11 @@
 		width: 60000px; //maybe this should be configurable
 		background-image: url("../../img/levels/grassland.jpg");
 		background-size: contain;
-		
+
 		.game-object{
 			cursor: move;
 			border: dashed 1px transparent;
-			
+
 			.remove-btn{
 				display: none;
 				position: absolute;
@@ -26,10 +34,10 @@
 				height: 20px;
 				cursor: pointer;
 			}
-			
+
 			&:hover{
 				border-color: #000000;
-				
+
 				.remove-btn{
 					display: block;
 				}
@@ -69,15 +77,15 @@
 					.label{
 						display: block;
 						margin-top: 5px;
-						margin-bottom: 2px;
-						font-size: 18px;
+						margin-bottom: 5px;
+						font-size: 14px;
 						font-weight: bold;
+						text-align: center
 					}
 
 					select{
 						padding: 5px;
 					}
-
 
 					.game-object{
 						display: inline-block;
@@ -86,6 +94,38 @@
 						img{
 							max-width: 230px;
 						}
+					}
+				}
+
+				&.load-level{
+					
+					select{
+						width: 100%;
+					}
+					
+				}
+
+				&.save-level{
+					
+					.save-level-button{
+						padding: 5px;
+						border: solid 1px #cccccc;
+						color: #ffffff;
+						font-weight: bold;
+						border-radius: 3px;
+						cursor: pointer;
+						background-color: #1aa72b;
+
+
+						&:hover{
+							background-color: #10831e;
+						}
+					}
+
+					.level-name{
+						width: 160px;
+						height: 25px;
+						font-size: 14px;
 					}
 				}
 			}

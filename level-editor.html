@@ -9,10 +9,10 @@
 	<body>
 
 		<div id="container">
-			<div class="background-container">
+			<!-- editor background container -->
+			<div class="background-container"></div>
 
-			</div>
-
+			<!-- controls container -->
 			<div class="controls-container">
 				<div class="controls">
 
@@ -20,11 +20,11 @@
 
 						<!-- level options -->
 						<div class="section">
-							
+
 							<!-- theme/background -->
 							<div class="item inline-block">
 								<div class="label">
-									Theme:
+									Theme
 								</div>
 								<select class="theme">
 									<option value="grassland">GRASSLAND</option>
@@ -36,7 +36,7 @@
 							<!-- weather effects -->
 							<div class="item inline-block">
 								<div class="label">
-									Weather:
+									Weather
 								</div>
 								<select class="weather">
 									<option value="default">DEFAULT</option>
@@ -46,46 +46,67 @@
 								</select>
 							</div>
 						</div>
-						
+
 						<!-- enemies -->
 						<div class="section">
 							<div class="item">
 								<div class="label">
-									Enemies:
+									Enemies
 								</div>
-								
+
 								<div class="game-object" data-object="Fighter" title="Fighter">
 									<img src="img/enemies/mustang/default/1.png"/>
 								</div>
-								
+
 								<div class="game-object" data-object="Bomber" title="B17 Bomber">
 									<img src="img/enemies/b17/default/1.png"/>
 								</div>
-								
+
 								<div class="game-object" data-object="Sherman" title="Sherman Tank">
 									<img src="img/enemies/sherman/1.png"/>
 								</div>
 							</div>
 						</div>
-						
+
 						<!-- civilians -->
 						<div class="section">
 							<div class="item">
 								<div class="label">
-									Civilians:
+									Civilians
 								</div>
-								
+
 								<div class="game-object" data-object="Civilian" title="Civilian">
 									<img src="img/civilian/red/2.png"/>
 								</div>
 							</div>
 						</div>
+
+						<!-- load level -->
+						<div class="section load-level">
+							<div class="item">
+								<div class="label">
+									Load Level
+								</div>
+								<select class="load-level" title="Load Level">
+									<option disabled="disabled" selected="selected" hidden="hidden">Select custom level...</option>
+									<option value="1234">level name</option>
+									<option value="5555123">another level name</option>
+									<option value="123421424">level_12345124</option>
+								</select>
+							</div>
+						</div>
 						
-						<!-- level actions -->
-						<div class="section">
-							<button type="button" class="save-level-button">
-								Save
-							</button>
+						<!-- save level -->
+						<div class="section save-level">
+							<div class="item">
+								<div class="label">
+									Save Level
+								</div>
+								<button type="button" class="save-level-button">
+									Save as
+								</button>
+								<input type="text" class="level-name" placeholder="Level Name"/>
+							</div>
 						</div>
 
 					</form>
