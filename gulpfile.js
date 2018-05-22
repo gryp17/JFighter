@@ -17,8 +17,8 @@ var AutoPrefixerOptions = {
 var cssGameSource = "./stylesheets/game/**/*.scss";
 var cssLevelEditorSource = "./stylesheets/level-editor/**/*.scss";
 var cssDestination = "./min/css";
-var jsGameSource = ["./game/resources/**/*.js", "./game/**/*.js"];
-var jsLevelEditorSource = "./level-editor/**/*.js";
+var jsGameSource = ["./config/**/*.js", "./game/resources/**/*.js", "./game/**/*.js"];
+var jsLevelEditorSource = ["./config/**/*.js", "./game/resources/images.js", "./level-editor/**/*.js"];
 var jsDestination = "./min/js";
 var jsLibsDestination = "./min/js";
 
@@ -84,21 +84,21 @@ gulp.task("js-libs", function () {
 //game scripts task
 gulp.task("game-scripts", function() {
 	return gulp.src(jsGameSource)
-		.pipe(concat("game.js"))
-		.pipe(uglify({
-			mangle: true
-		}))
-		.pipe(gulp.dest(jsDestination));
+	.pipe(concat("game.js"))
+	.pipe(uglify({
+		mangle: true
+	}))
+	.pipe(gulp.dest(jsDestination));
 });
 
 //level editor scripts task
 gulp.task("level-editor-scripts", function() {
 	return gulp.src(jsLevelEditorSource)
-		.pipe(concat("level-editor.js"))
-		.pipe(uglify({
-			mangle: true
-		}))
-		.pipe(gulp.dest(jsDestination));
+	.pipe(concat("level-editor.js"))
+	.pipe(uglify({
+		mangle: true
+	}))
+	.pipe(gulp.dest(jsDestination));
 });
 
 //watch task

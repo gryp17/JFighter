@@ -27,11 +27,8 @@ function LevelEditor(container) {
 	this.draggedObject;
 
 	//custom levels
-	this.cookieConfig = {
-		name: "jfighter-levels",
-		expires: 90
-	};
 	this.customLevels = {};
+	this.weatherInterval = 4096;
 
 	//objects that need to be placed on the ground
 	this.groundObjects = {
@@ -45,7 +42,7 @@ function LevelEditor(container) {
 	this.groundHeight = 40;
 
 	/**
-	 * Initialize the level editor by setting all event listeners
+	 * Initialize the level editor by setting all event listeners and loading all custom levels
 	 */
 	this.init = function () {
 
@@ -95,15 +92,13 @@ function LevelEditor(container) {
 	 * Loads all custom levels data from the cookies
 	 */
 	this.loadCustomLevels = function () {
-		var data = Cookies.get(this.cookieConfig.name);
+		var data = Cookies.get(CONFIG.COOKIE.CUSTOM_LEVELS.NAME);
 
 		if (data) {
 			this.customLevels = JSON.parse(data);
 		} else {
 			this.customLevels = {};
 		}
-		
-		console.log(this.customLevels);
 	};
 	
 	/**
@@ -128,9 +123,9 @@ function LevelEditor(container) {
 	this.setLevelTheme = function () {
 		var theme = $(this).val();
 
-		var imagesPath = "img/levels/";
+		var levelsPath = "img/levels/";
 		var extension = ".jpg";
-		self.backgroundContainer.css({backgroundImage: "url(" + imagesPath + theme + extension + ")"});
+		self.backgroundContainer.css({backgroundImage: "url(" + levelsPath + theme + extension + ")"});
 	};
 
 	/**
@@ -389,7 +384,7 @@ function LevelEditor(container) {
 				break;
 			case "rain":
 				weather.TYPE = "rain";
-				weather.INTERVAL = 4096;
+				weather.INTERVAL = self.weatherInterval;
 				break;
 			case "snow":
 				weather.TYPE = "snow";
@@ -411,7 +406,7 @@ function LevelEditor(container) {
 		self.customLevels[levelName] = level;
 		
 		//update the cookies
-		Cookies.set(self.cookieConfig.name, self.customLevels, {expires: self.cookieConfig.expires});
+		Cookies.set(CONFIG.COOKIE.CUSTOM_LEVELS.NAME, self.customLevels, {expires: CONFIG.COOKIE.CUSTOM_LEVELS.EXPIRES});
 		
 		//update the custom levels dropdown options
 		self.updateCustomLevelsDropdown();
