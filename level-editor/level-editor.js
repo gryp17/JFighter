@@ -121,7 +121,7 @@ function LevelEditor(container) {
 			self.loadLevelDropdown.append(option);
 		});
 	};
-
+	
 	/**
 	 * Changes the selected theme/background.
 	 */
@@ -202,19 +202,7 @@ function LevelEditor(container) {
 
 			//if the object doesn't have a remove button - add it
 			if (!self.draggedObject.has(".remove-btn").length) {
-
-				var removeBtn = $("<img>", {
-					class: "remove-btn",
-					src: "img/level-editor/icon-remove.png",
-					title: "Remove",
-					click: function (e) {
-						$(this).closest(".game-object").remove();
-						self.draggedObject = null;
-						self.dragging = false;
-						e.stopPropagation();
-					}
-				});
-
+				var removeBtn = self.generateGameObjectRemoveButton();
 				self.draggedObject.append(removeBtn);
 			}
 
@@ -238,20 +226,115 @@ function LevelEditor(container) {
 			});
 		}
 	};
+	
+	/**
+	 * Removes all game objects from the editor
+	 */
+	this.clearGameObjects = function (){
+		this.backgroundContainer.find(".game-object").remove();
+	};
+	
+	/**
+	 * Generates the remove button that is attached to each game object inside the editor
+	 * @returns {Object}
+	 */
+	this.generateGameObjectRemoveButton = function (){
+		return $("<img>", {
+			class: "remove-btn",
+			src: "img/level-editor/icon-remove.png",
+			title: "Remove",
+			click: function (e) {
+				$(this).closest(".game-object").remove();
+				self.draggedObject = null;
+				self.dragging = false;
+				e.stopPropagation();
+			}
+		});
+	};
 
 	/**
-	 * Loads the selected level
+	 * Loads the selected level into the editor
 	 */
 	this.loadLevel = function () {
 		var selectedLevel = $(this).val();
-		console.log(selectedLevel);
-
-		//TODO:
-		//load the data from the cookies
-		//add all the enemies and civilians to the screen
-		//set the correct weather and theme
 		
+		var levelData = self.customLevels[selectedLevel];
+		
+		if(!levelData){
+			alert("Level Not Found");
+		}
+		
+		//remove all game objects from the editor
+		self.clearGameObjects();
+		
+		//set the level name
 		self.levelName.val(selectedLevel);
+		
+		//set the level theme and trigger the dropdown change event
+		self.themeDropdown.val(levelData.THEME);
+		self.themeDropdown.change();
+		
+		//set the level weather
+		switch(levelData.WEATHER.TYPE){
+			case "rain":
+				if(levelData.WEATHER.INTERVAL){
+					self.weatherDropdown.val("rain");
+				}else{
+					self.weatherDropdown.val("heavy-rain");
+				}
+				break;
+			case "snow":
+				self.weatherDropdown.val("snow");
+				break;
+			default:
+				self.weatherDropdown.val("default");
+		}
+		
+		var gameObjects = levelData.ENEMIES.concat(levelData.CIVILIANS);
+		
+		//add all enemies and civilians to the editor
+		gameObjects.forEach(function (object){
+			
+			//generate the game object
+			var gameObject = $("<div>", {
+				class: "game-object",
+				"data-object": object.objectType,
+				title: object.objectType
+			});
+			
+			//generate the correct image
+			var image = $("<img>");
+			switch(object.objectType){
+				case "Fighter": 
+					image.attr("src", "img/enemies/mustang/default/1.png");
+					break;
+				case "Bomber":
+					image.attr("src", "img/enemies/b17/default/1.png");
+					break;
+				case "Sherman":
+					image.attr("src", "img/enemies/sherman/1.png");
+					break;
+				case "Civilian":
+					image.attr("src", "img/civilian/red/2.png");
+					break;
+			}
+			
+			//generate the remove button
+			var removeBtn = self.generateGameObjectRemoveButton();
+			
+			gameObject.append(image);
+			gameObject.append(removeBtn);
+			
+			//position the object using the provided arguments (and normalizing the Y coordinate)
+			gameObject.css({
+				left: object.arguments.x,
+				top: object.arguments.y + self.heightOffset
+			});
+			
+			//add the game object to the editor
+			self.backgroundContainer.append(gameObject);
+		});
+		
 	};
 
 	/**
