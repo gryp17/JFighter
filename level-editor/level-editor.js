@@ -301,16 +301,16 @@ function LevelEditor(container) {
 			var image = $("<img>");
 			switch(object.objectType){
 				case "Fighter": 
-					image.attr("src", "img/enemies/mustang/default/1.png");
+					image.attr("src", GAME_IMAGES.ENEMIES.MUSTANG.SPRITE.DEFAULT[0]);
 					break;
 				case "Bomber":
-					image.attr("src", "img/enemies/b17/default/1.png");
+					image.attr("src", GAME_IMAGES.ENEMIES.B17.SPRITE.DEFAULT[0]);
 					break;
 				case "Sherman":
-					image.attr("src", "img/enemies/sherman/1.png");
+					image.attr("src", GAME_IMAGES.ENEMIES.SHERMAN.SPRITE[0]);
 					break;
 				case "Civilian":
-					image.attr("src", "img/civilian/red/2.png");
+					image.attr("src", GAME_IMAGES.CIVILIANS[2].SPRITE[0]);
 					break;
 			}
 			
