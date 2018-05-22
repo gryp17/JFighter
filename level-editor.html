@@ -16,7 +16,7 @@
 			<div class="controls-container">
 				<div class="controls">
 
-					<form autocomplete="off">
+					<form autocomplete="off" onsubmit="return false">
 
 						<!-- level options -->
 						<div class="section">
@@ -26,7 +26,7 @@
 								<div class="label">
 									Theme
 								</div>
-								<select class="theme">
+								<select class="theme-dropdown">
 									<option value="grassland">GRASSLAND</option>
 									<option value="desert">DESERT</option>
 									<option value="winter">WINTER</option>
@@ -38,7 +38,7 @@
 								<div class="label">
 									Weather
 								</div>
-								<select class="weather">
+								<select class="weather-dropdown">
 									<option value="default">DEFAULT</option>
 									<option value="rain">RAINY</option>
 									<option value="heavy-rain">HEAVY RAIN</option>
@@ -87,11 +87,8 @@
 								<div class="label">
 									Load Level
 								</div>
-								<select class="load-level" title="Load Level">
+								<select class="load-level-dropdown" title="Load Level">
 									<option disabled="disabled" selected="selected" hidden="hidden">Select custom level...</option>
-									<option value="1234">level name</option>
-									<option value="5555123">another level name</option>
-									<option value="123421424">level_12345124</option>
 								</select>
 							</div>
 						</div>

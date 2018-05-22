@@ -5,22 +5,34 @@
  */
 function LevelEditor(container) {
 	var self = this;
-	
+
 	//selectors
 	this.container = container;
 	this.backgroundContainer = this.container.find(".background-container");
 	this.controlsContainer = this.container.find(".controls-container");
 	this.controls = this.container.find(".controls");
-	
+	this.themeDropdown = this.controls.find(".theme-dropdown");
+	this.weatherDropdown = this.controls.find(".weather-dropdown");
+	this.loadLevelDropdown = this.controls.find(".load-level-dropdown");
+	this.saveLevelButton = this.controls.find(".save-level-button");
+	this.levelName = this.controls.find(".level-name");
+
 	//heights
 	this.canvasHeight = 620;
 	this.backgroundImageHeight = this.backgroundContainer.height();
 	this.heightOffset = this.backgroundImageHeight - this.canvasHeight;
-	
+
 	//mouse status
 	this.dragging = false;
 	this.draggedObject;
-	
+
+	//custom levels
+	this.cookieConfig = {
+		name: "jfighter-levels",
+		expires: 90
+	};
+	this.customLevels = {};
+
 	//objects that need to be placed on the ground
 	this.groundObjects = {
 		Sherman: {
@@ -37,46 +49,90 @@ function LevelEditor(container) {
 	 */
 	this.init = function () {
 
+		//load all custom levels from the cookies (if any)
+		this.loadCustomLevels();
+
+		//fill the "load level" dropdown with the levels data
+		this.updateCustomLevelsDropdown();
+
 		//move the level background on mouse wheel scroll
 		this.backgroundContainer.on("mousewheel", self.scrollBackground);
 
 		//on theme value change - update the level theme
-		$(".theme").change(self.setLevelTheme);
-		
+		this.themeDropdown.change(self.setLevelTheme);
+
 		//mousedown handler only for the game objects inside the controls
 		this.controls.find(".game-object").mousedown(self.addGameObject);
-		
+
 		//mousedown handler only for the game objects inside the background container
 		$("body").on("mousedown", ".background-container .game-object", self.selectGameObject);
-		
+
 		//on mouse up drop the object at the cursor position
 		$("body").mouseup(self.dropGameObject);
-		
+
 		//on mouse move - move the dragged object to the mouse cursor position
 		this.container.mousemove(self.dragGameObject);
-		
-		//on load level select change load the selected level
-		$(".load-level").change(self.loadLevel);
-		
-		//on save button click get all objects and normalize their X and Y coordinates
-		$(".save-level-button").click(self.saveLevel);
-		
-		//generate a random level name when the level editor loads
-		$(".level-name").val("level_"+new Date().getTime());
 
+		//on load level select change load the selected level
+		this.loadLevelDropdown.change(self.loadLevel);
+
+		//on save button click get all objects and normalize their X and Y coordinates
+		this.saveLevelButton.click(self.saveLevel);
+		
+		//on "enter" keypress on the level name input - save the level
+		this.levelName.keypress(function (e) {
+			if (e.which === 13) {
+				self.saveLevel();
+			}
+		});
+
+		//generate a random level name when the level editor loads
+		this.levelName.val("level_" + new Date().getTime());
+
+	};
+
+	/**
+	 * Loads all custom levels data from the cookies
+	 */
+	this.loadCustomLevels = function () {
+		var data = Cookies.get(this.cookieConfig.name);
+
+		if (data) {
+			this.customLevels = JSON.parse(data);
+		} else {
+			this.customLevels = {};
+		}
+		
+		console.log(this.customLevels);
 	};
 	
 	/**
+	 * Fills the "load level" dropdown options
+	 */
+	this.updateCustomLevelsDropdown = function () {
+		this.loadLevelDropdown.find("option[disabled!=disabled]").remove();
+		
+		_.forOwn(this.customLevels, function (levelData, levelName){
+			var option = $("<option>", {
+				value: levelName,
+				text: levelName
+			});
+			
+			self.loadLevelDropdown.append(option);
+		});
+	};
+
+	/**
 	 * Changes the selected theme/background.
 	 */
-	this.setLevelTheme = function (){
+	this.setLevelTheme = function () {
 		var theme = $(this).val();
-		
+
 		var imagesPath = "img/levels/";
 		var extension = ".jpg";
-		self.backgroundContainer.css({backgroundImage: "url("+imagesPath+theme+extension+")"});
+		self.backgroundContainer.css({backgroundImage: "url(" + imagesPath + theme + extension + ")"});
 	};
-	
+
 	/**
 	 * Called when the mousewheel is scrolled. 
 	 * It makes the background scroll left or right.
@@ -107,7 +163,7 @@ function LevelEditor(container) {
 		self.dragging = true;
 		e.preventDefault();
 	};
-	
+
 	/**
 	 * Called when a game object is selected inside the background container area
 	 * @param {Object} e
@@ -117,7 +173,7 @@ function LevelEditor(container) {
 		self.dragging = true;
 		e.preventDefault();
 	};
-	
+
 	/**
 	 * Called when the mouseup event is fired anywhere inside the body
 	 * @param {Object} e
@@ -169,7 +225,7 @@ function LevelEditor(container) {
 			self.dragging = false;
 		}
 	};
-	
+
 	/**
 	 * Called when the mouse move event is fired
 	 * @param {Object} e
@@ -182,31 +238,43 @@ function LevelEditor(container) {
 			});
 		}
 	};
-		
+
 	/**
-	 * Loads the selected level from the cookies
+	 * Loads the selected level
 	 */
 	this.loadLevel = function () {
 		var selectedLevel = $(this).val();
 		console.log(selectedLevel);
-		
+
 		//TODO:
 		//load the data from the cookies
+		//add all the enemies and civilians to the screen
 		//set the correct weather and theme
-		//set the "save as" name as the current level name
 		
+		self.levelName.val(selectedLevel);
 	};
-	
+
 	/**
 	 * Get all games objects from the DOM and normalize their coordinates
 	 */
 	this.saveLevel = function () {
 		var enemies = [];
+		var civilians = [];
 		var objects = self.backgroundContainer.find(".game-object");
+		var levelName = self.levelName.val();
+		var selectedTheme = self.themeDropdown.val();
+		var selectedWeather = self.weatherDropdown.val();
+		
+		//check if the level name is set
+		if(!levelName || levelName.trim() === ""){
+			alert("Invalid Level Name");
+			return;
+		}
 
+		//separate the objects into enemies and civilians and normalize the Y coordinate
 		objects.each(function () {
-			var enemy = $(this);
-			var offset = enemy.offset();
+			var object = $(this);
+			var offset = object.offset();
 
 			var x = offset.left;
 			var y = offset.top;
@@ -214,16 +282,58 @@ function LevelEditor(container) {
 			//normalize the Y coordinate
 			y = y - self.heightOffset;
 
-			enemies.push({
-				objectType: enemy.attr("data-object"),
+			var item = {
+				objectType: object.attr("data-object"),
 				arguments: {
 					x: x,
 					y: y
 				}
-			});
+			};
+			
+			if(object.attr("data-object") === "Civilian"){
+				civilians.push(item);
+			}else{
+				enemies.push(item);
+			}
 		});
 
-		console.log(enemies);
+		//generate the weather object
+		var weather = {};
+		
+		switch(selectedWeather){
+			case "heavy-rain":
+				weather.TYPE = "rain";
+				break;
+			case "rain":
+				weather.TYPE = "rain";
+				weather.INTERVAL = 4096;
+				break;
+			case "snow":
+				weather.TYPE = "snow";
+				break;
+			default:
+				weather.TYPE = "normal";
+		}
+
+		//assemble the level data
+		var level = {
+			THEME: selectedTheme,
+			WEATHER: weather,
+			GROUND_HEIGHT: self.groundHeight,
+			CIVILIANS: civilians,
+			ENEMIES: enemies
+		};
+
+		//insert/overwrite the level data
+		self.customLevels[levelName] = level;
+		
+		//update the cookies
+		Cookies.set(self.cookieConfig.name, self.customLevels, {expires: self.cookieConfig.expires});
+		
+		//update the custom levels dropdown options
+		self.updateCustomLevelsDropdown();
+		
+		alert("Level Saved");
 	};
-	
+
 }
