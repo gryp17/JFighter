@@ -1,9 +1,10 @@
 /**
  * Class that handles all level editor actions
  * @param {Object} container
+ * @param {Object} images
  * @returns {LevelEditor}
  */
-function LevelEditor(container) {
+function LevelEditor(container, images) {
 	var self = this;
 
 	//selectors
@@ -17,10 +18,14 @@ function LevelEditor(container) {
 	this.saveLevelButton = this.controls.find(".save-level-button");
 	this.levelName = this.controls.find(".level-name");
 
+	//game images
+	this.images = images;
+
 	//heights
 	this.canvasHeight = 620;
 	this.backgroundImageHeight = this.backgroundContainer.height();
 	this.heightOffset = this.backgroundImageHeight - this.canvasHeight;
+	this.groundHeight = 40;
 
 	//mouse status
 	this.dragging = false;
@@ -30,21 +35,39 @@ function LevelEditor(container) {
 	this.customLevels = {};
 	this.weatherInterval = 4096;
 
-	//objects that need to be placed on the ground
-	this.groundObjects = {
+	//available editor game objects
+	this.editorObjects = {
+		Fighter: {
+			type: "enemy",
+			img: this.images.ENEMIES.MUSTANG.SPRITE.DEFAULT[0].src,
+			title: "Mustang/Spitfire Fighter"
+		},
+		Bomber: {
+			type: "enemy",
+			img: this.images.ENEMIES.B17.SPRITE.DEFAULT[0].src,
+			title: "B17 Bomber"
+		},
 		Sherman: {
+			type: "enemy",
+			img: this.images.ENEMIES.SHERMAN.SPRITE[0].src,
+			title: "Sherman Tank",
 			groundDistance: 10
 		},
 		Civilian: {
+			type: "civilian",
+			img: this.images.CIVILIANS[2].SPRITE[0].src,
+			title: "Civilian",
 			groundDistance: 24
 		}
 	};
-	this.groundHeight = 40;
 
 	/**
 	 * Initialize the level editor by setting all event listeners and loading all custom levels
 	 */
 	this.init = function () {
+
+		//generate the list of available game objects
+		this.generateGameObjects();
 
 		//load all custom levels from the cookies (if any)
 		this.loadCustomLevels();
@@ -86,6 +109,42 @@ function LevelEditor(container) {
 		//generate a random level name when the level editor loads
 		this.levelName.val("level_" + new Date().getTime());
 
+		//displays the controls container
+		this.showControls();
+	};
+	
+	/**
+	 * Generates all available game objects in the controls menu
+	 */
+	this.generateGameObjects = function () {
+		var sections = {
+			enemy: this.controls.find(".section.enemies .item"),
+			civilian: this.controls.find(".section.civilians .item")
+		};
+		
+		//loop through all game objects and add them to the controls 
+		_.forOwn(this.editorObjects, function (objectData, objectType){
+			var image = $("<img>", {
+				src: objectData.img
+			});
+			
+			var gameObject = $("<div>", {
+				class: "game-object",
+				"data-object": objectType,
+				title: objectData.title
+			});
+
+			gameObject.append(image);
+
+			sections[objectData.type].append(gameObject);
+		});
+	};
+	
+	/**
+	 * Shows the editor controls (once everything else has been loaded)
+	 */
+	this.showControls = function (){
+		this.controlsContainer.fadeIn(200);
 	};
 
 	/**
@@ -184,10 +243,11 @@ function LevelEditor(container) {
 			var top = e.pageY;
 			var left = e.pageX;
 
-			//if the object is a ground object - anchor it to the ground by setting the correct "top" parameter
-			if (self.groundObjects[self.draggedObject.attr("data-object")]) {
-				var groundData = self.groundObjects[self.draggedObject.attr("data-object")];
-				top = self.backgroundImageHeight - groundData.groundDistance - self.draggedObject.height();
+			var objectData = self.editorObjects[self.draggedObject.attr("data-object")];
+			
+			//if the object has ground distance - anchor it to the ground by setting the correct "top" parameter
+			if(objectData.groundDistance){
+				top = self.backgroundImageHeight - objectData.groundDistance - self.draggedObject.height();
 			}
 
 			self.draggedObject.css({
@@ -294,25 +354,13 @@ function LevelEditor(container) {
 			var gameObject = $("<div>", {
 				class: "game-object",
 				"data-object": object.objectType,
-				title: object.objectType
+				title: self.editorObjects[object.objectType].title
 			});
 			
-			//generate the correct image
-			var image = $("<img>");
-			switch(object.objectType){
-				case "Fighter": 
-					image.attr("src", GAME_IMAGES.ENEMIES.MUSTANG.SPRITE.DEFAULT[0]);
-					break;
-				case "Bomber":
-					image.attr("src", GAME_IMAGES.ENEMIES.B17.SPRITE.DEFAULT[0]);
-					break;
-				case "Sherman":
-					image.attr("src", GAME_IMAGES.ENEMIES.SHERMAN.SPRITE[0]);
-					break;
-				case "Civilian":
-					image.attr("src", GAME_IMAGES.CIVILIANS[2].SPRITE[0]);
-					break;
-			}
+			//generate the game object image
+			var image = $("<img>", {
+				src: self.editorObjects[object.objectType].img
+			});
 			
 			//generate the remove button
 			var removeBtn = self.generateGameObjectRemoveButton();

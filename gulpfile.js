@@ -18,7 +18,7 @@ var cssGameSource = "./stylesheets/game/**/*.scss";
 var cssLevelEditorSource = "./stylesheets/level-editor/**/*.scss";
 var cssDestination = "./min/css";
 var jsGameSource = ["./config/**/*.js", "./game/resources/**/*.js", "./game/**/*.js"];
-var jsLevelEditorSource = ["./config/**/*.js", "./game/resources/images.js", "./level-editor/**/*.js"];
+var jsLevelEditorSource = ["./config/**/*.js", "./game/misc/image-repository.js", "./game/resources/images.js", "./level-editor/**/*.js"];
 var jsDestination = "./min/js";
 var jsLibsDestination = "./min/js";
 
