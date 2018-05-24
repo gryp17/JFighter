@@ -4,38 +4,130 @@
  */
 function MainMenu() {
 	var self = this;
-	this.selectedPlane = null;
-	this.selectedLevel = null;
+	
+	this.loadingIndicator = $(".uil-ring-css");
+	this.mainMenu = $("#main-menu");
+	this.selectPlaneScreen = this.mainMenu.find(".select-plane");
+	this.selectLevelScreen = this.mainMenu.find(".select-level");
+	this.levelsList = this.selectLevelScreen.find(".levels-list");
+	this.thumbnailContainer = this.levelsList.find(".thumbnail-container");
+	
+	//default game levels
+	this.gameLevels = {
+		GRASSLAND: GRASSLAND,
+		DESERT: DESERT,
+		WINTER: WINTER
+	};
+	
+	this.levelIndex = 0;;
+	
+	this.selectedPlane;
+	this.selectedLevel;
 
 	/**
 	 * Hides the loader and shows the game menu
 	 * @param {Function} startGameCallback
 	 */
 	this.showMenu = function (startGameCallback) {
-		$(".uil-ring-css").fadeOut(300, function () {
-			$("#main-menu").fadeIn(300);
-		});
-
+		
+		//load all custom levels from the cookies
+		this.loadCustomLevels();
+		
+		//display the first level by default
+		this.setCurrentLevel(this.levelIndex);
+		
 		//on plane selection
-		$("#main-menu .plane").click(function () {
-			self.selectedPlane = $(this).attr("data-plane");
-
-			$("#main-menu .select-plane").fadeOut(100, function (){
-				$("#main-menu .select-level").fadeIn(100);
-			});
-		});
+		this.mainMenu.find(".plane").click(this.selectPlane);
+		
+		//levels list arrow handler
+		this.levelsList.find(".arrow").click(this.changeLevel);
 		
 		//on level selection
-		$("#main-menu .level").click(function (){
+		this.levelsList.find(".thumbnail-container").click(function (){
 			self.selectedLevel = $(this).attr("data-level");
-			
-			$("#main-menu").fadeOut(300, function () {
+		
+			self.mainMenu.fadeOut(300, function () {
 				$(".canvas").fadeIn(300);
 			});
-			
+
 			//call the callback with the selected plane and level
-			startGameCallback(self.selectedPlane, self.selectedLevel);
+			startGameCallback(self.gameLevels, self.selectedPlane, self.selectedLevel);
 		});
+		
+		//hide the loading indicator and show the main menu
+		this.loadingIndicator.fadeOut(300, function () {
+			self.mainMenu.fadeIn(300);
+		});
+		
+	};
+	
+	/**
+	 * Called when any of the planes is clicked.
+	 * It hides the select plane screen and shows the select level screen
+	 */
+	this.selectPlane = function () {
+		self.selectedPlane = $(this).attr("data-plane");
+
+		self.selectPlaneScreen.fadeOut(100, function () {
+			self.selectLevelScreen.fadeIn(100);
+		});
+	};
+	
+	/**
+	 * Called when one of the arrows is clicked.
+	 * It increments/decrements the level index and sets the current level
+	 */
+	this.changeLevel = function () {
+		
+		if ($(this).hasClass("previous")) {
+			self.levelIndex--;
+		} else {
+			self.levelIndex++;
+		}
+		
+		self.setCurrentLevel(self.levelIndex);
+	};
+	
+	/**
+	 * Sets the current level by updating the level thumbnail and title
+	 * @param {Number} index
+	 */
+	this.setCurrentLevel = function (index) {
+		var title = self.thumbnailContainer.find("h2");
+		var thumbnail = self.thumbnailContainer.find("img");
+		
+		var levelNames = Object.keys(self.gameLevels);
+		
+		self.levelIndex = index;
+		
+		//reset the levelIndex if necessary
+		if(self.levelIndex > levelNames.length - 1){
+			self.levelIndex = 0;
+		}else if(self.levelIndex < 0){
+			self.levelIndex = levelNames.length - 1;
+		}
+		
+		var currentLevel = self.gameLevels[levelNames[self.levelIndex]];
+		var levelName = levelNames[self.levelIndex];
+		
+		title.html(levelName);
+		thumbnail.attr("src", "img/levels/thumbnails/"+currentLevel.THEME+".jpg");
+		self.thumbnailContainer.attr("data-level", levelName);
+	};
+		
+	/**
+	 * Loads all custom levels (if any) from the cookies and merges them with the default game levels
+	 */
+	this.loadCustomLevels = function () {
+		var customLevels = Cookies.get(CONFIG.COOKIE.CUSTOM_LEVELS.NAME);
+
+		if (customLevels) {
+			customLevels = JSON.parse(customLevels);
+
+			_.forOwn(customLevels, function (levelData, levelName) {
+				self.gameLevels["CUSTOM_" + levelName] = levelData;
+			});
+		}
 	};
 
 }

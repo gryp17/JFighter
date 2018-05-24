@@ -1,4 +1,5 @@
 var GRASSLAND = {
+	THEME: "GRASSLAND",
 	WEATHER: {
 		TYPE: "rain",
 		INTERVAL: 4096 //(background.width / background.dx) / 2

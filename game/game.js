@@ -19,7 +19,7 @@ function Game(images, planeStats, enemyStats, levelsData) {
 	this.selectedLevel;
 	this.inputs;
 	this.deadCivilians;
-	
+		
 	//initialize the keyboard controls
 	this.keyboard = new Keyboard();
 	
@@ -54,7 +54,7 @@ function Game(images, planeStats, enemyStats, levelsData) {
 	this.start = function (selectedPlane, selectedLevel) {
 		//clear the frame id before starting the game in case there is another timer running already
 		this.clearFrameId();
-		
+				
 		this.status = CONSTANTS.GAME_STATE.ACTIVE;
 		this.selectedPlane = selectedPlane;
 		this.selectedLevel = selectedLevel;

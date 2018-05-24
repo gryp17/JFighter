@@ -7,7 +7,7 @@ function Background(game) {
 	this.context = game.contexts.background.context;
 	this.canvas = game.contexts.background.canvas;
 	
-	this.backgroundImage = game.images.LEVELS[game.selectedLevel];
+	this.backgroundImage = game.images.LEVELS[game.levelsData[game.selectedLevel].THEME];
 	this.dx = -2;
 	this.x = 0;
 	this.dy = 0;

@@ -1,4 +1,5 @@
 var DESERT = {
+	THEME: "DESERT",
 	WEATHER: {
 		TYPE: "normal"
 	},

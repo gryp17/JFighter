@@ -1,4 +1,5 @@
 var WINTER = {
+	THEME: "WINTER",
 	WEATHER: {
 		TYPE: "snow"
 	},
