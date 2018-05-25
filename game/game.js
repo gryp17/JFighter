@@ -174,7 +174,7 @@ function Game(images, planeStats, enemyStats, levelsData) {
 				return false;
 			}
 		});
-				
+						
 		//draw all bullet impacts that are still active
 		self.bulletImpacts = _.filter(self.bulletImpacts, function (bulletImpact){
 			if(bulletImpact.active){

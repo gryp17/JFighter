@@ -62,6 +62,15 @@ function Civilian(game, x, y) {
 		this.y = 580;
 		this.dx = game.background.dx;
 		this.currentImage = this.images.DEAD;
+		
+		//check if all civilians are dead and display the game over menu
+		var totalCivilians = game.levelsData[game.selectedLevel].CIVILIANS.length;
+		var deadCivilians = game.deadCivilians;
+		
+		if(deadCivilians === totalCivilians){
+			game.plane.disable();
+			game.menu.showMenu(true);
+		}
 	};
 	
 	/**
