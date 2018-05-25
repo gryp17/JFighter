@@ -44,14 +44,20 @@ function MainMenu() {
 		
 		//on level selection
 		this.levelsList.find(".thumbnail-container").click(function (){
+			//set the selected level
 			self.selectedLevel = $(this).attr("data-level");
 		
-			self.mainMenu.fadeOut(300, function () {
-				$(".canvas").fadeIn(300);
-			});
-
-			//call the callback with the selected plane and level
-			startGameCallback(self.gameLevels, self.selectedPlane, self.selectedLevel);
+			//start the game
+			self.startGame(startGameCallback);
+		});
+		
+		this.selectLevelScreen.find(".start-game-button").click(function (){
+			//set the selected level
+			var levelNames = Object.keys(self.gameLevels);
+			self.selectedLevel = levelNames[self.levelIndex];
+			
+			//start the game
+			self.startGame(startGameCallback);
 		});
 		
 		//hide the loading indicator and show the main menu
@@ -107,8 +113,8 @@ function MainMenu() {
 			self.levelIndex = levelNames.length - 1;
 		}
 		
-		var currentLevel = self.gameLevels[levelNames[self.levelIndex]];
 		var levelName = levelNames[self.levelIndex];
+		var currentLevel = self.gameLevels[levelName];
 		
 		title.html(levelName);
 		thumbnail.attr("src", "img/levels/thumbnails/"+currentLevel.THEME.toLowerCase()+".jpg");
@@ -128,6 +134,19 @@ function MainMenu() {
 				self.gameLevels["CUSTOM_" + levelName] = levelData;
 			});
 		}
+	};
+	
+	/**
+	 * Hides the main menu, shows the game canvas and calls the startGameCallback with the selected plane and level
+	 * @param {Function} startGameCallback
+	 */
+	this.startGame = function (startGameCallback) {
+		self.mainMenu.fadeOut(300, function () {
+			$(".canvas").fadeIn(300);
+		});
+
+		//call the callback with the selected plane and level
+		startGameCallback(self.gameLevels, self.selectedPlane, self.selectedLevel);
 	};
 
 }
