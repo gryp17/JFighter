@@ -11,7 +11,7 @@ function Background(game) {
 	this.dx = -2;
 	this.x = 0;
 	this.dy = 0;
-	
+		
 	//the point where the ground begins (used mostly to check if any of the game objects has collided with the ground)
 	this.groundHeight = game.levelsData[game.selectedLevel].GROUND_HEIGHT;
 	

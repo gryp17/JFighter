@@ -111,7 +111,7 @@ function MainMenu() {
 		var levelName = levelNames[self.levelIndex];
 		
 		title.html(levelName);
-		thumbnail.attr("src", "img/levels/thumbnails/"+currentLevel.THEME+".jpg");
+		thumbnail.attr("src", "img/levels/thumbnails/"+currentLevel.THEME.toLowerCase()+".jpg");
 		self.thumbnailContainer.attr("data-level", levelName);
 	};
 		
