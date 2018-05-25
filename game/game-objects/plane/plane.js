@@ -128,7 +128,7 @@ function Plane(game) {
 		game.explosions.push(new Explosion(game, explosionX, explosionY, game.background.dx, 0, false));
 		
 		//display the game over menu
-		game.menu.showMenu(true);
+		game.menu.gameOver();
 	};
 	
 	/**

@@ -11,7 +11,7 @@ function GameMenu(game) {
 		if(e.which === 27){
 			//toggle between the paused/active states
 			if(game.status === CONSTANTS.GAME_STATE.ACTIVE){
-				self.showMenu();
+				self.pauseGame();
 			}else if(game.status === CONSTANTS.GAME_STATE.PAUSED){
 				self.hideMenu();
 			}
@@ -37,19 +37,32 @@ function GameMenu(game) {
 	});
 	
 	/**
-	 * Shows the game pause/game over menu
+	 * Shows the game paused menu
 	 */
-	this.showMenu = function (gameOver){
-		var title;
-		
-		if(gameOver){
-			game.status = CONSTANTS.GAME_STATE.GAME_OVER;
-			title = "GAME OVER";
-		}else{
-			game.status = CONSTANTS.GAME_STATE.PAUSED;
-			title = "GAME PAUSED";
-		}
-		
+	this.pauseGame = function (){
+		this.showMenu(CONSTANTS.GAME_STATE.PAUSED, "GAME PAUSED");
+	};
+	
+	/**
+	 * Shows the game over menu
+	 */
+	this.gameOver = function (){
+		this.showMenu(CONSTANTS.GAME_STATE.GAME_OVER, "GAME OVER");
+	};
+	
+	/**
+	 * Shows the level completed menu
+	 */
+	this.levelCompleted = function (){
+		this.showMenu(CONSTANTS.GAME_STATE.LEVEL_COMPLETED, "LEVEL COMPLETED");
+	};
+	
+	/**
+	 * Shows the game pause/game over/level completed menu
+	 */
+	this.showMenu = function (status, title){
+		game.status = status;
+
 		$("#game-menu h4").html(title);
 		$("#game-menu").fadeIn(100);
 	};

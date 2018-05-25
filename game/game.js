@@ -162,6 +162,11 @@ function Game(images, planeStats, enemyStats, levelsData) {
 			}
 		});
 		
+		//show the level completed screen if all enemies are dead
+		if(self.enemies.length === 0 && self.status === CONSTANTS.GAME_STATE.ACTIVE){
+			self.menu.levelCompleted();
+		}
+		
 		//clear the entire civilians context before drawing any of the civilians
 		self.contexts.civilians.context.clearRect(0, 0, self.contexts.civilians.canvas.width, self.contexts.civilians.canvas.height);
 				

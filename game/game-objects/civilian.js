@@ -69,7 +69,7 @@ function Civilian(game, x, y) {
 		
 		if(deadCivilians === totalCivilians){
 			game.plane.disable();
-			game.menu.showMenu(true);
+			game.menu.gameOver();
 		}
 	};
 	
