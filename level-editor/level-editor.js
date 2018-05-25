@@ -184,7 +184,7 @@ function LevelEditor(container, images) {
 
 		var levelsPath = "img/levels/";
 		var extension = ".jpg";
-		self.backgroundContainer.css({backgroundImage: "url(" + levelsPath + theme + extension + ")"});
+		self.backgroundContainer.css({backgroundImage: "url(" + levelsPath + theme.toLowerCase() + extension + ")"});
 	};
 
 	/**
