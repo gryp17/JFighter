@@ -22,6 +22,7 @@ function BomberBomb(game, x, y, dx, dy) {
 
 	//stats
 	this.explosionRadius = game.enemyStats.B17.BOMB_EXPLOSION_RADIUS;
+	this.damage = game.enemyStats.B17.BOMB_DAMAGE;
 
 	//sprite variables
 	this.sprite = new Sprite(this.bombImages, 10, true);

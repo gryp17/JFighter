@@ -87,8 +87,10 @@ function CollisionsManager(game) {
 		bombers.forEach(function (bomber) {
 			bomber.bombs.forEach(function (bomb){
 				if (Utils.collidesWith(planeHitbox, bomb.getHitbox())) {
+					//damage the plane
+					plane.health = plane.health - bomb.damage;
+					
 					bomb.explode(false);
-					plane.disable();
 				}
 			});
 		});
