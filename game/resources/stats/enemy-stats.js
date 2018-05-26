@@ -36,6 +36,7 @@ var ENEMY_STATS = {
 	},
 	SOLDIER: {
 		HEALTH: 50,
-		DAMAGE: 3
+		DAMAGE: 3,
+		BULLET_COOLDOWN: 200
 	}
 };

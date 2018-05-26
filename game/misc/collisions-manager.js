@@ -25,6 +25,9 @@ function CollisionsManager(game) {
 		//handles all fighters collisions
 		this.handleFighters();
 		
+		//handles all soldiers collisions
+		this.handleSoldiers();
+		
 		//handle all civilians collisions
 		this.handleCivilians();
 		
@@ -403,6 +406,63 @@ function CollisionsManager(game) {
 	};
 	
 	/**
+	 * Handles all soldiers collisions
+	 */
+	this.handleSoldiers = function (){
+		
+		//separate the soldiers from the list of enemies
+		var soldiers = _.filter(game.enemies, function (enemy) {
+			return enemy.constructor === Soldier;
+		});
+		
+		//for each sherman...
+		soldiers.forEach(function (soldier) {
+			var soldierHitbox = soldier.getHitbox();
+			
+			//check if the sherman has left the screen
+			if (soldier.x + soldier.currentImage.width < 0) {
+				soldier.active = false;
+			}
+			
+			//check if any of the plane bullets have hit the soldier
+			game.plane.bullets.forEach(function (bullet) {
+				if(Utils.collidesWith(soldierHitbox, bullet.getHitbox())){
+					soldier.health = soldier.health - bullet.damage;
+					
+					//make the bullet explode
+					bullet.explode();
+				}
+			});
+			
+			//check if any of the plane bombs have hit the soldier
+			game.plane.bombs.forEach(function (bomb) {
+				if(bomb.active === false && Utils.collidesWith(soldierHitbox, bomb.getExplosionHitbox())){
+					soldier.health = soldier.health - bomb.damage;
+					bomb.explode(true);
+				}
+			});
+			
+			//handle the soldiers bullets ground and canvas collisions
+			self.handleSoldierBullets(soldier);
+		});
+		
+	};
+	
+	/**
+	 * Handles all soldier bullets ground and canvas collisions
+	 * @param {Soldier} soldier
+	 */
+	this.handleSoldierBullets = function (soldier) {
+		//for each soldier bullet...
+		soldier.bullets.forEach(function (bullet) {
+			//check if the bullet has left the canvas
+			if (bullet.x + bullet.currentImage.width < 0) {
+				bullet.active = false;
+			}
+		});
+	};
+	
+	/**
 	 * Handles all civilians collisions
 	 */
 	this.handleCivilians = function (){
@@ -410,6 +470,7 @@ function CollisionsManager(game) {
 		//separate the enemies by type
 		var bombers = [];
 		var shermans = [];
+		var soldiers = [];
 						
 		game.enemies.forEach(function (enemy){
 			switch(enemy.constructor){
@@ -418,6 +479,9 @@ function CollisionsManager(game) {
 					break;
 				case Sherman:
 					shermans.push(enemy);
+					break;
+				case Soldier:
+					soldiers.push(enemy);
 					break;
 			}
 		});
@@ -444,8 +508,13 @@ function CollisionsManager(game) {
 				}
 			});
 			
-			//check if the civilian has been hit by the plane bullets
-			game.plane.bullets.forEach(function (bullet){
+			//check if the civilian has been hit by an enemy (or friendly bullet)
+			var bullets = game.plane.bullets;
+			soldiers.forEach(function (soldier){
+				bullets = bullets.concat(soldier.bullets);
+			});
+			
+			bullets.forEach(function (bullet){
 				if(civilian.dead === false && Utils.collidesWith(civilianHitbox, bullet.getHitbox())){
 					bullet.explode();
 					civilian.health = civilian.health - bullet.damage;

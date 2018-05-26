@@ -161,7 +161,8 @@ var GAME_IMAGES = {
 					"img/enemies/soldier/light/3.png",
 					"img/enemies/soldier/light/4.png",
 					"img/enemies/soldier/light/5.png"
-				]
+				],
+				DEAD: "img/enemies/soldier/light/6.png"
 			},
 			{
 				SPRITE: [
@@ -170,7 +171,8 @@ var GAME_IMAGES = {
 					"img/enemies/soldier/dark/3.png",
 					"img/enemies/soldier/dark/4.png",
 					"img/enemies/soldier/dark/5.png"
-				]
+				],
+				DEAD: "img/enemies/soldier/dark/6.png"
 			}
 		]
 	},

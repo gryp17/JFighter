@@ -8,37 +8,37 @@ var WINTER = {
 		{
 			objectType: "Civilian",
 			arguments: {
-				x: 750,
+				x: 1050,
+				y: 550
+			}
+		},
+		{
+			objectType: "Civilian",
+			arguments: {
+				x: 1080,
+				y: 550
+			}
+		},
+		{
+			objectType: "Civilian",
+			arguments: {
+				x: 1110,
 				y: 550
 			}
 		}
 	],
 	ENEMIES: [
 		{
-			objectType: "Bomber",
-			arguments: {
-				x: 700,
-				y: 300
-			}
-		},
-		{
-			objectType: "Bomber",
-			arguments: {
-				x: 1200,
-				y: 400
-			}
-		},
-		{
 			objectType: "Soldier",
 			arguments: {
-				x: 700,
+				x: 1200,
 				y: 550
 			}
 		},
 		{
 			objectType: "Soldier",
 			arguments: {
-				x: 1200,
+				x: 1300,
 				y: 550
 			}
 		},
@@ -46,27 +46,6 @@ var WINTER = {
 			objectType: "Soldier",
 			arguments: {
 				x: 1350,
-				y: 550
-			}
-		},
-		{
-			objectType: "Soldier",
-			arguments: {
-				x: 1400,
-				y: 550
-			}
-		},
-		{
-			objectType: "Soldier",
-			arguments: {
-				x: 1430,
-				y: 550
-			}
-		},
-		{
-			objectType: "Soldier",
-			arguments: {
-				x: 1450,
 				y: 550
 			}
 		}
