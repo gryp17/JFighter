@@ -4,7 +4,7 @@ var IMAGE_REPOSITORY = new ImageRepository(GAME_IMAGES, function () {
 		
 	//display the main menu and start the game once a plane and level have been chosen
 	mainMenu.showMenu(function (levelsData, selectedPlane, selectedLevel){
-		var game = new Game(IMAGE_REPOSITORY.images, PLANE_STATS, ENEMY_STATS, levelsData);
+		var game = new Game(IMAGE_REPOSITORY.images, PLANE_STATS, ENEMY_STATS, CIVILIAN_STATS, levelsData);
 		game.start(selectedPlane, selectedLevel);
 	});
 });

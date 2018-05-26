@@ -1,0 +1,5 @@
+var CIVILIAN_STATS = {
+	CIVILIAN: {
+		HEALTH: 6
+	}
+};

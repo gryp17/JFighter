@@ -295,8 +295,8 @@ function CollisionsManager(game) {
 			//check if any of the plane bombs have hit the sherman
 			game.plane.bombs.forEach(function (bomb) {
 				if(bomb.active === false && Utils.collidesWith(shermanHitbox, bomb.getExplosionHitbox())){
+					sherman.health = sherman.health - bomb.damage;
 					bomb.explode(false);
-					sherman.destroy();
 				}
 			});
 			
@@ -440,7 +440,7 @@ function CollisionsManager(game) {
 			bombs.forEach(function (bomb){
 				//kill the civilian right when the bomb touches the ground (active === false)
 				if(civilian.dead === false && bomb.active === false && Utils.collidesWith(civilianHitbox, bomb.getExplosionHitbox())){
-					civilian.die();
+					civilian.health = civilian.health - bomb.damage;
 				}
 			});
 			
@@ -448,7 +448,7 @@ function CollisionsManager(game) {
 			game.plane.bullets.forEach(function (bullet){
 				if(civilian.dead === false && Utils.collidesWith(civilianHitbox, bullet.getHitbox())){
 					bullet.explode();
-					civilian.die();
+					civilian.health = civilian.health - bullet.damage;
 				}
 			});
 			

@@ -50,6 +50,11 @@ function Sherman(game, x, y) {
 		this.x = this.x + this.dx;
 		this.y = this.y + this.dy;
 		
+		//if the sherman tank health reaches 0...
+		if(this.health <= 0 && this.destroyed === false){
+			this.destroy();
+		}
+		
 		//if the tank is not destroyed - engage the player
 		if(this.destroyed === false){
 			this.engagePlayer();

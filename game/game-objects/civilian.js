@@ -19,8 +19,12 @@ function Civilian(game, x, y) {
 	this.dy = 0;
 	this.y = y;
 	
+	//stats
+	this.stats = game.civilianStats.CIVILIAN;
+	
 	//status
 	this.active = true;
+	this.health = this.stats.HEALTH;
 	this.dead = false;
 	
 	//sprite variables
@@ -31,6 +35,11 @@ function Civilian(game, x, y) {
 	 * Draws the civilian object
 	 */
 	this.draw = function () {
+		
+		//if the civilian health reaches 0...
+		if(this.health <= 0 && this.dead === false){
+			this.die();
+		}
 		
 		//update the "currentImage" with the correct sprite image
 		this.updateSprite();

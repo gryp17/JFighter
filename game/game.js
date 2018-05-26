@@ -3,10 +3,11 @@
  * @param {Object} images
  * @param {Object} planeStats
  * @param {Object} enemyStats
+ * @param {Object} civilianStats
  * @param {Object} levelsData
  * @returns {Game}
  */
-function Game(images, planeStats, enemyStats, levelsData) {
+function Game(images, planeStats, enemyStats, civilianStats, levelsData) {
 	var self = this;
 
 	this.frameId;
@@ -14,6 +15,7 @@ function Game(images, planeStats, enemyStats, levelsData) {
 	this.images = images;
 	this.planeStats = planeStats;
 	this.enemyStats = enemyStats;
+	this.civilianStats = civilianStats;
 	this.levelsData = levelsData;
 	this.selectedPlane;
 	this.selectedLevel;
