@@ -152,7 +152,27 @@ var GAME_IMAGES = {
 				]
 			},
 			CRASHED: "img/enemies/spitfire/crashed.png"
-		}
+		},
+		SOLDIER: [
+			{
+				SPRITE: [
+					"img/enemies/soldier/light/1.png",
+					"img/enemies/soldier/light/2.png",
+					"img/enemies/soldier/light/3.png",
+					"img/enemies/soldier/light/4.png",
+					"img/enemies/soldier/light/5.png"
+				]
+			},
+			{
+				SPRITE: [
+					"img/enemies/soldier/dark/1.png",
+					"img/enemies/soldier/dark/2.png",
+					"img/enemies/soldier/dark/3.png",
+					"img/enemies/soldier/dark/4.png",
+					"img/enemies/soldier/dark/5.png"
+				]
+			}
+		]
 	},
 	CIVILIANS: [
 		{
