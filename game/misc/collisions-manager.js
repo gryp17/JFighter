@@ -415,11 +415,11 @@ function CollisionsManager(game) {
 			return enemy.constructor === Soldier;
 		});
 		
-		//for each sherman...
+		//for each soldier...
 		soldiers.forEach(function (soldier) {
 			var soldierHitbox = soldier.getHitbox();
 			
-			//check if the sherman has left the screen
+			//check if the soldier has left the screen
 			if (soldier.x + soldier.currentImage.width < 0) {
 				soldier.active = false;
 			}
