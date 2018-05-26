@@ -53,6 +53,12 @@ function LevelEditor(container, images) {
 			title: "Sherman Tank",
 			groundDistance: 10
 		},
+		Soldier: {
+			type: "enemy",
+			img: this.images.ENEMIES.SOLDIER[0].SPRITE[0].src,
+			title: "Infantry Soldier",
+			groundDistance: 24
+		},
 		Civilian: {
 			type: "civilian",
 			img: this.images.CIVILIANS[2].SPRITE[0].src,
@@ -127,7 +133,7 @@ function LevelEditor(container, images) {
 			var image = $("<img>", {
 				src: objectData.img
 			});
-			
+						
 			var gameObject = $("<div>", {
 				class: "game-object",
 				"data-object": objectType,
