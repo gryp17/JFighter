@@ -74,8 +74,7 @@ gulp.task("js-libs", function () {
 	return gulp.src([
 		"./libs/jquery.js",
 		"./libs/lodash.js",
-		"./libs/jquery.mousewheel.js",
-		"./libs/js-cookie.js"
+		"./libs/jquery.mousewheel.js"
 	])
 	.pipe(concat("lib.js"))
 	.pipe(gulp.dest(jsLibsDestination));

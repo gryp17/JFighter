@@ -1,8 +1,7 @@
 var CONFIG = {
-	COOKIE: {
+	LOCAL_STORAGE: {
 		CUSTOM_LEVELS: {
-			NAME: "jfighter-levels",
-			EXPIRES: 90 
+			NAME: "jfighter-levels"
 		}
 	}
 };

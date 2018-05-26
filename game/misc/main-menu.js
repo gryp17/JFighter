@@ -30,7 +30,7 @@ function MainMenu() {
 	 */
 	this.showMenu = function (startGameCallback) {
 		
-		//load all custom levels from the cookies
+		//load all custom levels from the local storage
 		this.loadCustomLevels();
 		
 		//display the first level by default
@@ -122,16 +122,16 @@ function MainMenu() {
 	};
 		
 	/**
-	 * Loads all custom levels (if any) from the cookies and merges them with the default game levels
+	 * Loads all custom levels (if any) from the local storage and merges them with the default game levels
 	 */
 	this.loadCustomLevels = function () {
-		var customLevels = Cookies.get(CONFIG.COOKIE.CUSTOM_LEVELS.NAME);
+		var customLevels = localStorage.getItem(CONFIG.LOCAL_STORAGE.CUSTOM_LEVELS.NAME);
 
 		if (customLevels) {
 			customLevels = JSON.parse(customLevels);
 
 			_.forOwn(customLevels, function (levelData, levelName) {
-				self.gameLevels["CUSTOM_" + levelName] = levelData;
+				self.gameLevels["[CUSTOM] " + levelName] = levelData;
 			});
 		}
 	};

@@ -75,7 +75,7 @@ function LevelEditor(container, images) {
 		//generate the list of available game objects
 		this.generateGameObjects();
 
-		//load all custom levels from the cookies (if any)
+		//load all custom levels from the local storage (if any)
 		this.loadCustomLevels();
 
 		//fill the "load level" dropdown with the levels data
@@ -154,10 +154,10 @@ function LevelEditor(container, images) {
 	};
 
 	/**
-	 * Loads all custom levels data from the cookies
+	 * Loads all custom levels data from the local storage
 	 */
 	this.loadCustomLevels = function () {
-		var data = Cookies.get(CONFIG.COOKIE.CUSTOM_LEVELS.NAME);
+		var data = localStorage.getItem(CONFIG.LOCAL_STORAGE.CUSTOM_LEVELS.NAME);
 
 		if (data) {
 			this.customLevels = JSON.parse(data);
@@ -459,8 +459,8 @@ function LevelEditor(container, images) {
 		//insert/overwrite the level data
 		self.customLevels[levelName] = level;
 		
-		//update the cookies
-		Cookies.set(CONFIG.COOKIE.CUSTOM_LEVELS.NAME, self.customLevels, {expires: CONFIG.COOKIE.CUSTOM_LEVELS.EXPIRES});
+		//update the local storage
+		localStorage.setItem(CONFIG.LOCAL_STORAGE.CUSTOM_LEVELS.NAME, JSON.stringify(self.customLevels));
 		
 		//update the custom levels dropdown options
 		self.updateCustomLevelsDropdown();
