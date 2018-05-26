@@ -47,6 +47,13 @@ var GRASSLAND = {
 				x: 1590,
 				y: 550
 			}
+		},
+		{
+			objectType: "Civilian",
+			arguments: {
+				x: 2190,
+				y: 550
+			}
 		}
 	],
 	ENEMIES: [

@@ -91,7 +91,7 @@ function PlaneBomb(game, x, y, dx, dy) {
 	this.getExplosionHitbox = function (){
 		var hitbox = this.getHitbox();
 		hitbox.x = hitbox.x - this.explosionRadius;
-		hitbox.width = hitbox.width + this.explosionRadius;
+		hitbox.width = hitbox.width + (this.explosionRadius * 2);
 		return hitbox;
 	};
 
