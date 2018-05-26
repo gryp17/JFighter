@@ -82,8 +82,31 @@ function Bomber(game, x, y) {
 		//draw the bomber
 		this.drawBomber();
 		
+		//draw the health bar
+		if(this.disabled === false){
+			this.drawHealthBar();
+		}
+		
 		//draw the bombs that are still active
 		this.drawBombs();
+	};
+	
+	/**
+	 * Draws a health bar on top of the object
+	 */
+	this.drawHealthBar = function () {
+		var healthBar = Utils.generateHealthBar(this.getHitbox()[0], this.stats.HEALTH, this.health);
+		
+		//custom vertical offset for the bomber
+		var verticalOffset = 20;
+		
+		//border
+		this.context.strokeStyle = healthBar.strokeRect.style;
+		this.context.strokeRect(healthBar.x, healthBar.y - verticalOffset, healthBar.strokeRect.width, healthBar.strokeRect.height);
+		
+		//fill
+		this.context.fillStyle = healthBar.fillRect.style;
+		this.context.fillRect(healthBar.x, healthBar.y - verticalOffset, healthBar.fillRect.width, healthBar.fillRect.height);
 	};
 	
 	/**

@@ -71,4 +71,44 @@ var Utils = new function () {
 		return object;
 	};
 	
+	/**
+	 * Generates all health bar parameters
+	 * @param {Object} hitbox
+	 * @param {Number} maxHealth
+	 * @param {Number} currentHealth
+	 * @returns {Object}
+	 */
+	this.generateHealthBar = function (hitbox, maxHealth, currentHealth){
+		var barWidth = 50;
+		var barHeight = 5;
+		var barBorder = "black";
+		var barBackground = "red";
+		var horizontalDistance = 0; //used to center the health bar
+		var verticalDistance = 5;
+		
+		if(barWidth > hitbox.width){
+			barWidth = hitbox.width;
+		}else{
+			horizontalDistance = (hitbox.width - barWidth) / 2;
+		}
+		
+		var pixelsPerHP = barWidth / maxHealth;
+		
+		return {
+			x: hitbox.x + horizontalDistance,
+			y: hitbox.y + hitbox.offset - verticalDistance,
+			strokeRect: {
+				style: barBorder, 
+				width: barWidth,
+				height: barHeight
+			},
+			fillRect: {
+				style: barBackground,
+				width: pixelsPerHP * currentHealth,
+				height: barHeight
+			}
+		};		
+	};
+	
+	
 };

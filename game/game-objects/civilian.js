@@ -48,8 +48,27 @@ function Civilian(game, x, y) {
 		this.y = this.y + this.dy;
 							
 		this.context.drawImage(this.currentImage, this.x, this.y + game.background.offset);
+		
+		//draw the health bar
+		if(this.dead === false){
+			this.drawHealthBar();
+		}
 	};
 	
+	/**
+	 * Draws a health bar on top of the object
+	 */
+	this.drawHealthBar = function () {
+		var healthBar = Utils.generateHealthBar(this.getHitbox(), this.stats.HEALTH, this.health);
+		
+		//border
+		this.context.strokeStyle = healthBar.strokeRect.style;
+		this.context.strokeRect(healthBar.x, healthBar.y, healthBar.strokeRect.width, healthBar.strokeRect.height);
+		
+		//fill
+		this.context.fillStyle = healthBar.fillRect.style;
+		this.context.fillRect(healthBar.x, healthBar.y, healthBar.fillRect.width, healthBar.fillRect.height);
+	};
 
 	/**
 	 * Updates the "currentImage" with the correct sprite image

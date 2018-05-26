@@ -66,10 +66,30 @@ function Sherman(game, x, y) {
 		//draw the sherman
 		this.context.drawImage(this.currentImage, this.x, this.y + game.background.offset);
 		
+		//draw the health bar
+		if(this.destroyed === false){
+			this.drawHealthBar();
+		}
+		
 		//draw the sherman bullets
 		this.drawBullets();
 	};
 	
+	/**
+	 * Draws a health bar on top of the object
+	 */
+	this.drawHealthBar = function () {
+		var healthBar = Utils.generateHealthBar(this.getHullHitbox(), this.stats.HEALTH, this.health);
+		
+		//border
+		this.context.strokeStyle = healthBar.strokeRect.style;
+		this.context.strokeRect(healthBar.x, healthBar.y, healthBar.strokeRect.width, healthBar.strokeRect.height);
+		
+		//fill
+		this.context.fillStyle = healthBar.fillRect.style;
+		this.context.fillRect(healthBar.x, healthBar.y, healthBar.fillRect.width, healthBar.fillRect.height);
+	};
+		
 	/**
 	 * Draws all sherman bullets that are inside the canvas and haven't hit anything
 	 */
