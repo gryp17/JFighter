@@ -15,6 +15,7 @@ function LevelEditor(container, images) {
 	this.themeDropdown = this.controls.find(".theme-dropdown");
 	this.weatherDropdown = this.controls.find(".weather-dropdown");
 	this.loadLevelDropdown = this.controls.find(".load-level-dropdown");
+	this.deleteLevelButton = this.controls.find(".delete-level-button");
 	this.saveLevelButton = this.controls.find(".save-level-button");
 	this.levelName = this.controls.find(".level-name");
 
@@ -33,6 +34,7 @@ function LevelEditor(container, images) {
 
 	//custom levels
 	this.customLevels = {};
+	this.selectedLevel;
 	this.weatherInterval = 4096;
 
 	//available editor game objects
@@ -101,6 +103,9 @@ function LevelEditor(container, images) {
 
 		//on load level select change load the selected level
 		this.loadLevelDropdown.change(self.loadLevel);
+		
+		//on delete level button click - delete the selected custom level
+		this.deleteLevelButton.click(self.deleteLevel);
 
 		//on save button click get all objects and normalize their X and Y coordinates
 		this.saveLevelButton.click(self.saveLevel);
@@ -170,6 +175,7 @@ function LevelEditor(container, images) {
 	 * Fills the "load level" dropdown options
 	 */
 	this.updateCustomLevelsDropdown = function () {
+		var dropdownSize = 6;
 		this.loadLevelDropdown.find("option[disabled!=disabled]").remove();
 		
 		_.forOwn(this.customLevels, function (levelData, levelName){
@@ -180,6 +186,13 @@ function LevelEditor(container, images) {
 			
 			self.loadLevelDropdown.append(option);
 		});
+		
+		//adjust the dropdown size depending on the number of available custom levels
+		if(Object.keys(this.customLevels).length < dropdownSize){
+			dropdownSize = Object.keys(this.customLevels).length + 1;
+		}
+		
+		this.loadLevelDropdown.attr("size", dropdownSize);
 	};
 	
 	/**
@@ -317,9 +330,9 @@ function LevelEditor(container, images) {
 	 * Loads the selected level into the editor
 	 */
 	this.loadLevel = function () {
-		var selectedLevel = $(this).val();
+		self.selectedLevel = $(this).val();
 		
-		var levelData = self.customLevels[selectedLevel];
+		var levelData = self.customLevels[self.selectedLevel];
 		
 		if(!levelData){
 			alert("Level Not Found");
@@ -329,7 +342,7 @@ function LevelEditor(container, images) {
 		self.clearGameObjects();
 		
 		//set the level name
-		self.levelName.val(selectedLevel);
+		self.levelName.val(self.selectedLevel);
 		
 		//set the level theme and trigger the dropdown change event
 		self.themeDropdown.val(levelData.THEME);
@@ -384,6 +397,23 @@ function LevelEditor(container, images) {
 			self.backgroundContainer.append(gameObject);
 		});
 		
+	};
+	
+	/**
+	 * Deletes the selected custom level and updates the local storage data
+	 */
+	this.deleteLevel = function () {
+		if(self.selectedLevel){
+			delete self.customLevels[self.selectedLevel];
+			
+			//update the local storage
+			localStorage.setItem(CONFIG.LOCAL_STORAGE.CUSTOM_LEVELS.NAME, JSON.stringify(self.customLevels));
+
+			//update the custom levels dropdown options
+			self.updateCustomLevelsDropdown();
+
+			alert("Level Deleted");
+		}
 	};
 
 	/**
