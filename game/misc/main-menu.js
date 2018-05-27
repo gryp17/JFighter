@@ -129,7 +129,7 @@ function MainMenu() {
 
 		if (customLevels) {
 			customLevels = JSON.parse(customLevels);
-
+			
 			_.forOwn(customLevels, function (levelData, levelName) {
 				self.gameLevels["[CUSTOM] " + levelName] = levelData;
 			});

@@ -476,14 +476,14 @@ function LevelEditor(container, images) {
 			default:
 				weather.TYPE = "normal";
 		}
-
+		
 		//assemble the level data
 		var level = {
 			THEME: selectedTheme,
 			WEATHER: weather,
 			GROUND_HEIGHT: self.groundHeight,
 			CIVILIANS: civilians,
-			ENEMIES: enemies
+			ENEMIES: _.sortBy(enemies, "objectType").reverse() //order the enemies by objectType (this fixes an issue with the soldiers being printed on top of the tanks)
 		};
 
 		//insert/overwrite the level data

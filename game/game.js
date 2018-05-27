@@ -86,7 +86,7 @@ function Game(images, planeStats, enemyStats, civilianStats, levelsData) {
 			//create new dynamic Object (this[enemy.objectType]) passing the arguments
 			return new (Function.prototype.bind.apply(this[enemy.objectType], arguments));
 		});
-		
+				
 		this.civilians = this.levelsData[selectedLevel].CIVILIANS.map(function (civilian) {
 
 			//default arguments for each object type
