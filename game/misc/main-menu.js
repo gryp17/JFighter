@@ -7,6 +7,7 @@ function MainMenu() {
 	
 	this.loadingIndicator = $(".uil-ring-css");
 	this.mainMenu = $("#main-menu");
+	this.controlsPopup = this.mainMenu.find(".controls-popup");
 	this.selectPlaneScreen = this.mainMenu.find(".select-plane");
 	this.selectLevelScreen = this.mainMenu.find(".select-level");
 	this.levelsList = this.selectLevelScreen.find(".levels-list");
@@ -36,6 +37,9 @@ function MainMenu() {
 		//display the first level by default
 		this.setCurrentLevel(this.levelIndex);
 		
+		//open the controls popup
+		this.mainMenu.find(".controls-button").click(this.openControlsPopup);
+		
 		//on plane selection
 		this.mainMenu.find(".plane").click(this.selectPlane);
 		
@@ -51,6 +55,7 @@ function MainMenu() {
 			self.startGame(startGameCallback);
 		});
 		
+		//on start game button... start the game!
 		this.selectLevelScreen.find(".start-game-button").click(function (){
 			//set the selected level
 			var levelNames = Object.keys(self.gameLevels);
@@ -134,6 +139,13 @@ function MainMenu() {
 				self.gameLevels["[CUSTOM] " + levelName] = levelData;
 			});
 		}
+	};
+	
+	/**
+	 * Opens the controls popup window
+	 */
+	this.openControlsPopup = function (){
+		self.controlsPopup.fadeIn(300);
 	};
 	
 	/**

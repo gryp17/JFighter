@@ -1,5 +1,19 @@
 var GAME_IMAGES = {
-	MAIN_MENU: "img/menu/menu.png",
+	//main menu
+	MAIN_MENU: {
+		BACKGROUND: "img/main-menu/menu.png",
+		ARROW: "img/main-menu/arrow.png",
+		ICONS: {
+			EDIT_LEVEL: "img/main-menu/icon-edit-level.png",
+			CONTROLS: "img/main-menu/icon-keyboard.png"
+		}
+	},
+	//level editor
+	LEVEL_EDITOR: {
+		ICONS: {
+			REMOVE: "img/level-editor/icon-remove.png"
+		}
+	},
 	//planes
 	PLANES: {
 		BF109: {
