@@ -13,6 +13,8 @@ function Civilian(game, x, y) {
 	//random civilian skin
 	this.images = game.images.CIVILIANS[_.random(0, game.images.CIVILIANS.length - 1)];
 	
+	this.healthBarColor = "#00D40E";
+	
 	//positioning and speed
 	this.dx = game.background.dx - 0.5;
 	this.x = x;
@@ -66,7 +68,7 @@ function Civilian(game, x, y) {
 		this.context.strokeRect(healthBar.x, healthBar.y, healthBar.strokeRect.width, healthBar.strokeRect.height);
 		
 		//fill
-		this.context.fillStyle = healthBar.fillRect.style;
+		this.context.fillStyle = this.healthBarColor;
 		this.context.fillRect(healthBar.x, healthBar.y, healthBar.fillRect.width, healthBar.fillRect.height);
 	};
 
