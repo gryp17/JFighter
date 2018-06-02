@@ -14,6 +14,7 @@
 #container{
 	$controls-height: 100px;
 	$background-container-height: 768px;
+	font-family: "Arial";
 
 	.background-container{
 		height: $background-container-height;
@@ -155,7 +156,7 @@
 			
 			.main-menu-button{
 				display: block;
-				padding: 5px;
+				padding: 5px 15px;
 				position: absolute;
 				bottom: 10px;
 				right: 10px;

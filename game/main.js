@@ -1,6 +1,6 @@
 //load all the game images
 var IMAGE_REPOSITORY = new ImageRepository(GAME_IMAGES, function () {
-	var mainMenu = new MainMenu();
+	var mainMenu = new MainMenu(CONTROLS);
 	
 	//display the main menu and start the game once a plane and level have been chosen
 	mainMenu.showMenu(function (levelsData, selectedPlane, selectedLevel){

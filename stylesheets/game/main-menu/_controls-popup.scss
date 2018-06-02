@@ -1,0 +1,91 @@
+.controls-popup{
+	display: none;
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.3);
+	z-index: 1;
+
+	.content{
+		padding: 20px;
+		width: 550px;
+		margin: auto;
+		margin-top: 130px;
+		background-color: rgba(255, 255, 255, 0.9);
+		box-shadow: #515151 9px 10px 22px -7px;
+
+		.close{
+			float: right;
+			width: 10px;
+			padding: 10px;
+			margin-top: -10px;
+			margin-right: -10px;
+			opacity: 0.5;
+			cursor: pointer;
+
+			&:hover{
+				opacity: 1;
+			}
+		}
+
+		.title{
+			font-size: 25px;
+			font-weight: bold;
+			text-align: center;
+		}
+
+		.controls-list{
+			margin: auto;
+			margin-top: 20px;
+			width: 80%;
+
+			thead{
+				font-weight: bold;
+			}
+
+			tbody{
+				input{
+					padding: 5px;
+					text-transform: uppercase;
+				}
+			}
+		}
+
+		.buttons-wrapper{
+			text-align: center;
+			margin-top: 20px;
+
+			button{
+				width: 100px;
+				margin: 0px 5px;
+				border: none;
+				border-radius: 3px;
+				padding: 8px;
+				text-decoration: none;
+				font-size: 13px;
+				font-weight: bold;
+				box-shadow: #515151 1px 1px;
+				cursor: pointer;
+				color: #ffffff;
+
+				&.save-controls{
+					background-color: #1aa72b;
+
+					&:hover{
+						background-color: #10831e;
+					}
+				}
+
+				&.reset-controls{
+					background-color: #959d9c;
+
+					&:hover{
+						background-color: #6d7372;
+					}
+				}
+			}
+
+		}
+
+	}
+}

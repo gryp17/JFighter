@@ -1,0 +1,73 @@
+.select-level{
+	display: none;
+
+	.levels-list{
+		text-align: center;
+		margin-top: 55px;
+
+		.arrow{
+			display: inline-block;
+			margin-top: 140px;
+			margin-left: 35px;
+			margin-right: 35px;
+			vertical-align: top;
+			cursor: pointer;
+			opacity: 0.3;
+
+			img{
+				width: 150px;
+			}
+
+			&.previous{
+				img{
+					transform: rotate(180deg);
+				}
+			}
+
+			&:hover{
+				opacity: 0.6;
+			}
+		}
+
+		.thumbnail-container{
+			display: inline-block;
+			position: relative;
+			vertical-align: top;
+			cursor: pointer;
+
+			h2{
+				position: absolute;
+				top: 10px;
+				left: 0px;
+				right: 0px;
+				color: #243e99;
+			}
+
+			> img{
+				width: 530px;
+				border-radius: 10px;
+				border: solid 2px #ffffff;
+			}
+		}
+	}
+
+	.start-game-button{
+		display: block;
+		margin: auto;
+		width: 150px;
+		padding: 10px;
+		margin-top: 30px;
+		font-size: 16px;
+		font-weight: bold;
+		background-color: #007bff;
+		color: #ffffff;
+		border: none;
+		border-radius: 3px;
+		box-shadow: #515151 1px 1px;
+		cursor: pointer;
+
+		&:hover{
+			background-color: #0069d9;
+		}
+	}
+}
