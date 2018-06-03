@@ -411,8 +411,6 @@ function LevelEditor(container, images) {
 
 			//update the custom levels dropdown options
 			self.updateCustomLevelsDropdown();
-
-			alert("Level Deleted");
 		}
 	};
 
