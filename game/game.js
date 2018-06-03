@@ -5,9 +5,10 @@
  * @param {Object} enemyStats
  * @param {Object} civilianStats
  * @param {Object} levelsData
+ * @param {Object} gameControls
  * @returns {Game}
  */
-function Game(images, planeStats, enemyStats, civilianStats, levelsData) {
+function Game(images, planeStats, enemyStats, civilianStats, levelsData, gameControls) {
 	var self = this;
 
 	this.frameId;
@@ -23,7 +24,7 @@ function Game(images, planeStats, enemyStats, civilianStats, levelsData) {
 	this.deadCivilians;
 		
 	//initialize the keyboard controls
-	this.keyboard = new Keyboard();
+	this.keyboard = new Keyboard(gameControls);
 	
 	//initialize the collisions manager
 	this.collisionsManager = new CollisionsManager(this);

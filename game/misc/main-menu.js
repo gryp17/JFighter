@@ -14,8 +14,8 @@ function MainMenu(defaultControls) {
 	this.levelsList = this.selectLevelScreen.find(".levels-list");
 	this.thumbnailContainer = this.levelsList.find(".thumbnail-container");
 	
-	//default game controls
-	this.controls = _.cloneDeep(defaultControls);
+	//game controls
+	this.controls;
 	
 	//default game levels
 	this.gameLevels = {
@@ -43,6 +43,9 @@ function MainMenu(defaultControls) {
 		
 		//open the controls popup
 		this.mainMenu.find(".controls-button").click(this.openControlsPopup);
+		
+		//load the game controls
+		this.loadCustomControls();
 		
 		//close the controls popup
 		this.controlsPopup.find(".close").click(this.closeControlsPopup);
@@ -171,18 +174,23 @@ function MainMenu(defaultControls) {
 	};
 	
 	/**
-	 * Opens the controls popup window
+	 * Loads all custom controls if there are any
 	 */
-	this.openControlsPopup = function (){
-		self.resetControls();
-		
-		//load all custom controls if there are any
+	this.loadCustomControls = function (){
 		var customControls = localStorage.getItem(CONFIG.LOCAL_STORAGE.CUSTOM_CONTROLS.NAME);
 		
 		if(customControls){
 			self.controls = JSON.parse(customControls);
+		}else{
+			self.controls = _.cloneDeep(defaultControls);
 		}
-		
+	};
+	
+	/**
+	 * Opens the controls popup window
+	 */
+	this.openControlsPopup = function (){
+		self.loadCustomControls();
 		self.buildControlsList();
 		
 		self.controlsPopup.fadeIn(300);
@@ -269,8 +277,8 @@ function MainMenu(defaultControls) {
 			});
 		});
 		
-		//escape clears the input
-		if(keyCode === 27){
+		//escape and backspace keys clear the input
+		if(keyCode === 27 || keyCode === 8){
 			keyCode = "";
 		}
 		
@@ -291,7 +299,7 @@ function MainMenu(defaultControls) {
 		});
 
 		//call the callback with the selected plane and level
-		startGameCallback(self.gameLevels, self.selectedPlane, self.selectedLevel);
+		startGameCallback(self.gameLevels, self.controls, self.selectedPlane, self.selectedLevel);
 	};
 	
 	//list of key codes and their corresponding key names
