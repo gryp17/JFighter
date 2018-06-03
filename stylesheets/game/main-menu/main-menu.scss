@@ -18,19 +18,18 @@
 		display: inline-block;
 		width: 150px;
 		text-align: center;
-		background-color: #eff3ff;
+		background-color: #f8f9fa;
 		color: #000000;
 		border-radius: 3px;
 		padding: 8px;
 		text-decoration: none;
 		font-size: 13px;
 		font-weight: bold;
-		opacity: 0.9;
 		box-shadow: #515151 1px 1px;
 		cursor: pointer;
-
+		
 		&:hover{
-			opacity: 1;
+			background-color: #e2e6ea;
 		}
 	}
 
@@ -56,6 +55,7 @@
 				vertical-align: middle;
 				margin-top: -15px;
 				margin-bottom: -8px;
+				margin-right: 3px;
 			}
 		}
 	}

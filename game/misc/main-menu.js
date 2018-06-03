@@ -17,6 +17,15 @@ function MainMenu(defaultControls) {
 	//game controls
 	this.controls;
 	
+	this.controlsMap = {
+		LEFT: "BRAKES",
+		RIGHT: "THROTTLE",
+		UP: "ASCEND",
+		DOWN: "DESCEND",
+		SHOOT: "SHOOT",
+		BOMB: "DROP BOMB"
+	};
+	
 	//default game levels
 	this.gameLevels = {
 		GRASSLAND: GRASSLAND,
@@ -232,7 +241,7 @@ function MainMenu(defaultControls) {
 			var row = $("<tr>");
 			
 			var label = $("<td>", {
-				text: controlName
+				text: self.controlsMap[controlName]
 			});
 			
 			row.append(label);
