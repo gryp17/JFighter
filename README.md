@@ -35,5 +35,6 @@ Some of the game's features include:
 
 4. Open [/index.html](https://github.com/gryp17/JFighter/blob/master/index.html)
 
+## Live version
 
-
+Currently hosted at: [JFighter](http://portfolio-plamen.000webhostapp.com/projects/jfighter-js/)
