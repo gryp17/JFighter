@@ -37,4 +37,4 @@ Some of the game's features include:
 
 ## Live version
 
-Currently hosted at: [JFighter](http://portfolio-plamen.000webhostapp.com/projects/jfighter-js/)
+Currently hosted at: [JFighter](https://jfighter.gryp.dev/)
