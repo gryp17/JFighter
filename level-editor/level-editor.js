@@ -123,8 +123,8 @@ export default function LevelEditor(container, images) {
 		//generate a random level name when the level editor loads
 		this.levelName.val("level_" + new Date().getTime());
 
-		//displays the controls container
-		this.showControls();
+		//show the container once everything is initialized
+		this.container.fadeIn(300);
 	};
 	
 	/**
@@ -152,13 +152,6 @@ export default function LevelEditor(container, images) {
 
 			sections[objectData.type].append(gameObject);
 		});
-	};
-	
-	/**
-	 * Shows the editor controls (once everything else has been loaded)
-	 */
-	this.showControls = function (){
-		this.controlsContainer.fadeIn(200);
 	};
 
 	/**

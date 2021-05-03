@@ -47,8 +47,29 @@
 		}
 	}
 
+	.open-game-button {
+		position: fixed;
+		top: 10px;
+		left: 10px;
+		display: inline-block;
+		width: 150px;
+		text-align: center;
+		background-color: #f8f9fa;
+		color: #000000;
+		border-radius: 3px;
+		padding: 8px;
+		text-decoration: none;
+		font-size: 13px;
+		font-weight: bold;
+		box-shadow: #515151 1px 1px;
+		cursor: pointer;
+		
+		&:hover{
+			background-color: #e2e6ea;
+		}
+	}
+
 	.controls-container{
-		display: none;
 		position: fixed;
 		width: 250px;
 		height: $background-container-height;
