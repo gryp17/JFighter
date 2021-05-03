@@ -1,3 +1,7 @@
+import Sprite from '@/game/misc/sprite';
+import Explosion from '@/game/game-objects/misc/explosion';
+import BombHole from '@/game/game-objects/misc/bomb-hole';
+
 /**
  * Class used for the plane bombs
  * @param {Game} game
@@ -7,7 +11,7 @@
  * @param {Number} dy
  * @returns {PlaneBomb}
  */
-function PlaneBomb(game, x, y, dx, dy) {
+export default function PlaneBomb(game, x, y, dx, dy) {
 	this.context = game.contexts.projectiles.context;
 	this.canvas = game.contexts.projectiles.canvas;
 

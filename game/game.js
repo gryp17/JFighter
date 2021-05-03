@@ -1,3 +1,29 @@
+import constants from '@/game/constants';
+import Keyboard from '@/game/misc/keyboard';
+import CollisionsManager from '@/game/misc/collisions-manager';
+import HUD from '@/game/misc/hud';
+import HARPP from '@/game/misc/harpp';
+import GameMenu from '@/game/misc/game-menu';
+import Context from '@/game/misc/context';
+import Background from '@/game/game-objects/background';
+import Plane from '@/game/game-objects/plane/plane';
+import Fighter from '@/game/game-objects/enemies/fighter';
+import Sherman from '@/game/game-objects/enemies/sherman';
+import Soldier from '@/game/game-objects/enemies/soldier';
+import Bomber from '@/game/game-objects/enemies/bomber/bomber';
+import Civilian from '@/game/game-objects/civilian';
+
+var enemies = {
+	Fighter,
+	Sherman,
+	Soldier,
+	Bomber
+};
+
+var civilians = {
+	Civilian
+}
+
 /**
  * Main game class that initializes the game and all the game objects
  * @param {Object} images
@@ -8,7 +34,7 @@
  * @param {Object} gameControls
  * @returns {Game}
  */
-function Game(images, planeStats, enemyStats, civilianStats, levelsData, gameControls) {
+export default function(images, planeStats, enemyStats, civilianStats, levelsData, gameControls) {
 	var self = this;
 
 	this.frameId;
@@ -58,7 +84,7 @@ function Game(images, planeStats, enemyStats, civilianStats, levelsData, gameCon
 		//clear the frame id before starting the game in case there is another timer running already
 		this.clearFrameId();
 				
-		this.status = CONSTANTS.GAME_STATE.ACTIVE;
+		this.status = constants.GAME_STATE.ACTIVE;
 		this.selectedPlane = selectedPlane;
 		this.selectedLevel = selectedLevel;
 		this.deadCivilians = 0;
@@ -76,31 +102,31 @@ function Game(images, planeStats, enemyStats, civilianStats, levelsData, gameCon
 		this.enemies = this.levelsData[selectedLevel].ENEMIES.map(function (enemy) {
 
 			//default arguments for each object type
-			var arguments = [null, self];
+			var args = [self];
 
 			//additional arguments (x, y...)
 			var objectArguments = Object.values(enemy.arguments);
 
 			//merge all arguments
-			arguments = arguments.concat(objectArguments);
+			args = args.concat(objectArguments);
 
 			//create new dynamic Object (this[enemy.objectType]) passing the arguments
-			return new (Function.prototype.bind.apply(this[enemy.objectType], arguments));
+			return new enemies[enemy.objectType](...args);
 		});
 				
 		this.civilians = this.levelsData[selectedLevel].CIVILIANS.map(function (civilian) {
 
 			//default arguments for each object type
-			var arguments = [null, self];
+			var args = [self];
 
 			//additional arguments (x, y...)
 			var objectArguments = Object.values(civilian.arguments);
 
 			//merge all arguments
-			arguments = arguments.concat(objectArguments);
+			args = args.concat(objectArguments);
 
 			//create new dynamic Object (this[civilian.objectType]) passing the arguments
-			return new (Function.prototype.bind.apply(this[civilian.objectType], arguments));
+			return new civilians[civilian.objectType](...args);
 		});
 		
 		//listen for the keyboard events
@@ -132,7 +158,7 @@ function Game(images, planeStats, enemyStats, civilianStats, levelsData, gameCon
 		self.frameId = requestAnimFrame(self.animate);
 
 		//if the game is paused don't draw anything
-		if(self.status === CONSTANTS.GAME_STATE.PAUSED){
+		if(self.status === constants.GAME_STATE.PAUSED){
 			return;
 		}
 
@@ -166,7 +192,7 @@ function Game(images, planeStats, enemyStats, civilianStats, levelsData, gameCon
 		});
 		
 		//show the level completed screen if all enemies are dead
-		if(self.enemies.length === 0 && self.status === CONSTANTS.GAME_STATE.ACTIVE){
+		if(self.enemies.length === 0 && self.status === constants.GAME_STATE.ACTIVE){
 			self.menu.levelCompleted();
 		}
 		

@@ -1,3 +1,7 @@
+import Utils from '@/game/misc/utils';
+import Sprite from '@/game/misc/sprite';
+import Bullet from '@/game/game-objects/misc/bullet/bullet';
+
 /**
  * Class that represents the enemy tanks (Shermans)
  * @param {Object} game
@@ -5,7 +9,7 @@
  * @param {Number} y
  * @returns {Bomber}
  */
-function Sherman(game, x, y) {
+export default function Sherman(game, x, y) {
 	this.context = game.contexts.groundEnemies.context;
 	this.canvas = game.contexts.groundEnemies.canvas;
 			

@@ -1,4 +1,4 @@
-var ENEMY_STATS = {
+export default {
 	B17: {
 		HEALTH: 1000,
 		BOMB_DAMAGE: 800,

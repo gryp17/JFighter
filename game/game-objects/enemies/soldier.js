@@ -1,3 +1,7 @@
+import Utils from '@/game/misc/utils';
+import Sprite from '@/game/misc/sprite';
+import Bullet from '@/game/game-objects/misc/bullet/bullet';
+
 /**
  * Class that represents the enemy soldiers
  * @param {Object} game
@@ -5,9 +9,9 @@
  * @param {Number} y
  * @returns {Soldier}
  */
-function Soldier(game, x, y) {
+export default function Soldier(game, x, y) {
 	var self = this;
-	
+
 	this.context = game.contexts.groundEnemies.context;
 	this.canvas = game.contexts.groundEnemies.canvas;
 			

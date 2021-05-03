@@ -1,4 +1,4 @@
-var CONSTANTS = {
+export default {
 	GAME_STATE: {
 		ACTIVE: 1,
 		PAUSED: 2,

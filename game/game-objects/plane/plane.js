@@ -1,9 +1,14 @@
+import Sprite from '@/game/misc/sprite';
+import Bullet from '@/game/game-objects/misc/bullet/bullet';
+import Explosion from '@/game/game-objects/misc/explosion';
+import PlaneBomb from '@/game/game-objects/plane/plane-bomb';
+
 /**
  * Class that represents the player's plane
  * @param {Game} game
  * @returns {Plane}
  */
-function Plane(game) {
+export default function Plane(game) {
 	var self = this;
 	this.context = game.contexts.plane.context;
 	this.canvas = game.contexts.plane.canvas;

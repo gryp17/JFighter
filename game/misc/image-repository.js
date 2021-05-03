@@ -4,7 +4,7 @@
  * @param {Function} callback
  * @returns {ImageRepository}
  */
-function ImageRepository(images, callback) {
+export default function ImageRepository(images, callback) {
 	var self = this;
 	this.images = images;
 	this.loadedImages = 0;

@@ -1,4 +1,4 @@
-var DESERT = {
+export default {
 	THEME: "DESERT",
 	WEATHER: {
 		TYPE: "normal"

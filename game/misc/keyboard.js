@@ -3,7 +3,7 @@
  * @param {Object} inputs
  * @returns {Keyboard}
  */
-function Keyboard (inputs){
+export default function Keyboard (inputs){
 	var self = this;
 	
 	this.inputs = inputs;

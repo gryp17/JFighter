@@ -1,18 +1,20 @@
+import constants from '@/game/constants';
+
 /**
  * Class used for handling the game menu
  * @param {Game} game
  * @returns {GameMenu}
  */
-function GameMenu(game) {
+export default function GameMenu(game) {
 	var self = this;
 		
 	$("body").keyup(function (e) {
 		//escape
 		if(e.which === 27){
 			//toggle between the paused/active states
-			if(game.status === CONSTANTS.GAME_STATE.ACTIVE){
+			if(game.status === constants.GAME_STATE.ACTIVE){
 				self.pauseGame();
-			}else if(game.status === CONSTANTS.GAME_STATE.PAUSED){
+			}else if(game.status === constants.GAME_STATE.PAUSED){
 				self.hideMenu();
 			}
 		}
@@ -40,21 +42,21 @@ function GameMenu(game) {
 	 * Shows the game paused menu
 	 */
 	this.pauseGame = function (){
-		this.showMenu(CONSTANTS.GAME_STATE.PAUSED, "GAME PAUSED");
+		this.showMenu(constants.GAME_STATE.PAUSED, "GAME PAUSED");
 	};
 	
 	/**
 	 * Shows the game over menu
 	 */
 	this.gameOver = function (){
-		this.showMenu(CONSTANTS.GAME_STATE.GAME_OVER, "GAME OVER");
+		this.showMenu(constants.GAME_STATE.GAME_OVER, "GAME OVER");
 	};
 	
 	/**
 	 * Shows the level completed menu
 	 */
 	this.levelCompleted = function (){
-		this.showMenu(CONSTANTS.GAME_STATE.LEVEL_COMPLETED, "LEVEL COMPLETED");
+		this.showMenu(constants.GAME_STATE.LEVEL_COMPLETED, "LEVEL COMPLETED");
 	};
 	
 	/**
@@ -71,7 +73,7 @@ function GameMenu(game) {
 	 * Hides the game menu
 	 */
 	this.hideMenu = function (){
-		game.status = CONSTANTS.GAME_STATE.ACTIVE;
+		game.status = constants.GAME_STATE.ACTIVE;
 		$("#game-menu").fadeOut(100);
 	};
 }

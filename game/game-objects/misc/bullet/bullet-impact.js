@@ -1,3 +1,5 @@
+import Sprite from '@/game/misc/sprite';
+
 /**
  * Bullet impact class that displays the bullet impact effect after a bullet hits anything
  * @param {Game} game
@@ -5,7 +7,7 @@
  * @param {Number} y
  * @returns {BulletImpact}
  */
-function BulletImpact(game, x, y) {
+export default function BulletImpact(game, x, y) {
 	this.context = game.contexts.projectiles.context;
 	this.canvas = game.contexts.projectiles.canvas;
 	

@@ -1,4 +1,4 @@
-var GRASSLAND = {
+export default {
 	THEME: "GRASSLAND",
 	WEATHER: {
 		TYPE: "rain",

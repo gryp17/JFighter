@@ -1,4 +1,4 @@
-var CONFIG = {
+export default {
 	LOCAL_STORAGE: {
 		CUSTOM_LEVELS: {
 			NAME: "jfighter-levels"

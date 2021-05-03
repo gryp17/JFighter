@@ -1,9 +1,14 @@
+@import "main-menu/main-menu.scss";
+@import "loading-ring.scss";
+@import "game-menu.scss";
+@import "hud.scss";
+
 * {
 	margin: 0px;
 	padding: 0px;
 }
 
-#container{
+#container {
 	position: relative;
 	margin: auto;
 	width: 1000px;

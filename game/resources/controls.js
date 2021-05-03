@@ -1,4 +1,4 @@
-var CONTROLS = {
+export default {
 	LEFT: {
 		keys: [37, 65] //left arrow, A
 	},

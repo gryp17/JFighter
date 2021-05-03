@@ -9,7 +9,7 @@
  * @param {Number} height
  * @returns {Raindrop}
  */
-function Raindrop(game, x, y, dx, dy, width, height) {
+export default function Raindrop(game, x, y, dx, dy, width, height) {
 	this.context = game.contexts.weather.context;
 	this.canvas = game.contexts.weather.canvas;
 

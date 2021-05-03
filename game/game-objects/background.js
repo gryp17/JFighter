@@ -3,7 +3,7 @@
  * @param {Game} game
  * @returns {Background}
  */
-function Background(game) {
+export default function Background(game) {
 	this.context = game.contexts.background.context;
 	this.canvas = game.contexts.background.canvas;
 	

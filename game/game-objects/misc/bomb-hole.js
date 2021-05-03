@@ -5,7 +5,7 @@
  * @param {Number} y
  * @returns {BombHole}
  */
-function BombHole(game, x, y) {
+export default function BombHole(game, x, y) {
 	this.context = game.contexts.background.context;
 	this.canvas = game.contexts.background.canvas;
 

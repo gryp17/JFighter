@@ -1,3 +1,5 @@
+import BulletImpact from '@/game/game-objects/misc/bullet/bullet-impact';
+
 /**
  * Class used for the game bullets
  * @param {Game} game
@@ -9,7 +11,7 @@
  * @param {Plane|Fighter|Sherman} source
  * @returns {Bullet}
  */
-function Bullet(game, x, y, dx, dy, angle, source) {
+export default function Bullet(game, x, y, dx, dy, angle, source) {
 	this.context = game.contexts.projectiles.context;
 	this.canvas = game.contexts.projectiles.canvas;
 		

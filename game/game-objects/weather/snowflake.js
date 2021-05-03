@@ -8,7 +8,7 @@
  * @param {Number} radius
  * @returns {Snowflake}
  */
-function Snowflake(game, x, y, dx, dy, radius) {
+export default function Snowflake(game, x, y, dx, dy, radius) {
 	this.context = game.contexts.weather.context;
 	this.canvas = game.contexts.weather.canvas;
 

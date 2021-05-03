@@ -1,4 +1,4 @@
-var PLANE_STATS = {
+export default {
 	BF109: {
 		DAMAGE: 60,
 		HEALTH: 1200,

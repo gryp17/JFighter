@@ -1,3 +1,5 @@
+import Sprite from '@/game/misc/sprite';
+
 /**
  * Class used for the game explosions
  * @param {Game} game
@@ -8,7 +10,7 @@
  * @param {Boolean} showBombHole
  * @returns {Explosion}
  */
-function Explosion(game, x, y, dx, dy, showBombHole) {
+export default function Explosion(game, x, y, dx, dy, showBombHole) {
 	this.context = game.contexts.projectiles.context;
 	this.canvas = game.contexts.projectiles.canvas;
 

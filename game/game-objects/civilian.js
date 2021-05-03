@@ -1,3 +1,6 @@
+import Utils from '@/game/misc/utils';
+import Sprite from '@/game/misc/sprite';
+
 /**
  * Class that represents the civilians
  * @param {Object} game
@@ -5,7 +8,7 @@
  * @param {Number} y
  * @returns {Civilian}
  */
-function Civilian(game, x, y) {
+export default function Civilian(game, x, y) {
 	var self = this;
 	this.context = game.contexts.civilians.context;
 	this.canvas = game.contexts.civilians.canvas;

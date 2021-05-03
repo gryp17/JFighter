@@ -1,12 +1,18 @@
+import config from '@/config/config';
+import grassland from '@/game/resources/levels/grassland';
+import desert from '@/game/resources/levels/desert';
+import winter from '@/game/resources/levels/winter';
+
 /**
  * Class used for handling the main menu
  * @param {Object} defaultControls
  * @returns {MainMenu}
  */
-function MainMenu(defaultControls) {
+export default function MainMenu(defaultControls) {
 	var self = this;
 	
 	this.loadingIndicator = $(".uil-ring-css");
+	this.innerContainer = $("#inner-container");
 	this.mainMenu = $("#main-menu");
 	this.controlsPopup = this.mainMenu.find(".controls-popup");
 	this.selectPlaneScreen = this.mainMenu.find(".select-plane");
@@ -28,12 +34,12 @@ function MainMenu(defaultControls) {
 	
 	//default game levels
 	this.gameLevels = {
-		GRASSLAND: GRASSLAND,
-		DESERT: DESERT,
-		WINTER: WINTER
+		GRASSLAND: grassland,
+		DESERT: desert,
+		WINTER: winter
 	};
 	
-	this.levelIndex = 0;;
+	this.levelIndex = 0;
 	
 	this.selectedPlane;
 	this.selectedLevel;
@@ -108,7 +114,7 @@ function MainMenu(defaultControls) {
 		
 		//hide the loading indicator and show the main menu
 		this.loadingIndicator.fadeOut(300, function () {
-			self.mainMenu.fadeIn(300);
+			self.innerContainer.fadeIn(300);
 		});
 		
 	};
@@ -171,7 +177,7 @@ function MainMenu(defaultControls) {
 	 * Loads all custom levels (if any) from the local storage and merges them with the default game levels
 	 */
 	this.loadCustomLevels = function () {
-		var customLevels = localStorage.getItem(CONFIG.LOCAL_STORAGE.CUSTOM_LEVELS.NAME);
+		var customLevels = localStorage.getItem(config.LOCAL_STORAGE.CUSTOM_LEVELS.NAME);
 
 		if (customLevels) {
 			customLevels = JSON.parse(customLevels);
@@ -186,7 +192,7 @@ function MainMenu(defaultControls) {
 	 * Loads all custom controls if there are any
 	 */
 	this.loadCustomControls = function (){
-		var customControls = localStorage.getItem(CONFIG.LOCAL_STORAGE.CUSTOM_CONTROLS.NAME);
+		var customControls = localStorage.getItem(config.LOCAL_STORAGE.CUSTOM_CONTROLS.NAME);
 		
 		if(customControls){
 			self.controls = JSON.parse(customControls);
@@ -223,7 +229,7 @@ function MainMenu(defaultControls) {
 	 * Updates the local storage with the new controls configuration and closes the popup
 	 */
 	this.saveControls = function (){
-		localStorage.setItem(CONFIG.LOCAL_STORAGE.CUSTOM_CONTROLS.NAME, JSON.stringify(self.controls));
+		localStorage.setItem(config.LOCAL_STORAGE.CUSTOM_CONTROLS.NAME, JSON.stringify(self.controls));
 		self.closeControlsPopup();
 	};
 	

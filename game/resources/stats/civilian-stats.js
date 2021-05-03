@@ -1,4 +1,4 @@
-var CIVILIAN_STATS = {
+export default {
 	CIVILIAN: {
 		HEALTH: 6
 	}

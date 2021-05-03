@@ -1,9 +1,12 @@
+import Raindrop from '@/game/game-objects/weather/raindrop';
+import Snowflake from '@/game/game-objects/weather/snowflake';
+
 /**
  * HARPP class used for generating weather effects
  * @param {Game} game
  * @returns {HARPP}
  */
-function HARPP (game) {
+export default function HARPP (game) {
 	this.weather;
 	this.showWeatherEffects = false;
 	this.clock = 0;

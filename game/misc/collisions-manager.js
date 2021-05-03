@@ -1,9 +1,15 @@
+import Utils from '@/game/misc/utils';
+import Fighter from '@/game/game-objects/enemies/fighter';
+import Sherman from '@/game/game-objects/enemies/sherman';
+import Soldier from '@/game/game-objects/enemies/soldier';
+import Bomber from '@/game/game-objects/enemies/bomber/bomber';
+
 /**
  * Class used for handling all game object collisions
  * @param {Game} game
  * @returns {CollisionsManager}
  */
-function CollisionsManager(game) {
+export default function CollisionsManager(game) {
 	var self = this;
 
 	/**

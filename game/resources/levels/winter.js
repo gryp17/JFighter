@@ -1,4 +1,4 @@
-var WINTER = {
+export default {
 	THEME: "WINTER",
 	WEATHER: {
 		TYPE: "snow"

@@ -1,10 +1,13 @@
+import 'jquery.mousewheel';
+import config from '@/config/config';
+
 /**
  * Class that handles all level editor actions
  * @param {Object} container
  * @param {Object} images
  * @returns {LevelEditor}
  */
-function LevelEditor(container, images) {
+export default function LevelEditor(container, images) {
 	var self = this;
 
 	//selectors
@@ -162,7 +165,7 @@ function LevelEditor(container, images) {
 	 * Loads all custom levels data from the local storage
 	 */
 	this.loadCustomLevels = function () {
-		var data = localStorage.getItem(CONFIG.LOCAL_STORAGE.CUSTOM_LEVELS.NAME);
+		var data = localStorage.getItem(config.LOCAL_STORAGE.CUSTOM_LEVELS.NAME);
 
 		if (data) {
 			this.customLevels = JSON.parse(data);
@@ -407,7 +410,7 @@ function LevelEditor(container, images) {
 			delete self.customLevels[self.selectedLevel];
 			
 			//update the local storage
-			localStorage.setItem(CONFIG.LOCAL_STORAGE.CUSTOM_LEVELS.NAME, JSON.stringify(self.customLevels));
+			localStorage.setItem(config.LOCAL_STORAGE.CUSTOM_LEVELS.NAME, JSON.stringify(self.customLevels));
 
 			//update the custom levels dropdown options
 			self.updateCustomLevelsDropdown();
@@ -488,7 +491,7 @@ function LevelEditor(container, images) {
 		self.customLevels[levelName] = level;
 		
 		//update the local storage
-		localStorage.setItem(CONFIG.LOCAL_STORAGE.CUSTOM_LEVELS.NAME, JSON.stringify(self.customLevels));
+		localStorage.setItem(config.LOCAL_STORAGE.CUSTOM_LEVELS.NAME, JSON.stringify(self.customLevels));
 		
 		//update the custom levels dropdown options
 		self.updateCustomLevelsDropdown();

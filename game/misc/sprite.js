@@ -5,7 +5,7 @@
  * @param {Boolean} loop
  * @returns {Sprite}
  */
-function Sprite(images, delay, loop) {
+export default function Sprite(images, delay, loop) {
 	this.images = images;
 	this.delay = delay;
 	this.loop = loop;

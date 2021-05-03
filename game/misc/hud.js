@@ -4,7 +4,7 @@
  * @param {String} selector
  * @returns {HUD}
  */
-function HUD(game, selector) {
+export default function HUD(game, selector) {
 	this.element = $(selector);
 	this.visible = false;
 	

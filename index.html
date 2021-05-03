@@ -4,7 +4,12 @@
 		<title>JFighter</title>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<link rel="stylesheet" type="text/css" href="min/css/game.css">
+
+		<style>
+			#inner-container {
+				display: none;
+			}
+		</style>
 	</head>
 	<body>
 		<div id="container">
@@ -14,217 +19,218 @@
 				<div></div>
 			</div>
 
-			<!-- main menu -->
-			<div id="main-menu">
+			<!-- inner container -->
+			<div id="inner-container">
 				
-				<!-- buttons wrapper -->
-				<div class="buttons-wrapper">
-					<a class="white-button level-editor-button" href="level-editor.html">
-						<img src="img/main-menu/icon-edit-level.png"/>
-						LEVEL EDITOR
-					</a>
-
-					<a class="white-button controls-button">
-						<img src="img/main-menu/icon-keyboard.png"/>
-						CONTROLS
-					</a>
-				</div>
-				
-				<!-- controls popup -->
-				<div class="controls-popup">
-					<div class="content">
-						<img class="close" src="img/main-menu/icon-close.png"/>
-						
-						<div class="title">Game Controls</div>
-						
-						<table class="controls-list">
-							<thead>
-								<tr>
-									<td>Name</td>
-									<td>Input</td>
-									<td>Secondary Input</td>
-								</tr>
-							</thead>
-							<tbody></tbody>
-						</table>
-						
-						<div class="buttons-wrapper">
-							<button class="save-controls">Save</button>
-							<button class="reset-controls">Reset</button>
-						</div>
-					</div>
-				</div>
-				
-				<!-- select plane -->
-				<div class="select-plane">
-					<h4>Select plane</h4>
-					<div class="plane" data-plane="BF109">
-						<img src="img/planes/bf109/default/1.png"/>
-						<div class="stats">
-							<h4>Messerschmitt Bf 109</h4>
-							<table class="stats">
-								<tr>
-									<td>
-										HEALTH
-									</td>
-									<td>
-										<div style="width: 50%"></div>
-									</td>
-								</tr>
-								<tr>
-									<td>
-										DAMAGE
-									</td>
-									<td>
-										<div style="width: 70%"></div>
-									</td>
-								</tr>
-								<tr>
-									<td>
-										SPEED
-									</td>
-									<td>
-										<div style="width: 60%"></div>
-									</td>
-								</tr>
-							</table>							
-						</div>
-					</div>
-					<div class="plane" data-plane="STUKA">
-						<img src="img/planes/stuka/default/1.png"/>
-						<div class="stats">
-							<h4>Ju-87 Stuka</h4>
-							<table>
-								<tr>
-									<td>
-										HEALTH
-									</td>
-									<td>
-										<div style="width: 90%"></div>
-									</td>
-								</tr>
-								<tr>
-									<td>
-										DAMAGE
-									</td>
-									<td>
-										<div style="width: 70%"></div>
-									</td>
-								</tr>
-								<tr>
-									<td>
-										SPEED
-									</td>
-									<td>
-										<div style="width: 30%"></div>
-									</td>
-								</tr>
-							</table>
-						</div>
-					</div>
-					<div class="plane" data-plane="KI84">
-						<img src="img/planes/ki84/default/1.png"/>
-						<div class="stats">
-							<h4>Ki-84</h4>
-							<table>
-								<tr>
-									<td>
-										HEALTH
-									</td>
-									<td>
-										<div style="width: 30%"></div>
-									</td>
-								</tr>
-								<tr>
-									<td>
-										DAMAGE
-									</td>
-									<td>
-										<div style="width: 90%"></div>
-									</td>
-								</tr>
-								<tr>
-									<td>
-										SPEED
-									</td>
-									<td>
-										<div style="width: 80%"></div>
-									</td>
-								</tr>
-							</table>
-						</div>
-					</div>
-				</div>
-				
-				<!-- select level -->
-				<div class="select-level">
-					<h4>Select level</h4>
+				<!-- main menu -->
+				<div id="main-menu">
 					
-					<div class="levels-list">
-						<div class="arrow previous">
-							<img src="img/main-menu/arrow.png"/>
-						</div>
-						<div class="thumbnail-container">
-							<h2>Level Name</h2>
-							<img src=""/>
-						</div>
-						<div class="arrow next">
-							<img src="img/main-menu/arrow.png"/>
+					<!-- buttons wrapper -->
+					<div class="buttons-wrapper">
+						<a class="white-button level-editor-button" href="level-editor.html">
+							<img src="img/main-menu/icon-edit-level.png"/>
+							LEVEL EDITOR
+						</a>
+
+						<a class="white-button controls-button">
+							<img src="img/main-menu/icon-keyboard.png"/>
+							CONTROLS
+						</a>
+					</div>
+					
+					<!-- controls popup -->
+					<div class="controls-popup">
+						<div class="content">
+							<img class="close" src="img/main-menu/icon-close.png"/>
+							
+							<div class="title">Game Controls</div>
+							
+							<table class="controls-list">
+								<thead>
+									<tr>
+										<td>Name</td>
+										<td>Input</td>
+										<td>Secondary Input</td>
+									</tr>
+								</thead>
+								<tbody></tbody>
+							</table>
+							
+							<div class="buttons-wrapper">
+								<button class="save-controls">Save</button>
+								<button class="reset-controls">Reset</button>
+							</div>
 						</div>
 					</div>
 					
-					<button class="start-game-button">START GAME</button>
+					<!-- select plane -->
+					<div class="select-plane">
+						<h4>Select plane</h4>
+						<div class="plane" data-plane="BF109">
+							<img src="img/planes/bf109/default/1.png"/>
+							<div class="stats">
+								<h4>Messerschmitt Bf 109</h4>
+								<table class="stats">
+									<tr>
+										<td>
+											HEALTH
+										</td>
+										<td>
+											<div style="width: 50%"></div>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											DAMAGE
+										</td>
+										<td>
+											<div style="width: 70%"></div>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											SPEED
+										</td>
+										<td>
+											<div style="width: 60%"></div>
+										</td>
+									</tr>
+								</table>							
+							</div>
+						</div>
+						<div class="plane" data-plane="STUKA">
+							<img src="img/planes/stuka/default/1.png"/>
+							<div class="stats">
+								<h4>Ju-87 Stuka</h4>
+								<table>
+									<tr>
+										<td>
+											HEALTH
+										</td>
+										<td>
+											<div style="width: 90%"></div>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											DAMAGE
+										</td>
+										<td>
+											<div style="width: 70%"></div>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											SPEED
+										</td>
+										<td>
+											<div style="width: 30%"></div>
+										</td>
+									</tr>
+								</table>
+							</div>
+						</div>
+						<div class="plane" data-plane="KI84">
+							<img src="img/planes/ki84/default/1.png"/>
+							<div class="stats">
+								<h4>Ki-84</h4>
+								<table>
+									<tr>
+										<td>
+											HEALTH
+										</td>
+										<td>
+											<div style="width: 30%"></div>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											DAMAGE
+										</td>
+										<td>
+											<div style="width: 90%"></div>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											SPEED
+										</td>
+										<td>
+											<div style="width: 80%"></div>
+										</td>
+									</tr>
+								</table>
+							</div>
+						</div>
+					</div>
+					
+					<!-- select level -->
+					<div class="select-level">
+						<h4>Select level</h4>
+						
+						<div class="levels-list">
+							<div class="arrow previous">
+								<img src="img/main-menu/arrow.png"/>
+							</div>
+							<div class="thumbnail-container">
+								<h2>Level Name</h2>
+								<img src=""/>
+							</div>
+							<div class="arrow next">
+								<img src="img/main-menu/arrow.png"/>
+							</div>
+						</div>
+						
+						<button class="start-game-button">START GAME</button>
+					</div>
 				</div>
-			</div>
-			
-			<!-- game menu -->
-			<div id="game-menu">
-				<h4>GAME PAUSED</h4>
-				<hr/>
-				<div class="option restart">Restart Level</div>
-				<div class="option main-menu">Main Menu</div>
-			</div>
+				
+				<!-- game menu -->
+				<div id="game-menu">
+					<h4>GAME PAUSED</h4>
+					<hr/>
+					<div class="option restart">Restart Level</div>
+					<div class="option main-menu">Main Menu</div>
+				</div>
 
-			<!-- HUD -->
-			<div id="HUD">
-				<div class="health-bar">
-					<span>HEALTH</span>
-					<div class="current"></div>
+				<!-- HUD -->
+				<div id="HUD">
+					<div class="health-bar">
+						<span>HEALTH</span>
+						<div class="current"></div>
+					</div>
+					
+					<div class="throttle-bar">
+						<span>ENGINE</span>
+						<div class="current"></div>
+					</div>
+					
+					<div class="pitch-bar">
+						<span>PITCH</span>
+						<div class="current"></div>
+					</div>
+					
+					<div class="heat-bar">
+						<span>MACHINEGUN HEAT</span>
+						<div class="current"></div>
+					</div>
+					
+					<div class="loaded-bombs"></div>
+					
+					<div class="civilians-status"></div>
 				</div>
 				
-				<div class="throttle-bar">
-					<span>ENGINE</span>
-					<div class="current"></div>
-				</div>
-				
-				<div class="pitch-bar">
-					<span>PITCH</span>
-					<div class="current"></div>
-				</div>
-				
-				<div class="heat-bar">
-					<span>MACHINEGUN HEAT</span>
-					<div class="current"></div>
-				</div>
-				
-				<div class="loaded-bombs"></div>
-				
-				<div class="civilians-status"></div>
+				<!-- canvas elements -->
+				<canvas id="background-canvas" class="canvas" width="1000" height="620">
+					Your browser does not support HTML5 Canvas.
+				</canvas>
+				<canvas id="plane-canvas" class="canvas" width="1000" height="620"></canvas>
+				<canvas id="civilians-canvas" class="canvas" width="1000" height="620"></canvas>
+				<canvas id="air-enemies-canvas" class="canvas" width="1000" height="620"></canvas>
+				<canvas id="ground-enemies-canvas" class="canvas" width="1000" height="620"></canvas>
+				<canvas id="projectiles-canvas" class="canvas" width="1000" height="620"></canvas>
+				<canvas id="weather-canvas" class="canvas" width="1000" height="620"></canvas>
 			</div>
-			
-			<!-- canvas elements -->
-			<canvas id="background-canvas" class="canvas" width="1000" height="620">
-				Your browser does not support HTML5 Canvas.
-			</canvas>
-			<canvas id="plane-canvas" class="canvas" width="1000" height="620"></canvas>
-			<canvas id="civilians-canvas" class="canvas" width="1000" height="620"></canvas>
-			<canvas id="air-enemies-canvas" class="canvas" width="1000" height="620"></canvas>
-			<canvas id="ground-enemies-canvas" class="canvas" width="1000" height="620"></canvas>
-			<canvas id="projectiles-canvas" class="canvas" width="1000" height="620"></canvas>
-			<canvas id="weather-canvas" class="canvas" width="1000" height="620"></canvas>
 		</div>
-
-		<script type="text/javascript" src="min/js/lib.js"></script>
-		<script type="text/javascript" src="min/js/game.js"></script>
 	</body>
 </html>

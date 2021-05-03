@@ -1,3 +1,8 @@
+import Utils from '@/game/misc/utils';
+import Sprite from '@/game/misc/sprite';
+import BomberBomb from '@/game/game-objects/enemies/bomber/bomber-bomb';
+import Explosion from '@/game/game-objects/misc/explosion';
+
 /**
  * Class that represents the enemy bombers
  * @param {Object} game
@@ -5,7 +10,7 @@
  * @param {Number} y
  * @returns {Bomber}
  */
-function Bomber(game, x, y) {
+export default function Bomber(game, x, y) {
 	this.context = game.contexts.airEnemies.context;
 	this.canvas = game.contexts.airEnemies.canvas;
 			

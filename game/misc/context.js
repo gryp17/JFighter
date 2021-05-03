@@ -3,7 +3,7 @@
  * @param {String} id
  * @returns {Context}
  */
-function Context(id){
+export default function Context(id){
 	this.canvas = document.getElementById(id);
 	this.context = this.canvas.getContext("2d");
 }

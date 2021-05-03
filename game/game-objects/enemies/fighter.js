@@ -1,3 +1,8 @@
+import Utils from '@/game/misc/utils';
+import Sprite from '@/game/misc/sprite';
+import Bullet from '@/game/game-objects/misc/bullet/bullet';
+import Explosion from '@/game/game-objects/misc/explosion';
+
 /**
  * Class that represents the enemy fighters
  * @param {Object} game
@@ -5,7 +10,7 @@
  * @param {Number} y
  * @returns {Fighter}
  */
-function Fighter(game, x, y) {
+export default function Fighter(game, x, y) {
 	this.context = game.contexts.airEnemies.context;
 	this.canvas = game.contexts.airEnemies.canvas;
 

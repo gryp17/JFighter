@@ -1,7 +1,7 @@
 /**
  * Utils class containing helper functions
  */
-var Utils = new function () {
+export default new function Utils() {
 	var self = this;
 	
 	/**

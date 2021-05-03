@@ -1,4 +1,4 @@
-var GAME_IMAGES = {
+export default {
 	//main menu
 	MAIN_MENU: {
 		BACKGROUND: "img/main-menu/menu.png",
