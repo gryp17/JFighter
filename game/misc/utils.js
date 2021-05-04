@@ -1,21 +1,20 @@
 /**
  * Utils class containing helper functions
  */
-export default new function Utils() {
-	var self = this;
-	
+export default class Utils {
+
 	/**
 	 * Checks if the two rectangles intersect
 	 * @param {Object} objectA
 	 * @param {Object} objectB
 	 * @returns {Boolean}
 	 */
-	this.intersect = function (objectA, objectB){
+	static intersect(objectA, objectB) {
 		var result = false;
 		
 		//calculate the margins for both objects
-		objectA = calculateMargins(objectA);
-		objectB = calculateMargins(objectB);
+		objectA = this.calculateMargins(objectA);
+		objectB = this.calculateMargins(objectB);
 		
 		//calculate the horizontal and vertical overlap
 		var horizontalOverlap = Math.max(0, Math.min(objectA.right, objectB.right) - Math.max(objectA.left, objectB.left));
@@ -34,7 +33,7 @@ export default new function Utils() {
 	 * @param {Object|Array} hitboxB
 	 * @returns {Boolean}
 	 */
-	this.collidesWith = function (hitboxA, hitboxB){
+	static collidesWith(hitboxA, hitboxB) {
 		var result = false;
 		
 		//convert both hitboxes to arrays in case they are not arrays (some game objects might have more than 1 hitbox!)
@@ -47,9 +46,9 @@ export default new function Utils() {
 		}
 		
 		//check if the hitboxes collide
-		hitboxA.forEach(function (a){
-			hitboxB.forEach(function (b){
-				if(self.intersect(a, b)){
+		hitboxA.forEach((a) => {
+			hitboxB.forEach((b) => {
+				if(this.intersect(a, b)){
 					result = true;
 				}
 			});
@@ -63,7 +62,7 @@ export default new function Utils() {
 	 * @param {Object} object
 	 * @returns {Object}
 	 */
-	function calculateMargins (object){
+	static calculateMargins(object) {
 		object.left = object.x;
 		object.top = object.y + object.offset;
 		object.right = object.left + object.width;
@@ -78,7 +77,7 @@ export default new function Utils() {
 	 * @param {Number} currentHealth
 	 * @returns {Object}
 	 */
-	this.generateHealthBar = function (hitbox, maxHealth, currentHealth){
+	static generateHealthBar(hitbox, maxHealth, currentHealth) {
 		var barWidth = 50;
 		var barHeight = 5;
 		var barBorder = "black";

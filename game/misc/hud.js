@@ -1,35 +1,41 @@
 /**
  * Class used for displaying the HUD elements of the game
- * @param {Game} game
- * @param {String} selector
- * @returns {HUD}
  */
-export default function HUD(game, selector) {
-	this.element = $(selector);
-	this.visible = false;
-	
-	//color constants 
-	this.maxHue = 130;
-	this.maxPitchHue = 200;
+export default class HUD {
+
+	/**
+	 * HUD constructor
+	 * @param {Game} game
+ 	 * @param {String} selector
+	 */
+	constructor(game, selector) {
+		this.game = game;
+		this.element = $(selector);
+		this.visible = false;
+		
+		//color constants 
+		this.maxHue = 130;
+		this.maxPitchHue = 200;
+	}
 	
 	/**
 	 * Shows the HUD
 	 */
-	this.show = function (){
+	show(){
 		this.visible = true;
 	};
 	
 	/**
 	 * Hides the HUD
 	 */
-	this.hide = function (){
+	hide(){
 		this.visible = false;
 	};
 	
 	/**
 	 * Draws the HUD using the Game parameters
 	 */
-	this.draw = function (){
+	draw(){
 		this.element.css("display", this.visible ? "block": "none");
 		
 		if(this.visible){
@@ -45,10 +51,10 @@ export default function HUD(game, selector) {
 	/**
 	 * Draws the health indicator
 	 */
-	this.drawHealth = function () {
+	drawHealth() {
 		//get the current plane health and the max plane health
-		var currentHealth = game.plane.health;
-		var maxHealth = game.planeStats[game.selectedPlane].HEALTH;
+		var currentHealth = this.game.plane.health;
+		var maxHealth = this.game.planeStats[this.game.selectedPlane].HEALTH;
 
 		var healthBar = this.element.find(".health-bar");
 		var health = healthBar.find(".current");
@@ -68,10 +74,10 @@ export default function HUD(game, selector) {
 	/**
 	 * Draws the engine/power/throttle indicator
 	 */
-	this.drawThrottle = function () {
+	drawThrottle() {
 		//increment the current throttle and the max speed with + 1 because the neutral speed is -1 instead of 0
-		var currentThrottle = game.plane.dx + 1;
-		var maxSpeed = game.planeStats[game.selectedPlane].MAX_SPEED + 1;
+		var currentThrottle = this.game.plane.dx + 1;
+		var maxSpeed = this.game.planeStats[this.game.selectedPlane].MAX_SPEED + 1;
 		
 		var throttleBar = this.element.find(".throttle-bar");
 		var throttle = throttleBar.find(".current");
@@ -94,9 +100,9 @@ export default function HUD(game, selector) {
 	/**
 	 * Draws the plane pitch indicator
 	 */
-	this.drawPitch = function () {
+	drawPitch() {
 		//increment the current pitch and the max pitch with + 3 because there can be negative (-3) pitch when climbing
-		var currentPitch = game.plane.dy + 3;
+		var currentPitch = this.game.plane.dy + 3;
 		var maxPitch = 6; //3 + 3
 		
 		var pitchBar = this.element.find(".pitch-bar");
@@ -125,17 +131,17 @@ export default function HUD(game, selector) {
 	/**
 	 * Draws the plane machine gun heat indicator
 	 */
-	this.drawHeat = function (){
+	drawHeat(){
 		//get the current plane heat and the max plane heat
-		var currentHeat = game.plane.machinegunHeat;
-		var maxHeat = game.planeStats[game.selectedPlane].MAX_MACHINEGUN_HEAT;
+		var currentHeat = this.game.plane.machinegunHeat;
+		var maxHeat = this.game.planeStats[this.game.selectedPlane].MAX_MACHINEGUN_HEAT;
 
 		var heatBar = this.element.find(".heat-bar");
 		var span = heatBar.find("span");
 		var heat = heatBar.find(".current");
 
 		//show the correct text inside the bar
-		var text= game.plane.overheat ? "OVERHEAT" : "MACHINEGUN HEAT";
+		var text= this.game.plane.overheat ? "OVERHEAT" : "MACHINEGUN HEAT";
 
 		//calculate the pixels per heat
 		var pixelsPerHeat = heatBar.width() / maxHeat;
@@ -157,9 +163,9 @@ export default function HUD(game, selector) {
 	/**
 	 * Draws the loaded bombs indicator
 	 */
-	this.drawLoadedBombs = function (){		
-		var currentBombs = game.plane.loadedBombs;
-		var maxLoadedBombs = game.plane.stats.MAX_BOMBS;
+	drawLoadedBombs(){		
+		var currentBombs = this.game.plane.loadedBombs;
+		var maxLoadedBombs = this.game.plane.stats.MAX_BOMBS;
 		
 		var loadedBombsIndicator = this.element.find(".loaded-bombs");
 		
@@ -178,9 +184,9 @@ export default function HUD(game, selector) {
 	/**
 	 * Draws the civilians status indicator
 	 */
-	this.drawCiviliansStatus = function (){
-		var totalCivilians = game.levelsData[game.selectedLevel].CIVILIANS.length;
-		var deadCivilians = game.deadCivilians;
+	drawCiviliansStatus(){
+		var totalCivilians = this.game.levelsData[this.game.selectedLevel].CIVILIANS.length;
+		var deadCivilians = this.game.deadCivilians;
 		
 		var civiliansStatus = this.element.find(".civilians-status");
 				

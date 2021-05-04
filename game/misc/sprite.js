@@ -1,24 +1,29 @@
 /**
  * Sprite helper class used for handling object sprites
- * @param {Array} images
- * @param {Number} delay - the interval between each sprite image
- * @param {Boolean} loop
- * @returns {Sprite}
  */
-export default function Sprite(images, delay, loop) {
-	this.images = images;
-	this.delay = delay;
-	this.loop = loop;
-	
-	this.index = 0;
-	this.frames = 0;
-	this.currentImage = this.images[this.index];
+export default class Sprite {
+
+	/**
+	 * Sprite constructor
+	 * @param {Array} images
+ 	 * @param {Number} delay - the interval between each sprite image
+ 	 * @param {Boolean} loop
+	 */
+	constructor(images, delay, loop) {
+		this.images = images;
+		this.delay = delay;
+		this.loop = loop;
+		
+		this.index = 0;
+		this.frames = 0;
+		this.currentImage = this.images[this.index];
+	}
 	
 	/**
 	 * Called in order to get the current/next sprite image
 	 * @returns {String}
 	 */
-	this.move = function (){
+	move() {
 		
 		//if the loop flag is not raised and we have already looped thought all images - return null
 		if(!this.loop && this.index === this.images.length - 1){
@@ -48,7 +53,7 @@ export default function Sprite(images, delay, loop) {
 	 * @param {Number} index
 	 * @returns {String}
 	 */
-	this.moveTo = function (index){
+	moveTo(index){
 		this.index = index;
 		this.currentImage = this.images[this.index];
 		return this.move();

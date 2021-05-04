@@ -1,21 +1,23 @@
 /**
  * Keyboard class that handles all keyboard inputs
- * @param {Object} inputs
- * @returns {Keyboard}
  */
-export default function Keyboard (inputs){
-	var self = this;
-	
-	this.inputs = inputs;
+export default class Keyboard {
+	/**
+	 * Keyboard constructor
+	 * @param {Object} inputs
+	 */
+	constructor(inputs) {
+		this.inputs = inputs;
+	}
 	
 	/**
 	 * Returns all input statuses
 	 * @returns {Object}
 	 */
-	this.getInputs = function () {
+	getInputs() {
 		var result = {};
 		
-		_.forOwn(self.inputs, function (data, key){
+		_.forOwn(this.inputs, (data, key) => {
 			result[key] = data.status || false;
 		});
 		
@@ -25,11 +27,11 @@ export default function Keyboard (inputs){
 	/**
 	 * Initializes the keyboard controls
 	 */
-	this.listen = function () {
+	listen() {
 		
 		//key down
-		$("body").keydown(function (e) {
-			_.forOwn(self.inputs, function (data, key){
+		$("body").keydown((e) => {
+			_.forOwn(this.inputs, (data, key) => {
 				if(_.includes(data.keys, e.which)){
 					data.status = true;
 				}
@@ -37,14 +39,13 @@ export default function Keyboard (inputs){
 		});
 
 		//key up
-		$("body").keyup(function (e) {
-			_.forOwn(self.inputs, function (data, key){
+		$("body").keyup((e) => {
+			_.forOwn(this.inputs, (data, key) => {
 				if(_.includes(data.keys, e.which)){
 					data.status = false;
 				}
 			});
 		});
-		
 	};
 	
 }

@@ -1,29 +1,32 @@
 /**
  * Image repository class that loads all provided images and calls the callback when done
- * @param {Object} images
- * @param {Function} callback
- * @returns {ImageRepository}
  */
-export default function ImageRepository(images, callback) {
-	var self = this;
-	this.images = images;
-	this.loadedImages = 0;
-	this.totalImages = 0;
+export default class ImageRepository {
 
-	countImages(this.images);
-	loadImages(this.images);
+	/**
+	 * ImageRepository constructor
+	 * @param {Object} images
+ 	 * @param {Function} callback
+	 */
+	constructor(images, callback) {
+		this.images = images;
+		this.loadedImages = 0;
+		this.totalImages = 0;
 
+		this.countImages(this.images);
+		this.loadImages(this.images, callback);
+	}
 
 	/**
 	 * Recursive function that is used to count all images in the provided object
 	 * @param {Object} object
 	 */
-	function countImages(object) {
-		_.forOwn(object, function (value, key) {
+	countImages(object) {
+		_.forOwn(object, (value) => {
 			if (typeof value === "string") {
-				self.totalImages++;
+				this.totalImages++;
 			} else {
-				countImages(value);
+				this.countImages(value);
 			}
 		});
 	}
@@ -31,26 +34,27 @@ export default function ImageRepository(images, callback) {
 
 	/**
 	 * Recursive function that is used to preload all images in the provided object
-	 * @param {type} object
+	 * @param {Object} object
+	 * @param {Function} callback
 	 */
-	function loadImages(object) {
-		_.forOwn(object, function (value, key) {
+	loadImages(object, callback) {
+		_.forOwn(object, (value, key) => {
 			//if the value is an image path preload it
 			if (typeof value === "string") {
 				object[key] = new Image();
 				object[key].src = value;
 
-				object[key].onload = function () {
-					self.loadedImages++;
+				object[key].onload = () => {
+					this.loadedImages++;
 					//call the callback once all images have been preloaded
-					if (self.loadedImages === self.totalImages) {
+					if (this.loadedImages === this.totalImages) {
 						callback();
 					}
 				};
 			} 
 			//otherwise dig deeper into the object
 			else {
-				loadImages(value);
+				this.loadImages(value, callback);
 			}
 		});
 

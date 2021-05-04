@@ -6,16 +6,21 @@ import Bomber from '@/game/game-objects/enemies/bomber/bomber';
 
 /**
  * Class used for handling all game object collisions
- * @param {Game} game
- * @returns {CollisionsManager}
  */
-export default function CollisionsManager(game) {
-	var self = this;
+export default class CollisionsManager {
+
+	/**
+	 * CollisionsManager constructor
+	 * @param {Game} game
+	 */
+	constructor(game) {
+		this.game = game;
+	}
 
 	/**
 	 * Handles the collisions for all game objects
 	 */
-	this.handleCollisions = function () {
+	handleCollisions() {
 		//handle the plane ground and canvas collisions
 		this.handlePlane();
 
@@ -44,8 +49,8 @@ export default function CollisionsManager(game) {
 	/**
 	 * Handles all plane collisions
 	 */
-	this.handlePlane = function () {
-		var plane = game.plane;
+	handlePlane() {
+		var plane = this.game.plane;
 		var planeHitbox = plane.getHitbox();
 		
 		//separate the enemies by type
@@ -53,7 +58,7 @@ export default function CollisionsManager(game) {
 		var fighters = [];
 		var shermans = [];
 						
-		game.enemies.forEach(function (enemy){
+		this.game.enemies.forEach(function (enemy){
 			switch(enemy.constructor){
 				case Bomber:
 					bombers.push(enemy);
@@ -86,7 +91,7 @@ export default function CollisionsManager(game) {
 		}
 
 		//bottom end of screen
-		if (plane.y + plane.currentImage.height > plane.canvas.height - game.background.groundHeight) {
+		if (plane.y + plane.currentImage.height > plane.canvas.height - this.game.background.groundHeight) {
 			if(plane.crashed === false){
 				plane.crash();
 			}
@@ -129,13 +134,13 @@ export default function CollisionsManager(game) {
 	/**
 	 * Handles all plane bullets ground and canvas collisions
 	 */
-	this.handlePlaneBullets = function () {
+	handlePlaneBullets() {
 
 		//for each plane bullet...
-		game.plane.bullets.forEach(function (bullet) {
+		this.game.plane.bullets.forEach((bullet) => {
 
 			//check if the bullet has hit the ground
-			if (bullet.y >= bullet.canvas.height - game.background.groundHeight) {
+			if (bullet.y >= bullet.canvas.height - this.game.background.groundHeight) {
 				//make the bullet explode
 				bullet.explode();
 			}
@@ -151,9 +156,9 @@ export default function CollisionsManager(game) {
 	/**
 	 * Handles all plane bombs ground and canvas collisions
 	 */
-	this.handlePlaneBombs = function () {
+	handlePlaneBombs() {
 		//for each plane bomb...
-		game.plane.bombs.forEach(function (bomb) {
+		this.game.plane.bombs.forEach(function (bomb) {
 			//check if the bomb has left the screen
 			if (bomb.x + bomb.currentImage.width < 0) {
 				bomb.active = false;
@@ -170,8 +175,8 @@ export default function CollisionsManager(game) {
 	 * Handles the bomber bombs ground, canvas and plane bullets collisions
 	 * @param {Bomber} bomber
 	 */
-	this.handleBomberBombs = function (bomber) {
-		bomber.bombs.forEach(function (bomb) {
+	handleBomberBombs(bomber) {
+		bomber.bombs.forEach((bomb) => {
 			//check if the bomb has left the screen
 			if (bomb.x + bomb.currentImage.width < 0) {
 				bomb.active = false;
@@ -183,7 +188,7 @@ export default function CollisionsManager(game) {
 			}
 			
 			//check if the bomb has been hit by any of the plane's bullets
-			game.plane.bullets.forEach(function (bullet){
+			this.game.plane.bullets.forEach(function (bullet){
 				if(Utils.collidesWith(bomb.getHitbox(), bullet.getHitbox())){
 					bullet.explode();
 					bomb.explode(false);
@@ -196,21 +201,21 @@ export default function CollisionsManager(game) {
 	/**
 	 * Handles all bombers collisions
 	 */
-	this.handleBombers = function () {
+	handleBombers() {
 		
 		//separate the bombers from the list of enemies
-		var bombers = _.filter(game.enemies, function (enemy) {
+		var bombers = _.filter(this.game.enemies, function (enemy) {
 			return enemy.constructor === Bomber;
 		});
 		
-		var planeHitbox = game.plane.getHitbox();
+		var planeHitbox = this.game.plane.getHitbox();
 
 		//for each bomber...
-		bombers.forEach(function (bomber) {
+		bombers.forEach((bomber) => {
 			var bomberHitboxes = bomber.getHitbox();
 
 			//handle all bombs ground and canvas collisions
-			self.handleBomberBombs(bomber);
+			this.handleBomberBombs(bomber);
 
 			//check if the bomber has left the screen
 			if (bomber.x < -800) {
@@ -218,7 +223,7 @@ export default function CollisionsManager(game) {
 			}
 
 			//when the bomber touches the ground raise the disabled and crashed flags and "anchor" it to the ground
-			if (bomber.y + bomber.currentImage.height > bomber.canvas.height - game.background.groundHeight) {
+			if (bomber.y + bomber.currentImage.height > bomber.canvas.height - this.game.background.groundHeight) {
 				if(bomber.crashed === false){
 					bomber.crash();
 				}
@@ -227,11 +232,11 @@ export default function CollisionsManager(game) {
 			//check if the bomber has collided with the plane
 			if (Utils.collidesWith(bomberHitboxes, planeHitbox)) {
 				bomber.health--;
-				game.plane.health = game.plane.health - 2;
+				this.game.plane.health = this.game.plane.health - 2;
 			}
 
 			//check if any of the plane bullets have hit the bomber
-			game.plane.bullets.forEach(function (bullet) {
+			this.game.plane.bullets.forEach(function (bullet) {
 
 				var bodyHit = Utils.collidesWith(bomberHitboxes[0], bullet.getHitbox());
 				var tailHit = Utils.collidesWith(bomberHitboxes[1], bullet.getHitbox());
@@ -249,7 +254,7 @@ export default function CollisionsManager(game) {
 			});
 			
 			//check if any of the plane bombs have hit the bomber
-			game.plane.bombs.forEach(function (bomb) {
+			this.game.plane.bombs.forEach(function (bomb) {
 				if(Utils.collidesWith(bomberHitboxes, bomb.getHitbox())){
 					bomb.explode(false);
 					bomber.disable();
@@ -262,9 +267,9 @@ export default function CollisionsManager(game) {
 	/**
 	 * Handles the bomb holes collisions with the canvas
 	 */
-	this.handleBombHoles = function (){
+	handleBombHoles(){
 		//for each bomb hole...
-		game.bombHoles.forEach(function (bombHole){
+		this.game.bombHoles.forEach(function (bombHole){
 			//check if the bomb hole has left the screen
 			if (bombHole.x + bombHole.currentImage.width < 0) {
 				bombHole.active = false;
@@ -275,15 +280,15 @@ export default function CollisionsManager(game) {
 	/**
 	 * Handles all shermans collisions
 	 */
-	this.handleShermans = function (){
+	handleShermans(){
 		
 		//separate the shermans from the list of enemies
-		var shermans = _.filter(game.enemies, function (enemy) {
+		var shermans = _.filter(this.game.enemies, function (enemy) {
 			return enemy.constructor === Sherman;
 		});
 		
 		//for each sherman...
-		shermans.forEach(function (sherman) {
+		shermans.forEach((sherman) => {
 			var shermanHitbox = sherman.getHitbox();
 			
 			//check if the sherman has left the screen
@@ -292,7 +297,7 @@ export default function CollisionsManager(game) {
 			}
 			
 			//check if any of the plane bullets have hit the sherman
-			game.plane.bullets.forEach(function (bullet) {
+			this.game.plane.bullets.forEach(function (bullet) {
 				if(Utils.collidesWith(shermanHitbox, bullet.getHitbox())){
 					sherman.health = sherman.health - bullet.damage;
 					
@@ -302,7 +307,7 @@ export default function CollisionsManager(game) {
 			});
 			
 			//check if any of the plane bombs have hit the sherman
-			game.plane.bombs.forEach(function (bomb) {
+			this.game.plane.bombs.forEach(function (bomb) {
 				if(bomb.active === false && Utils.collidesWith(shermanHitbox, bomb.getExplosionHitbox())){
 					sherman.health = sherman.health - bomb.damage;
 					bomb.explode(false);
@@ -310,7 +315,7 @@ export default function CollisionsManager(game) {
 			});
 			
 			//handle the fighter bullets ground and canvas collisions
-			self.handleShermanBullets(sherman);
+			this.handleShermanBullets(sherman);
 		});
 		
 	};
@@ -319,7 +324,7 @@ export default function CollisionsManager(game) {
 	 * Handles all sherman bullets ground and canvas collisions
 	 * @param {Sherman} sherman
 	 */
-	this.handleShermanBullets = function (sherman) {
+	handleShermanBullets(sherman) {
 		//for each sherman bullet...
 		sherman.bullets.forEach(function (bullet) {
 			//check if the bullet has left the canvas
@@ -332,18 +337,16 @@ export default function CollisionsManager(game) {
 	/**
 	 * Handles all fighters collisions
 	 */
-	this.handleFighters = function () {
-		var self = this;
-		
+	handleFighters() {		
 		//separate the fighters from the list of enemies
-		var fighters = _.filter(game.enemies, function (enemy) {
+		var fighters = _.filter(this.game.enemies, function (enemy) {
 			return enemy.constructor === Fighter;
 		});
 		
-		var planeHitbox = game.plane.getHitbox();
+		var planeHitbox = this.game.plane.getHitbox();
 
 		//for each fighter...
-		fighters.forEach(function (fighter) {
+		fighters.forEach((fighter) => {
 			var fighterHitbox = fighter.getHitbox();
 
 			//check if the fighter has left the screen
@@ -352,7 +355,7 @@ export default function CollisionsManager(game) {
 			}
 
 			//when the fighter touches the ground raise the disabled and crashed flags and "anchor" it to the ground
-			if (fighter.y + fighter.currentImage.height > fighter.canvas.height - game.background.groundHeight) {
+			if (fighter.y + fighter.currentImage.height > fighter.canvas.height - this.game.background.groundHeight) {
 				if(fighter.crashed === false){
 					fighter.crash();
 				}
@@ -361,11 +364,11 @@ export default function CollisionsManager(game) {
 			//check if the fighter has collided with the plane
 			if (Utils.collidesWith(fighterHitbox, planeHitbox)) {
 				fighter.health = fighter.health - 3;
-				game.plane.health = game.plane.health - 2;
+				this.game.plane.health = this.game.plane.health - 2;
 			}
 
 			//check if any of the plane bullets have hit the fighter
-			game.plane.bullets.forEach(function (bullet) {
+			this.game.plane.bullets.forEach(function (bullet) {
 				if(Utils.collidesWith(fighterHitbox, bullet.getHitbox())){
 					fighter.health = fighter.health - bullet.damage;
 					
@@ -375,7 +378,7 @@ export default function CollisionsManager(game) {
 			});
 			
 			//check if any of the plane bombs have hit the fighter
-			game.plane.bombs.forEach(function (bomb) {
+			this.game.plane.bombs.forEach(function (bomb) {
 				if(Utils.collidesWith(fighterHitbox, bomb.getHitbox())){
 					bomb.explode(false);
 					fighter.disable();
@@ -383,7 +386,7 @@ export default function CollisionsManager(game) {
 			});
 			
 			//handle the fighter bullets ground and canvas collisions
-			self.handleFighterBullets(fighter);
+			this.handleFighterBullets(fighter);
 		});
 		
 	};
@@ -392,13 +395,13 @@ export default function CollisionsManager(game) {
 	 * Handles all fighter bullets ground and canvas collisions
 	 * @param {Fighter} fighter
 	 */
-	this.handleFighterBullets = function (fighter) {
+	handleFighterBullets(fighter) {
 
 		//for each fighter bullet...
-		fighter.bullets.forEach(function (bullet) {
+		fighter.bullets.forEach((bullet) => {
 
 			//check if the bullet has hit the ground
-			if (bullet.y >= bullet.canvas.height - game.background.groundHeight) {
+			if (bullet.y >= bullet.canvas.height - this.game.background.groundHeight) {
 				//make the bullet explode
 				bullet.explode();
 			}
@@ -414,15 +417,15 @@ export default function CollisionsManager(game) {
 	/**
 	 * Handles all soldiers collisions
 	 */
-	this.handleSoldiers = function (){
+	handleSoldiers(){
 		
 		//separate the soldiers from the list of enemies
-		var soldiers = _.filter(game.enemies, function (enemy) {
+		var soldiers = _.filter(this.game.enemies, function (enemy) {
 			return enemy.constructor === Soldier;
 		});
 		
 		//for each soldier...
-		soldiers.forEach(function (soldier) {
+		soldiers.forEach((soldier) => {
 			var soldierHitbox = soldier.getHitbox();
 			
 			//check if the soldier has left the screen
@@ -431,7 +434,7 @@ export default function CollisionsManager(game) {
 			}
 			
 			//check if any of the plane bullets have hit the soldier
-			game.plane.bullets.forEach(function (bullet) {
+			this.game.plane.bullets.forEach(function (bullet) {
 				if(Utils.collidesWith(soldierHitbox, bullet.getHitbox())){
 					soldier.health = soldier.health - bullet.damage;
 					
@@ -441,7 +444,7 @@ export default function CollisionsManager(game) {
 			});
 			
 			//check if any of the plane bombs have hit the soldier
-			game.plane.bombs.forEach(function (bomb) {
+			this.game.plane.bombs.forEach(function (bomb) {
 				if(bomb.active === false && Utils.collidesWith(soldierHitbox, bomb.getExplosionHitbox())){
 					soldier.health = soldier.health - bomb.damage;
 					bomb.explode(true);
@@ -449,7 +452,7 @@ export default function CollisionsManager(game) {
 			});
 			
 			//handle the soldiers bullets ground and canvas collisions
-			self.handleSoldierBullets(soldier);
+			this.handleSoldierBullets(soldier);
 		});
 		
 	};
@@ -458,7 +461,7 @@ export default function CollisionsManager(game) {
 	 * Handles all soldier bullets ground and canvas collisions
 	 * @param {Soldier} soldier
 	 */
-	this.handleSoldierBullets = function (soldier) {
+	handleSoldierBullets(soldier) {
 		//for each soldier bullet...
 		soldier.bullets.forEach(function (bullet) {
 			//check if the bullet has left the canvas
@@ -471,14 +474,14 @@ export default function CollisionsManager(game) {
 	/**
 	 * Handles all civilians collisions
 	 */
-	this.handleCivilians = function (){
+	handleCivilians(){
 		
 		//separate the enemies by type
 		var bombers = [];
 		var shermans = [];
 		var soldiers = [];
 						
-		game.enemies.forEach(function (enemy){
+		this.game.enemies.forEach(function (enemy){
 			switch(enemy.constructor){
 				case Bomber:
 					bombers.push(enemy);
@@ -493,7 +496,7 @@ export default function CollisionsManager(game) {
 		});
 		
 		//for each civilian...
-		game.civilians.forEach(function (civilian){
+		this.game.civilians.forEach((civilian) => {
 			var civilianHitbox = civilian.getHitbox();
 			
 			//check if the civilian has left the screen
@@ -502,7 +505,7 @@ export default function CollisionsManager(game) {
 			}
 			
 			//check if the civilian has been hit by an enemy (or friendly bomb)
-			var bombs = game.plane.bombs;
+			var bombs = this.game.plane.bombs;
 			bombers.forEach(function (bomber){
 				bombs = bombs.concat(bomber.bombs);
 			});
@@ -515,7 +518,7 @@ export default function CollisionsManager(game) {
 			});
 			
 			//check if the civilian has been hit by an enemy (or friendly bullet)
-			var bullets = game.plane.bullets;
+			var bullets = this.game.plane.bullets;
 			soldiers.forEach(function (soldier){
 				bullets = bullets.concat(soldier.bullets);
 			});
@@ -540,12 +543,12 @@ export default function CollisionsManager(game) {
 	/**
 	 * Handles all weather effects collisions
 	 */
-	this.handleWeatherEffects = function (){
+	handleWeatherEffects(){
 		
 		//for each weather effect (snowflake...)
-		game.weatherEffects.forEach(function (weatherEffect){
+		this.game.weatherEffects.forEach((weatherEffect) => {
 			//when the weather effect touches the ground - reset it
-			if(weatherEffect.y > weatherEffect.canvas.height - game.background.groundHeight){
+			if(weatherEffect.y > weatherEffect.canvas.height - this.game.background.groundHeight){
 				weatherEffect.reset();
 			}
 		});

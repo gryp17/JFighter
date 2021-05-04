@@ -10,7 +10,7 @@ import civilianStats from '@/game/resources/stats/civilian-stats';
 import '@/stylesheets/game/main.scss';
 
 //load all the game images
-var imageRepository = new ImageRepository(gameImages, function () {
+var imageRepository = new ImageRepository(gameImages, () => {
 	var mainMenu = new MainMenu(controls);
 	
 	//display the main menu and start the game once a plane and level have been chosen

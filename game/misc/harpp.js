@@ -3,20 +3,26 @@ import Snowflake from '@/game/game-objects/weather/snowflake';
 
 /**
  * HARPP class used for generating weather effects
- * @param {Game} game
- * @returns {HARPP}
  */
-export default function HARPP (game) {
-	this.weather;
-	this.showWeatherEffects = false;
-	this.clock = 0;
+export default class HARPP {
+
+	/**
+	 * HARPP constructor
+	 * @param {Game} game 
+	 */
+	constructor(game) {
+		this.game = game;
+		this.weather;
+		this.showWeatherEffects = false;
+		this.clock = 0;
+	}
 		
 	/**
 	 * Generates weather effects for the specified weather type
 	 * @param {Object} levelData
 	 * @returns {Array}
 	 */
-	this.generateWeather = function (levelData){
+	generateWeather(levelData){
 		this.weather = levelData.WEATHER;
 		
 		var weatherEffects = [];
@@ -35,7 +41,7 @@ export default function HARPP (game) {
 	/**
 	 * Updates the weather status
 	 */
-	this.updateWeatherStatus = function (){
+	updateWeatherStatus(){
 		
 		//if there is no weather interval
 		if(!this.weather.INTERVAL){
@@ -59,10 +65,10 @@ export default function HARPP (game) {
 	 * @param {Object} levelData
 	 * @returns {Array}
 	 */
-	this.generateSnow = function (levelData){
+	generateSnow(levelData){
 		var snowflakes = [];
 		
-		var canvas = game.contexts.weather.canvas;
+		var canvas = this.game.contexts.weather.canvas;
 		
 		//generate X snowflakes with random properties
 		for(var i = 0; i < 600; i++){
@@ -72,7 +78,7 @@ export default function HARPP (game) {
 			var dy = _.random(1, 2, true);
 			var radius = _.random(0.5, 2.5, true);
 			
-			snowflakes.push(new Snowflake(game, x, y, dx, dy, radius));
+			snowflakes.push(new Snowflake(this.game, x, y, dx, dy, radius));
 		}
 			
 		return snowflakes;
@@ -83,10 +89,10 @@ export default function HARPP (game) {
 	 * @param {Object} levelData
 	 * @returns {Array}
 	 */
-	this.generateRain = function (levelData){
+	generateRain(levelData){
 		var raindrops = [];
 		
-		var canvas = game.contexts.weather.canvas;
+		var canvas = this.game.contexts.weather.canvas;
 		
 		//generate X raindrops with random properties
 		for(var i = 0; i < 300; i++){
@@ -97,7 +103,7 @@ export default function HARPP (game) {
 			var width = 1;
 			var height = _.random(5, 10);
 			
-			raindrops.push(new Raindrop(game, x, y, dx, dy, width, height));
+			raindrops.push(new Raindrop(this.game, x, y, dx, dy, width, height));
 		}
 		
 		return raindrops;
