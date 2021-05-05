@@ -55,7 +55,7 @@ export default function Bullet(game, x, y, dx, dy, angle, source) {
 	/**
 	 * Sets the bullet as inactive and adds a bullet impact object in it's place
 	 */
-	this.explode = function (){
+	this.explode = function () {
 		this.active = false;
 		game.bulletImpacts.push(new BulletImpact(game, this.x + this.currentImage.width, this.y));
 	};

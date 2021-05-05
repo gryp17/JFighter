@@ -16,17 +16,17 @@ export default function HARPP (game) {
 	 * @param {Object} levelData
 	 * @returns {Array}
 	 */
-	this.generateWeather = function (levelData){
+	this.generateWeather = function (levelData) {
 		this.weather = levelData.WEATHER;
 		
 		var weatherEffects = [];
 		
-		switch(levelData.WEATHER.TYPE){
-			case "snow":
-				weatherEffects = this.generateSnow(levelData);
-				break;
-			case "rain":
-				weatherEffects = this.generateRain(levelData);
+		switch(levelData.WEATHER.TYPE) {
+		case 'snow':
+			weatherEffects = this.generateSnow(levelData);
+			break;
+		case 'rain':
+			weatherEffects = this.generateRain(levelData);
 		}
 		
 		return weatherEffects;
@@ -35,10 +35,10 @@ export default function HARPP (game) {
 	/**
 	 * Updates the weather status
 	 */
-	this.updateWeatherStatus = function (){
+	this.updateWeatherStatus = function () {
 		
 		//if there is no weather interval
-		if(!this.weather.INTERVAL){
+		if(!this.weather.INTERVAL) {
 			this.showWeatherEffects = true;
 		}
 		//otherwise enable/disable the weather periodically using the clock counter
@@ -46,7 +46,7 @@ export default function HARPP (game) {
 			this.clock++;
 			
 			//reset the clock and toggle the weather
-			if(this.clock === this.weather.INTERVAL){
+			if(this.clock === this.weather.INTERVAL) {
 				this.clock = 0;
 				this.showWeatherEffects = !this.showWeatherEffects;
 			}
@@ -59,13 +59,13 @@ export default function HARPP (game) {
 	 * @param {Object} levelData
 	 * @returns {Array}
 	 */
-	this.generateSnow = function (levelData){
+	this.generateSnow = function (levelData) {
 		var snowflakes = [];
 		
 		var canvas = game.contexts.weather.canvas;
 		
 		//generate X snowflakes with random properties
-		for(var i = 0; i < 600; i++){
+		for(var i = 0; i < 600; i++) {
 			var x = _.random(0, canvas.width * 2);
 			var y = _.random(canvas.height * -1, 0);
 			var dx = _.random(-4, -2.5, true);
@@ -83,13 +83,13 @@ export default function HARPP (game) {
 	 * @param {Object} levelData
 	 * @returns {Array}
 	 */
-	this.generateRain = function (levelData){
+	this.generateRain = function (levelData) {
 		var raindrops = [];
 		
 		var canvas = game.contexts.weather.canvas;
 		
 		//generate X raindrops with random properties
-		for(var i = 0; i < 300; i++){
+		for(var i = 0; i < 300; i++) {
 			var x = _.random(0, canvas.width * 2);
 			var y = _.random(canvas.height * -1, 0);
 			var dx = _.random(-4, -2.5, true);

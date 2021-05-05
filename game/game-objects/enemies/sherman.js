@@ -55,12 +55,12 @@ export default function Sherman(game, x, y) {
 		this.y = this.y + this.dy;
 		
 		//if the sherman tank health reaches 0...
-		if(this.health <= 0 && this.destroyed === false){
+		if(this.health <= 0 && this.destroyed === false) {
 			this.destroy();
 		}
 		
 		//if the tank is not destroyed - engage the player
-		if(this.destroyed === false){
+		if(this.destroyed === false) {
 			this.engagePlayer();
 		}
 		
@@ -71,7 +71,7 @@ export default function Sherman(game, x, y) {
 		this.context.drawImage(this.currentImage, this.x, this.y + game.background.offset);
 		
 		//draw the health bar
-		if(this.destroyed === false){
+		if(this.destroyed === false) {
 			this.drawHealthBar();
 		}
 		
@@ -97,7 +97,7 @@ export default function Sherman(game, x, y) {
 	/**
 	 * Draws all sherman bullets that are inside the canvas and haven't hit anything
 	 */
-	this.drawBullets = function (){
+	this.drawBullets = function () {
 		this.bullets = _.filter(this.bullets, function (bullet) {
 			if (bullet.active === false) {
 				return false;
@@ -124,12 +124,12 @@ export default function Sherman(game, x, y) {
 	/**
 	 * Shoot at the players plane when he flies over
 	 */
-	this.engagePlayer = function (){
+	this.engagePlayer = function () {
 		var horizontalDistance = this.x - game.plane.x + game.plane.currentImage.width;
 		var verticalDistance = (this.y + game.background.offset + this.currentImage.height) - game.plane.y;
 		
 		//if the player plane is close horizontally
-		if(horizontalDistance > 0 && horizontalDistance < this.canvas.width / 1.1){
+		if(horizontalDistance > 0 && horizontalDistance < this.canvas.width / 1.1) {
 						
 			//if the player plane is within shooting range - shoot
 			if (verticalDistance > 200 && verticalDistance < 500) {
@@ -142,7 +142,7 @@ export default function Sherman(game, x, y) {
 	/**
 	 * Updates the bullets burst cooldown/delay parameters
 	 */
-	this.updateBulletsStatus = function (){
+	this.updateBulletsStatus = function () {
 		
 		//bullet delay
 		if (this.shooting === true) {
@@ -157,7 +157,7 @@ export default function Sherman(game, x, y) {
 		}
 		
 		//burst cooldown (start the cooldown timer only if all burst bullets have been shot)
-		if(this.bulletsShot === this.burstSize){
+		if(this.bulletsShot === this.burstSize) {
 			this.burstTimer++;
 
 			//reset the burst timer
@@ -196,7 +196,7 @@ export default function Sherman(game, x, y) {
 	/**
 	 * Destroys the sherman
 	 */
-	this.destroy = function (){
+	this.destroy = function () {
 		this.health = 0;
 		this.destroyed = true;
 		this.dx = game.background.dx;

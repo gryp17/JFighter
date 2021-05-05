@@ -15,24 +15,24 @@ export default function HUD(game, selector) {
 	/**
 	 * Shows the HUD
 	 */
-	this.show = function (){
+	this.show = function () {
 		this.visible = true;
 	};
 	
 	/**
 	 * Hides the HUD
 	 */
-	this.hide = function (){
+	this.hide = function () {
 		this.visible = false;
 	};
 	
 	/**
 	 * Draws the HUD using the Game parameters
 	 */
-	this.draw = function (){
-		this.element.css("display", this.visible ? "block": "none");
+	this.draw = function () {
+		this.element.css('display', this.visible ? 'block': 'none');
 		
-		if(this.visible){
+		if(this.visible) {
 			this.drawHealth();
 			this.drawThrottle();
 			this.drawPitch();
@@ -50,8 +50,8 @@ export default function HUD(game, selector) {
 		var currentHealth = game.plane.health;
 		var maxHealth = game.planeStats[game.selectedPlane].HEALTH;
 
-		var healthBar = this.element.find(".health-bar");
-		var health = healthBar.find(".current");
+		var healthBar = this.element.find('.health-bar');
+		var health = healthBar.find('.current');
 
 		//calculate the pixels per HP
 		var pixelsPerHP = healthBar.width() / maxHealth;
@@ -60,7 +60,7 @@ export default function HUD(game, selector) {
 		var huePerHP = this.maxHue / maxHealth;
 
 		health.css({
-			backgroundColor: "hsl("+huePerHP*currentHealth+", 70%, 50%)",
+			backgroundColor: 'hsl('+huePerHP*currentHealth+', 70%, 50%)',
 			width: currentHealth * pixelsPerHP
 		});
 	};
@@ -73,8 +73,8 @@ export default function HUD(game, selector) {
 		var currentThrottle = game.plane.dx + 1;
 		var maxSpeed = game.planeStats[game.selectedPlane].MAX_SPEED + 1;
 		
-		var throttleBar = this.element.find(".throttle-bar");
-		var throttle = throttleBar.find(".current");
+		var throttleBar = this.element.find('.throttle-bar');
+		var throttle = throttleBar.find('.current');
 		
 		//calculate the pixels per throttle
 		var pixelsPerThrottle = throttleBar.width() / maxSpeed;
@@ -86,7 +86,7 @@ export default function HUD(game, selector) {
 		var hue = this.maxHue - (huePerThrottle * currentThrottle);
 		
 		throttle.css({
-			backgroundColor: "hsl("+hue+", 70%, 50%)",
+			backgroundColor: 'hsl('+hue+', 70%, 50%)',
 			width: currentThrottle * pixelsPerThrottle
 		});
 	};
@@ -99,8 +99,8 @@ export default function HUD(game, selector) {
 		var currentPitch = game.plane.dy + 3;
 		var maxPitch = 6; //3 + 3
 		
-		var pitchBar = this.element.find(".pitch-bar");
-		var pitch = pitchBar.find(".current");
+		var pitchBar = this.element.find('.pitch-bar');
+		var pitch = pitchBar.find('.current');
 		
 		//calculate the pixels per pitch
 		var pixelsPerPitch = pitchBar.height() / maxPitch;
@@ -110,14 +110,14 @@ export default function HUD(game, selector) {
 		
 		//calculate the hue (greenish for regular pitch and red for extremely high or low pitch)
 		var hue;
-		if(currentPitch >= maxPitch / 2){
+		if(currentPitch >= maxPitch / 2) {
 			hue = this.maxPitchHue - (huePerPitch*currentPitch);
 		}else{
 			hue = huePerPitch*currentPitch;
 		}
 		
 		pitch.css({
-			backgroundColor: "hsl("+hue+", 70%, 50%)",
+			backgroundColor: 'hsl('+hue+', 70%, 50%)',
 			height: pitchBar.height() - (currentPitch * pixelsPerPitch)
 		});
 	};
@@ -125,17 +125,17 @@ export default function HUD(game, selector) {
 	/**
 	 * Draws the plane machine gun heat indicator
 	 */
-	this.drawHeat = function (){
+	this.drawHeat = function () {
 		//get the current plane heat and the max plane heat
 		var currentHeat = game.plane.machinegunHeat;
 		var maxHeat = game.planeStats[game.selectedPlane].MAX_MACHINEGUN_HEAT;
 
-		var heatBar = this.element.find(".heat-bar");
-		var span = heatBar.find("span");
-		var heat = heatBar.find(".current");
+		var heatBar = this.element.find('.heat-bar');
+		var span = heatBar.find('span');
+		var heat = heatBar.find('.current');
 
 		//show the correct text inside the bar
-		var text= game.plane.overheat ? "OVERHEAT" : "MACHINEGUN HEAT";
+		var text= game.plane.overheat ? 'OVERHEAT' : 'MACHINEGUN HEAT';
 
 		//calculate the pixels per heat
 		var pixelsPerHeat = heatBar.width() / maxHeat;
@@ -147,7 +147,7 @@ export default function HUD(game, selector) {
 		var hue = this.maxHue - (huePerHeat * currentHeat);
 
 		heat.css({
-			backgroundColor: "hsl("+hue+", 70%, 50%)",
+			backgroundColor: 'hsl('+hue+', 70%, 50%)',
 			width: currentHeat * pixelsPerHeat
 		});
 		
@@ -157,18 +157,18 @@ export default function HUD(game, selector) {
 	/**
 	 * Draws the loaded bombs indicator
 	 */
-	this.drawLoadedBombs = function (){		
+	this.drawLoadedBombs = function () {		
 		var currentBombs = game.plane.loadedBombs;
 		var maxLoadedBombs = game.plane.stats.MAX_BOMBS;
 		
-		var loadedBombsIndicator = this.element.find(".loaded-bombs");
+		var loadedBombsIndicator = this.element.find('.loaded-bombs');
 		
 		//generate the correct number of bombs with their classes
 		loadedBombsIndicator.empty();
-		for(var i = 0; i < maxLoadedBombs; i++){
-			var bomb = $("<img>", {
-				src: "img/hud/bomb_icon.png",
-				class: i + 1 <= currentBombs ? "loaded" : ""
+		for(var i = 0; i < maxLoadedBombs; i++) {
+			var bomb = $('<img>', {
+				src: 'img/hud/bomb_icon.png',
+				class: i + 1 <= currentBombs ? 'loaded' : ''
 			});
 			
 			loadedBombsIndicator.append(bomb);
@@ -178,18 +178,18 @@ export default function HUD(game, selector) {
 	/**
 	 * Draws the civilians status indicator
 	 */
-	this.drawCiviliansStatus = function (){
+	this.drawCiviliansStatus = function () {
 		var totalCivilians = game.levelsData[game.selectedLevel].CIVILIANS.length;
 		var deadCivilians = game.deadCivilians;
 		
-		var civiliansStatus = this.element.find(".civilians-status");
+		var civiliansStatus = this.element.find('.civilians-status');
 				
 		//generate the correct number of dead/alive civilians
 		civiliansStatus.empty();
-		for(var i = 0; i < totalCivilians; i++){
-			var civilian = $("<img>", {
-				src: "img/hud/running_civilian_icon.png",
-				class: i + 1 <= deadCivilians ? "dead" : ""
+		for(var i = 0; i < totalCivilians; i++) {
+			var civilian = $('<img>', {
+				src: 'img/hud/running_civilian_icon.png',
+				class: i + 1 <= deadCivilians ? 'dead' : ''
 			});
 			
 			civiliansStatus.append(civilian);

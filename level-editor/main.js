@@ -6,6 +6,6 @@ import '@/stylesheets/level-editor/level-editor.scss';
 
 //load all the game images
 var imageRepository = new ImageRepository(gameImages, function () {
-	var editor = new LevelEditor($("#container"), imageRepository.images);
+	var editor = new LevelEditor($('#container'), imageRepository.images);
 	editor.init();
 });

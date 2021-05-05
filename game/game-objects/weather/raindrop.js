@@ -22,7 +22,7 @@ export default function Raindrop(game, x, y, dx, dy, width, height) {
 	//raindrop parameters
 	this.width = width;
 	this.height = height;
-	this.color = "rgba(174, 194, 224, 0.5)";
+	this.color = 'rgba(174, 194, 224, 0.5)';
 
 	/**
 	 * Draws the raindrop
@@ -33,7 +33,7 @@ export default function Raindrop(game, x, y, dx, dy, width, height) {
 		this.y = this.y + this.dy;
 
 		this.context.lineWidth = this.width;
-		this.context.lineCap = "round";
+		this.context.lineCap = 'round';
 
 		this.context.strokeStyle = this.color;
 	   

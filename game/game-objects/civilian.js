@@ -16,7 +16,7 @@ export default function Civilian(game, x, y) {
 	//random civilian skin
 	this.images = game.images.CIVILIANS[_.random(0, game.images.CIVILIANS.length - 1)];
 	
-	this.healthBarColor = "#00D40E";
+	this.healthBarColor = '#00D40E';
 	
 	//positioning and speed
 	this.dx = game.background.dx - 0.5;
@@ -42,7 +42,7 @@ export default function Civilian(game, x, y) {
 	this.draw = function () {
 		
 		//if the civilian health reaches 0...
-		if(this.health <= 0 && this.dead === false){
+		if(this.health <= 0 && this.dead === false) {
 			this.die();
 		}
 		
@@ -55,7 +55,7 @@ export default function Civilian(game, x, y) {
 		this.context.drawImage(this.currentImage, this.x, this.y + game.background.offset);
 		
 		//draw the health bar
-		if(this.dead === false){
+		if(this.dead === false) {
 			this.drawHealthBar();
 		}
 	};
@@ -79,7 +79,7 @@ export default function Civilian(game, x, y) {
 	 * Updates the "currentImage" with the correct sprite image
 	 */
 	this.updateSprite = function () {
-		if(this.dead === false){
+		if(this.dead === false) {
 			this.currentImage = this.sprite.move();
 		}
 	};
@@ -87,7 +87,7 @@ export default function Civilian(game, x, y) {
 	/**
 	 * Makes the civilian die
 	 */
-	this.die = function (){
+	this.die = function () {
 		//increment the global dead civilians counter
 		game.deadCivilians++;
 		
@@ -100,7 +100,7 @@ export default function Civilian(game, x, y) {
 		var totalCivilians = game.levelsData[game.selectedLevel].CIVILIANS.length;
 		var deadCivilians = game.deadCivilians;
 		
-		if(deadCivilians === totalCivilians){
+		if(deadCivilians === totalCivilians) {
 			game.plane.disable();
 			game.menu.gameOver();
 		}

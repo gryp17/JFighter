@@ -14,7 +14,7 @@ export default function Fighter(game, x, y) {
 	this.context = game.contexts.airEnemies.context;
 	this.canvas = game.contexts.airEnemies.canvas;
 
-	this.models = ["MUSTANG", "SPITFIRE"];
+	this.models = ['MUSTANG', 'SPITFIRE'];
 	this.model = this.models[_.random(0, this.models.length - 1)]; //pick one of the fighter models
 
 	this.images = game.images.ENEMIES[this.model];
@@ -73,11 +73,11 @@ export default function Fighter(game, x, y) {
 		this.y = this.y + this.dy;
 
 		//if the fighter is not disabled follow the player (fighter) and shoot at him
-		if(this.disabled === false){
+		if(this.disabled === false) {
 			this.engagePlayer();
 		}
 		//slowly descend the fighter until it crashes
-		else if(this.crashed === false){
+		else if(this.crashed === false) {
 			this.freeFall();
 		}
 		
@@ -88,7 +88,7 @@ export default function Fighter(game, x, y) {
 		this.drawFighter();
 		
 		//draw the health bar
-		if(this.disabled === false){
+		if(this.disabled === false) {
 			this.drawHealthBar();
 		}
 		
@@ -122,19 +122,19 @@ export default function Fighter(game, x, y) {
 	/**
 	 * Try to follow and shoot the fighter (player) plane by staying on the same altitude
 	 */
-	this.engagePlayer = function (){
+	this.engagePlayer = function () {
 		var horizontalDistance = this.x - game.plane.x + game.plane.currentImage.width;
 		var verticalDistance = (this.y + game.background.offset + this.currentImage.height) - game.plane.y;
 		
 		//if the player plane is close horizontally
-		if(horizontalDistance > 0 && horizontalDistance < this.canvas.width / 1.1){
+		if(horizontalDistance > 0 && horizontalDistance < this.canvas.width / 1.1) {
 			
 			//if the player plane is flying on lower altitude - descend
-			if(verticalDistance < 0){
+			if(verticalDistance < 0) {
 				this.descend();
 			}
 			//if the player plane is flying on highter altitude - climb
-			else if(verticalDistance > 50){
+			else if(verticalDistance > 50) {
 				this.climb();
 			}
 			//the player plane is flying on similar altitude and the fighter can shoot
@@ -155,8 +155,8 @@ export default function Fighter(game, x, y) {
 	/**
 	 * Makes the fighter climb until it reaches it's max climb speed
 	 */
-	this.climb = function (){
-		if(this.dy > (this.stats.CLIMB_SPEED * -1)){
+	this.climb = function () {
+		if(this.dy > (this.stats.CLIMB_SPEED * -1)) {
 			this.dy = this.dy - 0.1;
 		}
 	};
@@ -164,8 +164,8 @@ export default function Fighter(game, x, y) {
 	/**
 	 * Makes the fighter descend until it reaches it's max descend speed
 	 */
-	this.descend = function (){
-		if(this.dy < this.stats.DESCEND_SPEED){
+	this.descend = function () {
+		if(this.dy < this.stats.DESCEND_SPEED) {
 			this.dy = this.dy + 0.1;
 		}
 	};
@@ -173,10 +173,10 @@ export default function Fighter(game, x, y) {
 	/**
 	 * Ascends/Descends the plane slowly until it starts flying in straight line (dy = 0)
 	 */
-	this.level = function (){
-		if(this.dy < 0){
+	this.level = function () {
+		if(this.dy < 0) {
 			this.descend();
-		}else if(this.dy > 0){
+		}else if(this.dy > 0) {
 			this.climb();
 		}
 	};
@@ -238,7 +238,7 @@ export default function Fighter(game, x, y) {
 	/**
 	 * Draws all fighter bullets that are inside the canvas and haven't hit anything (ground, enemy...)
 	 */
-	this.drawBullets = function (){
+	this.drawBullets = function () {
 		this.bullets = _.filter(this.bullets, function (bullet) {
 			if (bullet.active === false) {
 				return false;
@@ -264,7 +264,7 @@ export default function Fighter(game, x, y) {
 	/**
 	 * Updates the bullets burst cooldown/delay parameters
 	 */
-	this.updateBulletsStatus = function (){
+	this.updateBulletsStatus = function () {
 		
 		//bullet delay
 		if (this.shooting === true) {
@@ -279,7 +279,7 @@ export default function Fighter(game, x, y) {
 		}
 		
 		//burst cooldown (start the cooldown timer only if all burst bullets have been shot)
-		if(this.bulletsShot === this.burstSize){
+		if(this.bulletsShot === this.burstSize) {
 			this.burstTimer++;
 
 			//reset the burst timer
@@ -297,7 +297,7 @@ export default function Fighter(game, x, y) {
 	this.shoot = function () {
 		
 		//if the fighter is inside the screen and is not disabled
-		if(this.x < this.canvas.width && this.disabled === false){
+		if(this.x < this.canvas.width && this.disabled === false) {
 						
 			//shoot only if the bullet is not on cooldown and if the number of bullets per burst doesn't exceed the burst size
 			if (this.shooting === false && this.bulletsShot < this.burstSize) {

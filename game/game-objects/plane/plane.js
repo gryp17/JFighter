@@ -73,7 +73,7 @@ export default function Plane(game) {
 			this.processInputs(game.inputs);
 		}
 		//slowly descend the plane until it crashes
-		else if(this.crashed === false){
+		else if(this.crashed === false) {
 			this.freeFall();
 		}
 		
@@ -102,7 +102,7 @@ export default function Plane(game) {
 	/**
 	 * Disables the plane
 	 */
-	this.disable = function (){
+	this.disable = function () {
 		this.disabled = true;
 		this.health = 0;
 	};
@@ -110,7 +110,7 @@ export default function Plane(game) {
 	/**
 	 * Slowly descend the plane until it crashes to the ground
 	 */
-	this.freeFall = function (){
+	this.freeFall = function () {
 		this.dy = this.dy + 0.05;
 	};
 	
@@ -271,12 +271,12 @@ export default function Plane(game) {
 	this.updateBombsStatus = function () {
 		
 		//if at least one bomb is on cooldown
-		if(this.loadedBombs < this.stats.MAX_BOMBS){
+		if(this.loadedBombs < this.stats.MAX_BOMBS) {
 			this.bombTimer++;
 			this.delayTimer++;
 			
 			//reset the bomb delay timer
-			if(this.delayTimer > this.bombDelay){
+			if(this.delayTimer > this.bombDelay) {
 				this.bombing = false;
 				this.delayTimer = 0;
 			}
@@ -293,7 +293,7 @@ export default function Plane(game) {
 	/**
 	 * Draws all plane bullets that are inside the canvas and haven't hit anything (ground, enemy...)
 	 */
-	this.drawBullets = function (){
+	this.drawBullets = function () {
 		this.bullets = _.filter(this.bullets, function (bullet) {
 			if (bullet.active === false) {
 				return false;
@@ -307,9 +307,9 @@ export default function Plane(game) {
 	/**
 	 * Draws all plane bombs that are inside the canvas
 	 */
-	this.drawBombs = function (){
+	this.drawBombs = function () {
 		this.bombs = _.filter(this.bombs, function (bomb) {
-			if(bomb.active){
+			if(bomb.active) {
 				bomb.draw();
 				return true;
 			}else{
@@ -354,7 +354,7 @@ export default function Plane(game) {
 			*/
 			
 			//additional fix for the KI84 at extreme climb angles
-			if (game.selectedPlane === "KI84" && angle <= -20 && game.background.offset > 0) {				
+			if (game.selectedPlane === 'KI84' && angle <= -20 && game.background.offset > 0) {				
 				bulletX = bulletX - game.background.offset / 2.5;
 				bulletY = bulletY - game.background.offset / 7;
 			}
@@ -387,7 +387,7 @@ export default function Plane(game) {
 	 * Returns the plane hitbox
 	 * @returns {Object}
 	 */
-	this.getHitbox = function (){
+	this.getHitbox = function () {
 		return {
 			x: this.x,
 			y: this.y,

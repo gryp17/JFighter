@@ -14,7 +14,7 @@ var imageRepository = new ImageRepository(gameImages, function () {
 	var mainMenu = new MainMenu(controls);
 	
 	//display the main menu and start the game once a plane and level have been chosen
-	mainMenu.showMenu(function (levelsData, gameControls, selectedPlane, selectedLevel){
+	mainMenu.showMenu(function (levelsData, gameControls, selectedPlane, selectedLevel) {
 		var game = new Game(imageRepository.images, planeStats, enemyStats, civilianStats, levelsData, gameControls);
 		game.start(selectedPlane, selectedLevel);
 	});

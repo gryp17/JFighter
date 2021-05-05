@@ -20,7 +20,7 @@ export default function ImageRepository(images, callback) {
 	 */
 	function countImages(object) {
 		_.forOwn(object, function (value, key) {
-			if (typeof value === "string") {
+			if (typeof value === 'string') {
 				self.totalImages++;
 			} else {
 				countImages(value);
@@ -36,7 +36,7 @@ export default function ImageRepository(images, callback) {
 	function loadImages(object) {
 		_.forOwn(object, function (value, key) {
 			//if the value is an image path preload it
-			if (typeof value === "string") {
+			if (typeof value === 'string') {
 				object[key] = new Image();
 				object[key].src = value;
 

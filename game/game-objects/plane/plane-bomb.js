@@ -62,7 +62,7 @@ export default function PlaneBomb(game, x, y, dx, dy) {
 		game.explosions.push(new Explosion(game, explosionX, explosionY, game.background.dx, 0, showBombHole));
 		
 		//add the bomb hole object
-		if(showBombHole){
+		if(showBombHole) {
 			game.bombHoles.push(new BombHole(game, explosionX, explosionY));
 		}
 	};
@@ -92,7 +92,7 @@ export default function PlaneBomb(game, x, y, dx, dy) {
 	 * Returns the plane bomb explosion hitbox
 	 * @returns {Object}
 	 */
-	this.getExplosionHitbox = function (){
+	this.getExplosionHitbox = function () {
 		var hitbox = this.getHitbox();
 		hitbox.x = hitbox.x - this.explosionRadius;
 		hitbox.width = hitbox.width + (this.explosionRadius * 2);

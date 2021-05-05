@@ -35,7 +35,7 @@ export default function BulletImpact(game, x, y) {
 		//update the "currentImage" with the correct sprite image
 		this.updateSprite();
 
-		if(this.active){
+		if(this.active) {
 			this.context.drawImage(this.currentImage, this.x, this.y + game.background.offset);
 		}
 	};
@@ -43,11 +43,11 @@ export default function BulletImpact(game, x, y) {
 	/**
 	 * Updates the "currentImage" with the correct sprite image
 	 */
-	this.updateSprite = function (){
+	this.updateSprite = function () {
 		this.currentImage = this.impactSprite.move();
 		
 		//if the final image in the sprite has been reached - set the impact as inactive
-		if(this.currentImage === null){
+		if(this.currentImage === null) {
 			this.active = false;
 		}
 	};

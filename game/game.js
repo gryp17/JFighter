@@ -22,7 +22,7 @@ var enemies = {
 
 var civilians = {
 	Civilian
-}
+};
 
 /**
  * Main game class that initializes the game and all the game objects
@@ -56,7 +56,7 @@ export default function(images, planeStats, enemyStats, civilianStats, levelsDat
 	this.collisionsManager = new CollisionsManager(this);
 	
 	//initialize the HUD object
-	this.HUD = new HUD(this, "#HUD");
+	this.HUD = new HUD(this, '#HUD');
 	
 	//initialize the HARPP (get it?) object
 	this.HARPP = new HARPP(this);
@@ -66,13 +66,13 @@ export default function(images, planeStats, enemyStats, civilianStats, levelsDat
 
 	//canvas/context objects
 	this.contexts = {
-		background: new Context("background-canvas"),
-		plane: new Context("plane-canvas"),
-		civilians: new Context("civilians-canvas"),
-		airEnemies: new Context("air-enemies-canvas"),
-		groundEnemies: new Context("ground-enemies-canvas"),
-		projectiles: new Context("projectiles-canvas"),
-		weather: new Context("weather-canvas")
+		background: new Context('background-canvas'),
+		plane: new Context('plane-canvas'),
+		civilians: new Context('civilians-canvas'),
+		airEnemies: new Context('air-enemies-canvas'),
+		groundEnemies: new Context('ground-enemies-canvas'),
+		projectiles: new Context('projectiles-canvas'),
+		weather: new Context('weather-canvas')
 	};
 	
 	/**
@@ -143,7 +143,7 @@ export default function(images, planeStats, enemyStats, civilianStats, levelsDat
 	 * Clears the frame id of the animation loop
 	 */
 	this.clearFrameId = function () {
-		if(this.frameId){
+		if(this.frameId) {
 			clearTimeout(this.frameId);
 			window.cancelAnimationFrame(this.frameId);
 			this.frameId = undefined;
@@ -158,7 +158,7 @@ export default function(images, planeStats, enemyStats, civilianStats, levelsDat
 		self.frameId = requestAnimFrame(self.animate);
 
 		//if the game is paused don't draw anything
-		if(self.status === constants.GAME_STATE.PAUSED){
+		if(self.status === constants.GAME_STATE.PAUSED) {
 			return;
 		}
 
@@ -182,8 +182,8 @@ export default function(images, planeStats, enemyStats, civilianStats, levelsDat
 		self.contexts.groundEnemies.context.clearRect(0, 0, self.contexts.groundEnemies.canvas.width, self.contexts.groundEnemies.canvas.height);
 
 		//draw all enemies that are still on the screen
-		self.enemies = _.filter(self.enemies, function (enemy){
-			if(enemy.active){
+		self.enemies = _.filter(self.enemies, function (enemy) {
+			if(enemy.active) {
 				enemy.draw();
 				return true;
 			}else{
@@ -192,7 +192,7 @@ export default function(images, planeStats, enemyStats, civilianStats, levelsDat
 		});
 		
 		//show the level completed screen if all enemies are dead
-		if(self.enemies.length === 0 && self.status === constants.GAME_STATE.ACTIVE){
+		if(self.enemies.length === 0 && self.status === constants.GAME_STATE.ACTIVE) {
 			self.menu.levelCompleted();
 		}
 		
@@ -200,8 +200,8 @@ export default function(images, planeStats, enemyStats, civilianStats, levelsDat
 		self.contexts.civilians.context.clearRect(0, 0, self.contexts.civilians.canvas.width, self.contexts.civilians.canvas.height);
 				
 		//draw all civilians that are still active
-		self.civilians = _.filter(self.civilians, function (civilian){
-			if(civilian.active){
+		self.civilians = _.filter(self.civilians, function (civilian) {
+			if(civilian.active) {
 				civilian.draw();
 				return true;
 			}else{
@@ -210,8 +210,8 @@ export default function(images, planeStats, enemyStats, civilianStats, levelsDat
 		});
 						
 		//draw all bullet impacts that are still active
-		self.bulletImpacts = _.filter(self.bulletImpacts, function (bulletImpact){
-			if(bulletImpact.active){
+		self.bulletImpacts = _.filter(self.bulletImpacts, function (bulletImpact) {
+			if(bulletImpact.active) {
 				bulletImpact.draw();
 				return true;
 			}else{
@@ -220,8 +220,8 @@ export default function(images, planeStats, enemyStats, civilianStats, levelsDat
 		});
 		
 		//draw all explosions that are still active
-		self.explosions = _.filter(self.explosions, function (explosion){
-			if(explosion.active){
+		self.explosions = _.filter(self.explosions, function (explosion) {
+			if(explosion.active) {
 				explosion.draw();
 				return true;
 			}else{
@@ -230,8 +230,8 @@ export default function(images, planeStats, enemyStats, civilianStats, levelsDat
 		});
 		
 		//draw all bomb holes that are still active
-		self.bombHoles = _.filter(self.bombHoles, function (bombHole){
-			if(bombHole.active){
+		self.bombHoles = _.filter(self.bombHoles, function (bombHole) {
+			if(bombHole.active) {
 				bombHole.draw();
 				return true;
 			}else{
@@ -246,9 +246,9 @@ export default function(images, planeStats, enemyStats, civilianStats, levelsDat
 		self.HARPP.updateWeatherStatus();
 		
 		//draw all weather effects
-		self.weatherEffects.forEach(function (weatherEffect){
+		self.weatherEffects.forEach(function (weatherEffect) {
 			//if the showWeatherEffects flag is raised OR if the weather effect is still inside the canvas (vertically)
-			if(self.HARPP.showWeatherEffects || weatherEffect.y >= 0){
+			if(self.HARPP.showWeatherEffects || weatherEffect.y >= 0) {
 				weatherEffect.draw();
 			}
 		});

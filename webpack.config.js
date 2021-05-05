@@ -1,7 +1,7 @@
-var webpack = require("webpack");
+var webpack = require('webpack');
 var path = require('path');
-var HtmlWebpackPlugin = require("html-webpack-plugin");
-var CopyWebpackPlugin = require("copy-webpack-plugin");
+var HtmlWebpackPlugin = require('html-webpack-plugin');
+var CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
 	entry: {
@@ -9,9 +9,9 @@ module.exports = {
 		editor: './level-editor/main.js'
 	},
 	output: {
-		path: __dirname + "/dist",
-		publicPath: "",
-		filename: "[name]-bundle.js"
+		path: __dirname + '/dist',
+		publicPath: '',
+		filename: '[name]-bundle.js'
 	},
 	module: {
 		rules: [
@@ -19,16 +19,16 @@ module.exports = {
 				test: /\.scss$/,
 				use: [
 					{
-						loader: "style-loader"
+						loader: 'style-loader'
 					},
 					{
-						loader: "css-loader"
+						loader: 'css-loader'
 					},
 					{
-						loader: "postcss-loader"
+						loader: 'postcss-loader'
 					},
 					{
-						loader: "sass-loader"
+						loader: 'sass-loader'
 					}
 				]
 			},
@@ -38,7 +38,7 @@ module.exports = {
 					{
 						loader: 'file-loader',
 						options: {
-							outputPath: 'css-images',
+							outputPath: 'css-images'
 						}
 					}
 				]
@@ -47,17 +47,17 @@ module.exports = {
 				test: /\.js$/,
 				exclude: /node_modules/,
 				use: {
-					loader: "babel-loader"
+					loader: 'babel-loader'
 				}
 			}
 		]
 	},
 	plugins: [
 		new webpack.ProvidePlugin({
-			"jQuery": "jquery",
-			"$": "jquery",
-			"global.jQuery": "jquery",
-			"_": "lodash"
+			'jQuery': 'jquery',
+			'$': 'jquery',
+			'global.jQuery': 'jquery',
+			'_': 'lodash'
 		}),
 		new HtmlWebpackPlugin({
 			filename: 'index.html',
@@ -77,8 +77,8 @@ module.exports = {
 		new CopyWebpackPlugin({
 			patterns: [
 				{
-					from: "./img",
-					to: "./img" 
+					from: './img',
+					to: './img' 
 				}
 			]
 		})

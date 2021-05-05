@@ -3,7 +3,7 @@
  * @param {Object} inputs
  * @returns {Keyboard}
  */
-export default function Keyboard (inputs){
+export default function Keyboard (inputs) {
 	var self = this;
 	
 	this.inputs = inputs;
@@ -15,7 +15,7 @@ export default function Keyboard (inputs){
 	this.getInputs = function () {
 		var result = {};
 		
-		_.forOwn(self.inputs, function (data, key){
+		_.forOwn(self.inputs, function (data, key) {
 			result[key] = data.status || false;
 		});
 		
@@ -28,18 +28,18 @@ export default function Keyboard (inputs){
 	this.listen = function () {
 		
 		//key down
-		$("body").keydown(function (e) {
-			_.forOwn(self.inputs, function (data, key){
-				if(_.includes(data.keys, e.which)){
+		$('body').keydown(function (e) {
+			_.forOwn(self.inputs, function (data, key) {
+				if(_.includes(data.keys, e.which)) {
 					data.status = true;
 				}
 			});
 		});
 
 		//key up
-		$("body").keyup(function (e) {
-			_.forOwn(self.inputs, function (data, key){
-				if(_.includes(data.keys, e.which)){
+		$('body').keyup(function (e) {
+			_.forOwn(self.inputs, function (data, key) {
+				if(_.includes(data.keys, e.which)) {
 					data.status = false;
 				}
 			});

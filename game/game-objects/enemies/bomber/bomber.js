@@ -69,12 +69,12 @@ export default function Bomber(game, x, y) {
 		this.x = this.x + this.dx;
 		this.y = this.y + this.dy;
 				
-		if(this.disabled === false){
+		if(this.disabled === false) {
 			//always fly higher than the fighter plane
 			this.avoidPlayer();
 		}
 		//slowly descend the bomber until it crashes
-		else if(this.crashed === false){
+		else if(this.crashed === false) {
 			this.freeFall();
 		}
 		
@@ -88,7 +88,7 @@ export default function Bomber(game, x, y) {
 		this.drawBomber();
 		
 		//draw the health bar
-		if(this.disabled === false){
+		if(this.disabled === false) {
 			this.drawHealthBar();
 		}
 		
@@ -117,7 +117,7 @@ export default function Bomber(game, x, y) {
 	/**
 	 * Disables the bomber
 	 */
-	this.disable = function (){
+	this.disable = function () {
 		this.disabled = true;
 		this.health = 0;
 	};
@@ -125,8 +125,8 @@ export default function Bomber(game, x, y) {
 	/**
 	 * Slowly descend the bomber until it crashes to the ground
 	 */
-	this.freeFall = function (){
-		if(this.dy < 3){
+	this.freeFall = function () {
+		if(this.dy < 3) {
 			this.dy = this.dy + 0.05;
 		}
 	};
@@ -183,7 +183,7 @@ export default function Bomber(game, x, y) {
 	 */
 	this.drawBombs = function () {
 		this.bombs = _.filter(this.bombs, function (bomb) {
-			if(bomb.active){
+			if(bomb.active) {
 				bomb.draw();
 				return true;
 			}else{
@@ -208,7 +208,7 @@ export default function Bomber(game, x, y) {
 	 * Returns the bomber hitboxes
 	 * @returns {Array}
 	 */
-	this.getHitbox = function (){
+	this.getHitbox = function () {
 		//the bomber has 2 hitboxes - body and tail
 		var bomberBody = {
 			x: this.x,
@@ -235,12 +235,12 @@ export default function Bomber(game, x, y) {
 	/**
 	 * Try to avoid the fighter (player) plane by always flying higher
 	 */
-	this.avoidPlayer = function (){
+	this.avoidPlayer = function () {
 		var horizontalDistance = this.x - game.plane.x + game.plane.currentImage.width;
 		var verticalDistance = (this.y + game.background.offset + this.currentImage.height) - game.plane.y;
 		
 		//if the fighter gets too close - fly up
-		if(horizontalDistance > 0 && horizontalDistance < this.canvas.width - 300 && verticalDistance > -100){
+		if(horizontalDistance > 0 && horizontalDistance < this.canvas.width - 300 && verticalDistance > -100) {
 			this.climb();
 		}
 		//otherwise level the bomber
@@ -252,8 +252,8 @@ export default function Bomber(game, x, y) {
 	/**
 	 * Makes the bomber climb until it reaches it's max climb speed
 	 */
-	this.climb = function (){
-		if(this.dy > (this.stats.CLIMB_SPEED * -1)){
+	this.climb = function () {
+		if(this.dy > (this.stats.CLIMB_SPEED * -1)) {
 			this.dy = this.dy - 0.1;
 		}
 	};
@@ -261,8 +261,8 @@ export default function Bomber(game, x, y) {
 	/**
 	 * Makes the bomber descend until it reaches it's max descend speed
 	 */
-	this.descend = function (){
-		if(this.dy < this.stats.DESCEND_SPEED){
+	this.descend = function () {
+		if(this.dy < this.stats.DESCEND_SPEED) {
 			this.dy = this.dy + 0.1;
 		}
 	};
@@ -270,10 +270,10 @@ export default function Bomber(game, x, y) {
 	/**
 	 * Ascends/Descends the bomber slowly until it starts flying in straight line (dy = 0)
 	 */
-	this.level = function (){
-		if(this.dy < 0){
+	this.level = function () {
+		if(this.dy < 0) {
 			this.descend();
-		}else if(this.dy > 0){
+		}else if(this.dy > 0) {
 			this.climb();
 		}
 	};
@@ -281,7 +281,7 @@ export default function Bomber(game, x, y) {
 	/**
 	 * Updates the bomb cooldown/delay parameters
 	 */
-	this.updateBombsStatus = function (){
+	this.updateBombsStatus = function () {
 		
 		//bombs delay
 		if (this.bombing === true) {
@@ -296,7 +296,7 @@ export default function Bomber(game, x, y) {
 		}
 		
 		//carpet cooldown (start the cooldown timer only if all bombs have been dropped)
-		if(this.droppedBombs === this.bombCarpetSize){
+		if(this.droppedBombs === this.bombCarpetSize) {
 			this.carpetTimer++;
 
 			//reset the carpet timer
@@ -311,10 +311,10 @@ export default function Bomber(game, x, y) {
 	/**
 	 * Makes the bomber drop bombs if the correct parameter are set
 	 */
-	this.dropBombs = function (){
+	this.dropBombs = function () {
 		
 		//if the bomber is inside the screen and is not disabled
-		if(this.x < this.canvas.width && this.disabled === false){
+		if(this.x < this.canvas.width && this.disabled === false) {
 						
 			//drop bomb only if the bomb is not on cooldown and if the number of dropped bombs doesn't exceed the max carpet size
 			if (this.bombing === false && this.droppedBombs < this.bombCarpetSize) {

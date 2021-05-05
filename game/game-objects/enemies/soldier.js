@@ -55,12 +55,12 @@ export default function Soldier(game, x, y) {
 		this.y = this.y + this.dy;
 		
 		//if the civilian health reaches 0...
-		if(this.health <= 0 && this.dead === false){
+		if(this.health <= 0 && this.dead === false) {
 			this.die();
 		}
 		
 		//if the soldier is alive and is inside the screen - engage the civilians
-		if(this.dead === false && this.x < this.canvas.width){
+		if(this.dead === false && this.x < this.canvas.width) {
 			this.engageCivilians();
 		}
 		
@@ -71,7 +71,7 @@ export default function Soldier(game, x, y) {
 		this.context.drawImage(this.currentImage, this.x, this.y + game.background.offset);
 		
 		//draw the health bar
-		if(this.dead === false){
+		if(this.dead === false) {
 			this.drawHealthBar();
 		}
 		
@@ -97,7 +97,7 @@ export default function Soldier(game, x, y) {
 	/**
 	 * Draws all soldier bullets that are inside the canvas and haven't hit anything
 	 */
-	this.drawBullets = function (){
+	this.drawBullets = function () {
 		this.bullets = _.filter(this.bullets, function (bullet) {
 			if (bullet.active === false) {
 				return false;
@@ -120,11 +120,11 @@ export default function Soldier(game, x, y) {
 	/**
 	 * Shoots at all civilians that are close
 	 */
-	this.engageCivilians = function (){
-		game.civilians.forEach(function (civilian){
+	this.engageCivilians = function () {
+		game.civilians.forEach(function (civilian) {
 			var distance = self.x - civilian.x + civilian.currentImage.width;
 			
-			if(civilian.dead === false && distance > 0 && distance < 600){
+			if(civilian.dead === false && distance > 0 && distance < 600) {
 				self.shoot();
 			}
 		});
@@ -133,7 +133,7 @@ export default function Soldier(game, x, y) {
 	/**
 	 * Updates the bullets cooldown/reload status
 	 */
-	this.updateBulletsStatus = function (){
+	this.updateBulletsStatus = function () {
 		//bullet cooldown
 		if (this.reloading === true) {
 			this.bulletCooldownTimer++;
@@ -166,7 +166,7 @@ export default function Soldier(game, x, y) {
 	/**
 	 * Makes the soldier die
 	 */
-	this.die = function (){		
+	this.die = function () {		
 		this.dead = true;
 		this.y = 570;
 		this.dx = game.background.dx;

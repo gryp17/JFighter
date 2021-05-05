@@ -20,7 +20,7 @@ export default function Snowflake(game, x, y, dx, dy, radius) {
 	
 	//snowflake parameters
 	this.radius = radius;
-	this.color = "rgba(255, 255, 255, 0.8)";
+	this.color = 'rgba(255, 255, 255, 0.8)';
 
 	/**
 	 * Draws the snowflake

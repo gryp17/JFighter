@@ -18,10 +18,10 @@ export default function Sprite(images, delay, loop) {
 	 * Called in order to get the current/next sprite image
 	 * @returns {String}
 	 */
-	this.move = function (){
+	this.move = function () {
 		
 		//if the loop flag is not raised and we have already looped thought all images - return null
-		if(!this.loop && this.index === this.images.length - 1){
+		if(!this.loop && this.index === this.images.length - 1) {
 			this.currentImage = null;
 			return this.currentImage;
 		}
@@ -48,7 +48,7 @@ export default function Sprite(images, delay, loop) {
 	 * @param {Number} index
 	 * @returns {String}
 	 */
-	this.moveTo = function (index){
+	this.moveTo = function (index) {
 		this.index = index;
 		this.currentImage = this.images[this.index];
 		return this.move();
