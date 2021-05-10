@@ -36,10 +36,7 @@ module.exports = {
 				test: /\.(png|jpe?g|gif)$/i,
 				use: [
 					{
-						loader: 'file-loader',
-						options: {
-							outputPath: 'css-images'
-						}
+						loader: 'url-loader'
 					}
 				]
 			},
@@ -78,7 +75,7 @@ module.exports = {
 			patterns: [
 				{
 					from: './img',
-					to: './img' 
+					to: './img'
 				}
 			]
 		})
